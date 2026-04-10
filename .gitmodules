@@ -1,0 +1,9 @@
+[submodule "robot-android-app"]
+	path = robot-android-app
+	url = git@github.com:BehzadIT/robot-android-app.git
+[submodule "robot-pico-platform"]
+	path = robot-pico-platform
+	url = git@github.com:BehzadIT/robot-pico-platform.git
+[submodule "robot-esp32-platform"]
+	path = robot-esp32-platform
+	url = git@github.com:BehzadIT/robot-esp32-platform.git
