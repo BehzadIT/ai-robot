@@ -8,5 +8,5 @@ Thumbs.db
 
 # Local logs and scratch files
 *.log
-tmp/
-temp/
+/tmp/
+/temp/

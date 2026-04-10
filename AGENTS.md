@@ -50,6 +50,19 @@ architecture docs are intentionally updated in the same change.
 - Do not assume all child repositories are released together.
 - Preserve unrelated dirty work in child repositories.
 
+## Temporary Workspace
+- Use the parent repo `temp/` directory for Work In Progress material and
+  short-lived artifacts.
+- Put scratch plans, copied logs, investigation notes, one-off temp scripts,
+  generated snippets, command output captures, and experiments in `temp/`.
+- `temp/` is intentionally excluded from Git. Do not place canonical
+  documentation, source code, release artifacts, or durable decisions there.
+- When temporary work becomes durable project knowledge, move the relevant
+  result into `docs/`, the appropriate child repo docs, or code comments before
+  committing.
+- Prefer `temp/` over ad hoc scratch files in the repo root or canonical docs
+  tree.
+
 ## Agent Working Rules
 - Treat `docs/` as the source of truth for project-wide context.
 - Keep parent docs focused on system behavior, subsystem boundaries, protocols,
