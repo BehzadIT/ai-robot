@@ -1,30 +1,25 @@
 # Motor Control And Encoders
 
 ## Purpose
-Describe the implemented motor-control logic, RPM interpretation, and encoder handling.
+Summarize the system-level motor and encoder responsibilities.
 
-## Current status
-- `Implemented`: dual-track PID-based control loop with PIO encoder reading.
-- `Implemented`: signed target RPM is converted into direction plus absolute speed.
-- `Needs verification`: actual left encoder pins on the current robot.
+Detailed Pico motor-control and encoder implementation notes live in
+`../../robot-pico-platform/docs/motor-control-and-encoders.md`.
 
-## Motor control behavior
-- Control loop uses target RPM and target angle state from the navigation controller.
-- The active WebSocket route now exposes signed throttle / turn intent and converts that into internal RPM / direction / angle targets before the control loop runs.
-- HTTP legacy payloads still expose target RPM, target direction, and target angle directly.
-- PID output is converted to signed PWM and then mapped to Cytron PWM/DIR outputs.
-- Stop currently terminates the control thread and stops motors.
+## System-Level Ownership
+- Pico owns drivetrain control and encoder interpretation.
+- Android sends throttle and turn intent, not motor RPM or PWM authority.
+- ESP32 must not own motor control or safety decisions.
 
-## Encoder behavior
-- PIO quadrature counter is used for dual encoders.
-- Current code assumes full quadrature decoding with `ENCODER_CPR = 64`.
-- `GEAR_RATIO = 30` yields `1920 counts/output rev`.
+## Current Integration Facts
+- The robot uses a dual-track drivetrain with two motor outputs.
+- Encoder polarity, exact as-built pinout, and supply assumptions must remain
+  visible in parent electrical and verification docs.
+- Control behavior should fail safe when encoder data or motor output state is
+  untrustworthy.
 
-## Important mismatch
-The docs and wiring notes point to left encoder pins `GP12/13`, while one current implementation path uses `GP20/21`. This is a high-priority verification item.
-
-## Sources
-- Code: [robot_cross_coupled_pid.py](../../robot-pico-platform/services/robot_cross_coupled_pid.py)
-- Code: [dual_rpm_pio_test.py](../../robot-pico-platform/services/dual_rpm_pio_test.py)
-- Source file: [Pololu_37D_Encoder_Spec_and_RPM_Test_Code (1).txt](../../robot-pico-platform/docs/Pololu_37D_Encoder_Spec_and_RPM_Test_Code%20%281%29.txt)
-- Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
+## Related Docs
+- Parent wiring: `../electrical/wiring-and-pinout.md`
+- Parent hardware interfaces: `../interfaces/hardware-interfaces.md`
+- Parent known issues: `../verification/known-issues-and-open-questions.md`
+- Pico implementation: `../../robot-pico-platform/docs/motor-control-and-encoders.md`

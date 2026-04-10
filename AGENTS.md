@@ -19,6 +19,7 @@ context; it does not replace the child repositories.
 
 ## Read First
 For system-level or cross-project work, start with:
+- `docs/README.md`
 - `docs/overview/project-summary.md`
 - `docs/overview/current-architecture.md`
 - `docs/overview/design-decisions.md`
@@ -51,6 +52,10 @@ architecture docs are intentionally updated in the same change.
 
 ## Agent Working Rules
 - Treat `docs/` as the source of truth for project-wide context.
+- Keep parent docs focused on system behavior, subsystem boundaries, protocols,
+  hardware, operations, and verification.
+- Put platform implementation details in the relevant child repo's `docs/`
+  directory.
 - Keep `AGENTS.md` files short and navigational; put durable technical detail in
   docs or code comments.
 - When changing protocols, wiring, safety behavior, or subsystem boundaries,

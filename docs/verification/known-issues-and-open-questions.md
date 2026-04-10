@@ -54,9 +54,6 @@ The parts inventory includes multiple sensors, but the current control-critical 
 If a statement appears only in rough project notes and cannot be confirmed by code, manual, image, or bench evidence, treat it as `Project note` or `Needs verification`, not as a final fact.
 
 ## Sources
-- Code: [robot_drive_controller.py](../../robot-pico-platform/services/robot_drive_controller.py)
-- Code: [robot_cross_coupled_pid.py](../../robot-pico-platform/services/robot_cross_coupled_pid.py)
-- Code: [NavigationWebSocketApi.kt](../../robot-android-app/app/src/main/java/com/bizi/roboapp/core/transport/NavigationWebSocketApi.kt)
 - Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
 - Source file: [Robot battery system.txt](../../robot-pico-platform/docs/Robot%20battery%20system.txt)
 - Source file: [Pololu_37D_Encoder_Spec_and_RPM_Test_Code (1).txt](../../robot-pico-platform/docs/Pololu_37D_Encoder_Spec_and_RPM_Test_Code%20%281%29.txt)

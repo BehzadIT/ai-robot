@@ -37,5 +37,3 @@ The current PIO encoder implementation in code uses `GP10/11` for the right enco
 
 ## Sources
 - Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
-- Code: [robot_cross_coupled_pid.py](../../robot-pico-platform/services/robot_cross_coupled_pid.py)
-- Code: [dual_rpm_pio_test.py](../../robot-pico-platform/services/dual_rpm_pio_test.py)

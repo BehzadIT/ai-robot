@@ -19,6 +19,4 @@ Provide a safe, repeatable high-level bring-up sequence for future work sessions
 Treat command, telemetry, and motor subsystems as separable bring-up targets. Do not assume that one working path proves the others are correct.
 
 ## Sources
-- Code: [wifi connection](../../robot-pico-platform/wifi/connection.py)
-- Code: [navigation.py](../../robot-pico-platform/server/routes/navigation.py)
 - Manual/source file: [Smart Active Balance BMS manual.pdf](../../robot-pico-platform/docs/Smart%20Active%20Balance%20BMS%20manual.pdf)

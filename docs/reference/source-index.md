@@ -4,9 +4,9 @@
 List the main source materials used by the canonical docs.
 
 ## Repositories
-- [robot-pico-platform](robot-pico-platform)
-- [robot-esp32-platform](robot-esp32-platform)
-- [robot-android-app](robot-android-app)
+- [robot-pico-platform](../../robot-pico-platform)
+- [robot-esp32-platform](../../robot-esp32-platform)
+- [robot-android-app](../../robot-android-app)
 
 ## Local manuals and project files
 - [robot_project_components_UPDATED (1).pdf](../../robot-pico-platform/docs/robot_project_components_UPDATED%20%281%29.pdf)

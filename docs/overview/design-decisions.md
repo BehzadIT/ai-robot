@@ -26,6 +26,7 @@ The print-mirroring design preserves IDE and REPL compatibility by keeping USB o
 ### Canonical docs must preserve uncertainty
 Conflicts and unresolved facts should be documented explicitly instead of normalized away.
 
-## Sources
-- Code: [logger.py](../../robot-pico-platform/src/support/logger.py)
-- Code: [ESP32 bridge](../../robot-esp32-platform/components/telemetry_bridge/telemetry_bridge.c)
+## Related Docs
+- Current architecture: `current-architecture.md`
+- Known issues and open questions: `../verification/known-issues-and-open-questions.md`
+- Pico drivetrain review: `../../robot-pico-platform/docs/drivetrain-pid-pio-reliability-review.md`

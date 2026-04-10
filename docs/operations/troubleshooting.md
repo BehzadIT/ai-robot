@@ -29,6 +29,4 @@ Provide a fast fault-isolation map for common future debugging sessions.
 - verify `target_direction` semantics
 
 ## Sources
-- Code: [logger.py](../../robot-pico-platform/src/support/logger.py)
-- Code: [NavigationWebSocketApi.kt](../../robot-android-app/app/src/main/java/com/bizi/roboapp/core/transport/NavigationWebSocketApi.kt)
 - Source file: [faulty shaft and solution.txt](../../robot-pico-platform/docs/faulty%20shaft%20and%20solution.txt)

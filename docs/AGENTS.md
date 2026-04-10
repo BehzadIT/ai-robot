@@ -8,6 +8,11 @@ project.
 - Read the relevant files in this docs tree before making changes in any related repo.
 - Prefer these docs for project-wide context across mechanics, power, firmware, telemetry, Android control, and verification status.
 - Treat this docs tree as the first stop for system understanding and current known conflicts.
+- Keep this docs tree system-level. It may describe platform responsibilities,
+  interactions, and boundaries, but implementation plans belong in child repo
+  docs.
+- Link to child implementation docs instead of duplicating low-level code plans
+  here.
 - When documenting significant changes, note the underlying best practice, design pattern, technology choice, and architectural rationale so future work has decision context.
 - Document reliability, recovery, timeout, and logging behavior clearly when transport or control semantics change.
 - Treat code documentation as an engineering requirement for this project: non-obvious behavior in code should be reflected either in code comments/docstrings, in this docs tree, or both.
@@ -34,6 +39,7 @@ project.
   - ownership and safety boundary
 
 ## Key files
+- `README.md`
 - `overview/project-summary.md`
 - `overview/current-architecture.md`
 - `electrical/wiring-and-pinout.md`

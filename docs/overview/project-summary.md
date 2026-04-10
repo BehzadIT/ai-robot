@@ -32,8 +32,5 @@ The project is not purely software. Future work depends on consistent documentat
 - Power: 4S2P LiFePO4 pack with DALY-family BMS.
 
 ## Sources
-- Code: [robot-pico-platform main](../../robot-pico-platform/main.py)
-- Code: [ESP32 bridge](../../robot-esp32-platform/components/telemetry_bridge/telemetry_bridge.c)
-- Code: [Android app](../../robot-android-app/app/src/main/java/com/bizi/roboapp/feature/drivecontrol/ui/HomeViewModel.kt)
 - Manual/source file: [robot_project_components_UPDATED (1).pdf](../../robot-pico-platform/docs/robot_project_components_UPDATED%20%281%29.pdf)
 - Manual/source file: [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)

@@ -56,7 +56,8 @@ HTTP JSON object remains legacy:
 - WebSocket control is compact-schema only.
 - The earlier WebSocket `r/d/a` payload shape is retired.
 
-## Sources
-- Code: [navigation.py](../../robot-pico-platform/server/routes/navigation.py)
-- Code: [request_models.py](../../robot-pico-platform/src/protocol/request_models.py)
-- Code: [NavigationWebSocketApi.kt](../../robot-android-app/app/src/main/java/com/bizi/roboapp/core/transport/NavigationWebSocketApi.kt)
+## Related Docs
+- Current architecture: `../overview/current-architecture.md`
+- Operator model: `../control-and-apps/operator-control-model.md`
+- Android implementation: `../../robot-android-app/docs/operator-control-ui.md`
+- Pico implementation: `../../robot-pico-platform/docs/firmware-architecture.md`

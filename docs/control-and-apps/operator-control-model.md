@@ -37,6 +37,7 @@ The current app already speaks operator intent over WebSocket, but the visible c
   - may continue to use internal RPM, PWM, angle, or left/right track target variables as needed
   - should treat Android percentages as operator intent, not as direct hardware commands
 
-## Sources
-- Code: [request_models.py](../../robot-pico-platform/src/protocol/request_models.py)
-- Code: [HomeViewModel.kt](../../robot-android-app/app/src/main/java/com/bizi/roboapp/feature/drivecontrol/ui/HomeViewModel.kt)
+## Related Docs
+- Android system role: `android-control-app.md`
+- Command protocol: `../interfaces/command-protocol.md`
+- Pico control role: `../firmware/pico-firmware-architecture.md`

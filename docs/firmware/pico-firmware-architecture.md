@@ -1,45 +1,25 @@
 # Pico Firmware Architecture
 
 ## Purpose
-Describe the current Raspberry Pi Pico firmware structure and runtime responsibilities.
+Describe the Pico firmware's role in the overall robot system.
 
-## Current status
-- `Implemented`: MicroPython application in `robot-pico-platform` owns Wi-Fi connection, control routes, motor control, and logging.
+Detailed Pico module layout and runtime implementation notes live in
+`../../robot-pico-platform/docs/firmware-architecture.md`.
 
-## Entry flow
-- repo-root `main.py` delegates into `src/app/`.
-- The runtime enables UART print mirroring.
-- It creates a Microdot app.
-- It registers routes.
-- It reads tracked runtime settings from `settings/config.py`.
-- It reads local Wi-Fi credentials from `settings/secrets.py`.
-- It connects to Wi-Fi.
-- It starts the HTTP server on port `80`.
+## System Role
+- Pico is the robot's real-time control authority.
+- Pico owns motor control, encoder interpretation, safety stop behavior,
+  drivetrain timing, and command freshness handling.
+- Pico currently also hosts the live command server used by the Android app.
+- Pico emits logs and telemetry that the ESP32 can bridge for bench visibility.
 
-## Key modules
-- `src/transport/navigation.py`: HTTP and WebSocket control endpoints
-- `src/control/robot_drive_controller.py`: navigation target state and stop handling
-- `src/control/robot_cross_coupled_pid.py`: drive loop, PWM output, encoder reads
-- `src/support/logger.py`: REPL-safe logging implementation
-- `src/platform/wifi_connection.py`: station-mode Wi-Fi join logic
+## Boundary With Other Subsystems
+- Android sends operator intent and owns app transport lifecycle.
+- ESP32 bridges telemetry and must not own drivetrain safety or motor output.
+- Parent protocol docs define shared command and telemetry semantics.
 
-## Root layout
-- `main.py`: Pico firmware bootstrap
-- `src/`: project-owned runtime code
-- `lib/`: runtime dependencies deployed to the Pico
-- `settings/`: Pico-side configuration package
-- `docs/`: reference material
-- `experiments/`: non-production tuning and exploratory scripts
-
-## Notes
-The Pico firmware is currently both the real-time controller and the live control server. That is a current implementation fact even if future architecture changes move command routing elsewhere.
-The shared upload workflow should target the real firmware paths (`main.py`, `src/`, `lib/`, `settings/`) rather than a mirrored deploy tree.
-Drivetrain watchdog settings are owned by `settings/config.py` and are rolled
-out in stages. The current safe pattern is to defer watchdog arming until after
-the first clean stop cycle instead of arming immediately at startup.
-
-## Sources
-- Code: [main.py](../../robot-pico-platform/main.py)
-- Code: [navigation.py](../../robot-pico-platform/src/transport/navigation.py)
-- Code: [robot_drive_controller.py](../../robot-pico-platform/src/control/robot_drive_controller.py)
-- Code: [robot_cross_coupled_pid.py](../../robot-pico-platform/src/control/robot_cross_coupled_pid.py)
+## Related Docs
+- Parent architecture: `../overview/current-architecture.md`
+- Parent command protocol: `../interfaces/command-protocol.md`
+- Parent telemetry protocol: `../interfaces/telemetry-protocol.md`
+- Pico implementation: `../../robot-pico-platform/docs/firmware-architecture.md`

@@ -16,6 +16,7 @@ Define the preferred debugging workflow for this robot.
 ## Notes
 Any logging change that breaks REPL tooling or IDE memory probes is a regression.
 
-## Sources
-- Code: [logger.py](../../robot-pico-platform/src/support/logger.py)
-- Code: [telemetry_bridge.c](../../robot-esp32-platform/components/telemetry_bridge/telemetry_bridge.c)
+## Related Docs
+- Logging and telemetry: `../firmware/logging-and-telemetry.md`
+- ESP32 telemetry bridge: `../control-and-apps/esp32-telemetry-bridge.md`
+- Pico logging implementation: `../../robot-pico-platform/docs/logging-and-telemetry.md`

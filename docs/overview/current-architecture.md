@@ -32,8 +32,12 @@ Describe the current implemented architecture across the Pico, ESP32, Android ap
 - Control: `Android -> Pico WebSocket/HTTP -> Pico motor control`
 - Telemetry: `Pico UART -> ESP32 -> WebSocket -> PC terminal`
 
-## Sources
-- Code: [Pico route registration](../../robot-pico-platform/server/routes/navigation.py)
-- Code: [Pico control entrypoint](../../robot-pico-platform/main.py)
-- Code: [ESP32 bridge](../../robot-esp32-platform/components/telemetry_bridge/telemetry_bridge.c)
-- Code: [Android WebSocket client](../../robot-android-app/app/src/main/java/com/bizi/roboapp/core/transport/NavigationWebSocketApi.kt)
+## Related Docs
+- Project summary: `project-summary.md`
+- Design decisions: `design-decisions.md`
+- Command protocol: `../interfaces/command-protocol.md`
+- Telemetry protocol: `../interfaces/telemetry-protocol.md`
+- Platform implementation docs:
+  - `../../robot-android-app/docs/README.md`
+  - `../../robot-esp32-platform/docs/README.md`
+  - `../../robot-pico-platform/docs/README.md`

@@ -8,5 +8,6 @@ Track documentation-level changes and major shifts in the understood state of th
 - Consolidated implementation-backed facts from the three repos.
 - Captured hardware, wiring, power, and app conflicts into the verification section.
 
-## Sources
-- Code: [robot-pico-platform README](../../robot-pico-platform/README.md)
+## Related Docs
+- Project summary: `../overview/project-summary.md`
+- Source index: `../reference/source-index.md`

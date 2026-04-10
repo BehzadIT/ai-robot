@@ -33,11 +33,14 @@ git submodule update --init --recursive
 Start with:
 
 - `AGENTS.md`
+- `docs/README.md`
 - `docs/overview/project-summary.md`
 - `docs/overview/current-architecture.md`
 - `docs/reference/source-index.md`
 
 For platform-specific work, read the `AGENTS.md` inside the target submodule.
+Detailed platform implementation docs live in each child repo's `docs/`
+directory.
 
 ## Submodule Workflow
 

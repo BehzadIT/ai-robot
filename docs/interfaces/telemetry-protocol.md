@@ -23,6 +23,7 @@ Current `telemetry()` output contains:
 ## Notes
 The telemetry path is optimized for observability during live robot motion without halting execution.
 
-## Sources
-- Code: [logger.py](../../robot-pico-platform/src/support/logger.py)
-- Code: [telemetry_bridge.c](../../robot-esp32-platform/components/telemetry_bridge/telemetry_bridge.c)
+## Related Docs
+- Current architecture: `../overview/current-architecture.md`
+- Logging and telemetry: `../firmware/logging-and-telemetry.md`
+- ESP32 telemetry bridge: `../control-and-apps/esp32-telemetry-bridge.md`

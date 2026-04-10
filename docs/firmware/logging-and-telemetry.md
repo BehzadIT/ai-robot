@@ -1,54 +1,22 @@
 # Logging And Telemetry
 
 ## Purpose
-Document the Pico logging architecture and the telemetry contract expected by the ESP32 bridge and bench tools.
+Describe logging and telemetry as a cross-system behavior.
 
-## Current status
-- `Implemented`: `print()` output is mirrored to UART while preserving normal USB REPL output.
-- `Implemented`: structured logs and telemetry use UART-first behavior.
-- `Project note`: preserving IDE compatibility is a hard requirement.
+Detailed Pico logging implementation notes live in
+`../../robot-pico-platform/docs/logging-and-telemetry.md`. ESP32 bridge details
+live in `../../robot-esp32-platform/docs/telemetry-bridge.md`.
 
-## Behavior
-### `print()`
-- USB REPL output should remain unchanged.
-- UART copy is prefixed with boot-relative ticks.
+## System-Level Behavior
+- Pico produces runtime logs and telemetry.
+- ESP32 bridges Pico UART output to WebSocket clients for bench diagnostics.
+- Logging must preserve the Pico REPL and avoid blocking safety-critical control
+  behavior.
+- Telemetry should help diagnose transport, control, hardware, and safety state
+  without moving ownership away from the Pico.
 
-### Structured logs
-- `loge`, `logw`, `logi`, `logd`, `logv` emit formatted UART logs.
-- Current code also emits ANSI-colored output to the USB side, which is an implementation fact to keep in mind during tooling work.
-
-### Telemetry packets
-- `telemetry(tag, **data)` emits JSON over UART with fields `t`, `tag`, and `data`.
-
-## Design rule
-UART failures must never crash the firmware.
-Logging also must never be able to block drivetrain control or websocket
-command handling.
-
-## Stability learnings
-Recent teleop stabilization work showed that logging pressure was a primary
-failure mode on the Pico.
-
-Rules to preserve:
-- Keep the logger non-blocking across threads.
-- Sample high-rate transport logs instead of emitting one line per drive frame.
-- Keep stop/restart paths quiet unless extra logging is needed for a specific
-  safety investigation.
-- Treat added UART/USB log volume as a control-path change, not just an
-  observability change.
-
-Symptoms that previously pointed at logging trouble:
-- drivetrain worker appearing to stop immediately after startup
-- websocket commands apparently accepted but no further drivetrain progress
-- watchdog resets around drive/stop boundaries without a clear control fault
-
-If teleop becomes unstable again, inspect:
-- global logger lock behavior
-- drive-log sampling behavior in websocket transport
-- new telemetry added in stop/start paths
-- any synchronous print/log loop introduced in worker or route code
-
-## Sources
-- Code: [logger.py](../../robot-pico-platform/src/support/logger.py)
-- Code: [logging.py](../../robot-pico-platform/src/support/logging.py)
-- Code: [navigation.py](../../robot-pico-platform/src/transport/navigation.py)
+## Related Docs
+- Parent telemetry protocol: `../interfaces/telemetry-protocol.md`
+- Parent ESP32 role: `../control-and-apps/esp32-telemetry-bridge.md`
+- Pico implementation: `../../robot-pico-platform/docs/logging-and-telemetry.md`
+- ESP32 implementation: `../../robot-esp32-platform/docs/telemetry-bridge.md`

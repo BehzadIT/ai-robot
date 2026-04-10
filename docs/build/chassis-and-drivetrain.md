@@ -24,4 +24,3 @@ These legacy values must not silently leak into new motor-control assumptions.
 ## Sources
 - Manual/source file: [Pololu_37D_Encoder_Spec_and_RPM_Test_Code (1).txt](../../robot-pico-platform/docs/Pololu_37D_Encoder_Spec_and_RPM_Test_Code%20%281%29.txt)
 - Manual/source file: [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)
-- Code: [dual_rpm_pio_test.py](../../robot-pico-platform/services/dual_rpm_pio_test.py)
