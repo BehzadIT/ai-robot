@@ -18,9 +18,11 @@ Platform implementation details live in the child repositories.
 - `interfaces/telemetry-protocol.md`: Pico-to-ESP32 telemetry semantics.
 - `interfaces/hardware-interfaces.md`: hardware-facing integration points.
 
-## Hardware And Build
+## Hardware And Inventory
 - `electrical/`: power, wiring, BMS, charging, and electrical risks.
-- `build/`: mechanical stack, drivetrain parts, mounting, and BOM status.
+- `mechanical/`: chassis, drivetrain, mounting fitment, and physical build notes.
+- `reference/bom-and-parts-status.md`: current parts, available inventory, and
+  legacy component-list status.
 - `assets/electrical/`: battery, wiring, charger, BMS, and cell source files.
 - `assets/mechanical/`: chassis, drivetrain, shaft adapter, and mounting source
   files.
