@@ -32,5 +32,5 @@ The project is not purely software. Future work depends on consistent documentat
 - Power: 4S2P LiFePO4 pack with DALY-family BMS.
 
 ## Sources
-- Manual/source file: [robot_project_components_UPDATED (1).pdf](../../robot-pico-platform/docs/robot_project_components_UPDATED%20%281%29.pdf)
-- Manual/source file: [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)
+- Manual/source file: [robot-project-components-updated.pdf](../assets/reference/robot-project-components-updated.pdf)
+- Manual/source file: [robot-project-complete-component-list.txt](../assets/reference/robot-project-complete-component-list.txt)

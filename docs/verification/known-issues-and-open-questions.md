@@ -54,8 +54,8 @@ The parts inventory includes multiple sensors, but the current control-critical 
 If a statement appears only in rough project notes and cannot be confirmed by code, manual, image, or bench evidence, treat it as `Project note` or `Needs verification`, not as a final fact.
 
 ## Sources
-- Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
-- Source file: [Robot battery system.txt](../../robot-pico-platform/docs/Robot%20battery%20system.txt)
-- Source file: [Pololu_37D_Encoder_Spec_and_RPM_Test_Code (1).txt](../../robot-pico-platform/docs/Pololu_37D_Encoder_Spec_and_RPM_Test_Code%20%281%29.txt)
-- Manual/source file: [Smart Active Balance BMS manual.pdf](../../robot-pico-platform/docs/Smart%20Active%20Balance%20BMS%20manual.pdf)
-- Manual/source file: [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)
+- Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
+- Source file: [robot-battery-system.txt](../assets/electrical/robot-battery-system.txt)
+- Source file: [pololu-37d-encoder-spec-and-rpm-test-code.txt](../assets/reference/pololu-37d-encoder-spec-and-rpm-test-code.txt)
+- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
+- Manual/source file: [robot-project-complete-component-list.txt](../assets/reference/robot-project-complete-component-list.txt)

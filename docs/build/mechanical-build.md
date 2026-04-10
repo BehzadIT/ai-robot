@@ -20,6 +20,6 @@ Describe the physical robot build at the level needed to inspect, reproduce, and
 - Treat custom brackets, washers, and shaft adapters as versioned build artifacts, not incidental workshop details.
 
 ## Sources
-- Manual/source file: [robot_project_components_UPDATED (1).pdf](../../robot-pico-platform/docs/robot_project_components_UPDATED%20%281%29.pdf)
-- Manual/source file: [Technical parameters related to suspended tracked vehicles.pdf](../../robot-pico-platform/docs/Technical%20parameters%20related%20to%20suspended%20tracked%20vehicles.pdf)
-- Source file: [robot_chassis_expansion_design.txt](../../robot-pico-platform/docs/robot_chassis_expansion_design.txt)
+- Manual/source file: [robot-project-components-updated.pdf](../assets/reference/robot-project-components-updated.pdf)
+- Manual/source file: [suspended-tracked-vehicle-technical-parameters.pdf](../assets/mechanical/suspended-tracked-vehicle-technical-parameters.pdf)
+- Source file: [robot-chassis-expansion-design.txt](../assets/mechanical/robot-chassis-expansion-design.txt)

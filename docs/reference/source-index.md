@@ -9,21 +9,24 @@ List the main source materials used by the canonical docs.
 - [robot-android-app](../../robot-android-app)
 
 ## Local manuals and project files
-- [robot_project_components_UPDATED (1).pdf](../../robot-pico-platform/docs/robot_project_components_UPDATED%20%281%29.pdf)
-- [Technical parameters related to suspended tracked vehicles.pdf](../../robot-pico-platform/docs/Technical%20parameters%20related%20to%20suspended%20tracked%20vehicles.pdf)
-- [Anleitung_iQLoadEVO_EN_2021.pdf](../../robot-pico-platform/docs/Anleitung_iQLoadEVO_EN_2021.pdf)
-- [Smart Active Balance BMS manual.pdf](../../robot-pico-platform/docs/Smart%20Active%20Balance%20BMS%20manual.pdf)
-- [JGCFR18650-2200mAh-3.2V_18FC-7.04Wh_specification_.pdf](../../robot-pico-platform/docs/JGCFR18650-2200mAh-3.2V_18FC-7.04Wh_specification_.pdf)
-- [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
-- [Robot battery system.txt](../../robot-pico-platform/docs/Robot%20battery%20system.txt)
-- [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)
-- [Pololu_37D_Encoder_Spec_and_RPM_Test_Code (1).txt](../../robot-pico-platform/docs/Pololu_37D_Encoder_Spec_and_RPM_Test_Code%20%281%29.txt)
-- [faulty shaft and solution.txt](../../robot-pico-platform/docs/faulty%20shaft%20and%20solution.txt)
-- [robot_chassis_expansion_design.txt](../../robot-pico-platform/docs/robot_chassis_expansion_design.txt)
-- [37D_safe_mounting_detail_updated.png](../../robot-pico-platform/docs/37D_safe_mounting_detail_updated.png)
-- [37D_unsafe_mounting_detail_updated.png](../../robot-pico-platform/docs/37D_unsafe_mounting_detail_updated.png)
-- [37D_mounting_geometry_data.json](../../robot-pico-platform/docs/37D_mounting_geometry_data.json)
-- [Motor wire.jpg](../../robot-pico-platform/docs/Motor%20wire.jpg)
+- [Robot project components PDF](../assets/reference/robot-project-components-updated.pdf)
+- [Complete component list](../assets/reference/robot-project-complete-component-list.txt)
+- [Pololu 37D encoder spec and RPM test note](../assets/reference/pololu-37d-encoder-spec-and-rpm-test-code.txt)
+- [Suspended tracked vehicle technical parameters](../assets/mechanical/suspended-tracked-vehicle-technical-parameters.pdf)
+- [Robot chassis expansion design](../assets/mechanical/robot-chassis-expansion-design.txt)
+- [Faulty shaft and adapter solution](../assets/mechanical/faulty-shaft-and-solution.txt)
+- [37D safe mounting detail](../assets/mechanical/37d-safe-mounting-detail.png)
+- [37D unsafe mounting detail](../assets/mechanical/37d-unsafe-mounting-detail.png)
+- [37D mounting geometry data](../assets/mechanical/37d-mounting-geometry-data.json)
+- [Robot battery system note](../assets/electrical/robot-battery-system.txt)
+- [Wiring reference](../assets/electrical/wiring-reference.txt)
+- [Motor wire photo](../assets/electrical/motor-wire.jpg)
+- [LiFePO4 cell specification](../assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf)
+- [Smart Active Balance BMS manual](../assets/electrical/smart-active-balance-bms-manual.pdf)
+- [IQ Load EVO charger manual](../assets/electrical/iqload-evo-charger-manual-en-2021.pdf)
 
 ## Notes
-The existing rough project notes are source material for extraction, not canonical final documentation.
+The existing rough project notes are source material for extraction, not
+canonical final documentation. Hardware and mechanical source assets are stored
+in the parent docs tree because they apply to the whole robot, not only to Pico
+firmware.

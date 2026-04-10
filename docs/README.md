@@ -21,6 +21,10 @@ Platform implementation details live in the child repositories.
 ## Hardware And Build
 - `electrical/`: power, wiring, BMS, charging, and electrical risks.
 - `build/`: mechanical stack, drivetrain parts, mounting, and BOM status.
+- `assets/electrical/`: battery, wiring, charger, BMS, and cell source files.
+- `assets/mechanical/`: chassis, drivetrain, shaft adapter, and mounting source
+  files.
+- `assets/reference/`: component lists and general project source material.
 
 ## Operations And Verification
 - `operations/`: bring-up, troubleshooting, calibration, maintenance, and bench

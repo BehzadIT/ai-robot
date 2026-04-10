@@ -19,5 +19,5 @@ Summarize the physical and electrical interfaces between the robot subsystems.
 - DYP-A02-V2.0
 
 ## Sources
-- Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
-- Manual/source file: [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)
+- Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
+- Manual/source file: [robot-project-complete-component-list.txt](../assets/reference/robot-project-complete-component-list.txt)

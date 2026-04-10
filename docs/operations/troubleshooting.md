@@ -29,4 +29,4 @@ Provide a fast fault-isolation map for common future debugging sessions.
 - verify `target_direction` semantics
 
 ## Sources
-- Source file: [faulty shaft and solution.txt](../../robot-pico-platform/docs/faulty%20shaft%20and%20solution.txt)
+- Source file: [faulty-shaft-and-solution.txt](../assets/mechanical/faulty-shaft-and-solution.txt)

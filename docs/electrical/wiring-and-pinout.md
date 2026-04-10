@@ -36,4 +36,4 @@ Provide the canonical wiring reference to support bench work and future firmware
 The current PIO encoder implementation in code uses `GP10/11` for the right encoder and `GP20/21` for the left encoder. Bench verification is required before changing firmware around this area.
 
 ## Sources
-- Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
+- Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)

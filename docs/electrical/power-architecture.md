@@ -19,6 +19,6 @@ Describe the robot power tree and electrical ownership boundaries.
 - Encoder supply voltage must be bench-checked against the exact installed motor variant.
 
 ## Sources
-- Source file: [Robot battery system.txt](../../robot-pico-platform/docs/Robot%20battery%20system.txt)
-- Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
-- Manual/source file: [JGCFR18650-2200mAh-3.2V_18FC-7.04Wh_specification_.pdf](../../robot-pico-platform/docs/JGCFR18650-2200mAh-3.2V_18FC-7.04Wh_specification_.pdf)
+- Source file: [robot-battery-system.txt](../assets/electrical/robot-battery-system.txt)
+- Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
+- Manual/source file: [jgcfr18650-2200mah-lifepo4-cell-specification.pdf](../assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf)

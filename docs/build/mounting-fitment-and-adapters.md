@@ -21,7 +21,7 @@ The original wheel adapter converting `6 mm D-shaft -> 8 mm hex` was slightly mi
 The project contains a fitment study for Pololu 37D motors on a `2 mm` aluminum chassis. The safe pattern intentionally shifts the bolt pattern to improve shaft-hole clearance.
 
 ## Sources
-- Source file: [faulty shaft and solution.txt](../../robot-pico-platform/docs/faulty%20shaft%20and%20solution.txt)
-- Image: [37D_safe_mounting_detail_updated.png](../../robot-pico-platform/docs/37D_safe_mounting_detail_updated.png)
-- Image: [37D_unsafe_mounting_detail_updated.png](../../robot-pico-platform/docs/37D_unsafe_mounting_detail_updated.png)
-- Data: [37D_mounting_geometry_data.json](../../robot-pico-platform/docs/37D_mounting_geometry_data.json)
+- Source file: [faulty-shaft-and-solution.txt](../assets/mechanical/faulty-shaft-and-solution.txt)
+- Image: [37d-safe-mounting-detail.png](../assets/mechanical/37d-safe-mounting-detail.png)
+- Image: [37d-unsafe-mounting-detail.png](../assets/mechanical/37d-unsafe-mounting-detail.png)
+- Data: [37d-mounting-geometry-data.json](../assets/mechanical/37d-mounting-geometry-data.json)

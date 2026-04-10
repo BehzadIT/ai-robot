@@ -24,5 +24,5 @@ Provide a working bill of materials view focused on what matters to future engin
 - bench PSU, multimeter, connectors, brackets, washers, FR-4, and workshop hardware
 
 ## Sources
-- Manual/source file: [EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt](../../robot-pico-platform/docs/EXHAUSTIVELY_COMPLETE_Robot_Project_Component_List.txt)
-- Manual/source file: [robot_project_components_UPDATED (1).pdf](../../robot-pico-platform/docs/robot_project_components_UPDATED%20%281%29.pdf)
+- Manual/source file: [robot-project-complete-component-list.txt](../assets/reference/robot-project-complete-component-list.txt)
+- Manual/source file: [robot-project-components-updated.pdf](../assets/reference/robot-project-components-updated.pdf)

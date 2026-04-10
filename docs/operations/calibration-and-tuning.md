@@ -18,4 +18,4 @@ Capture the tuning areas that matter when the robot is adjusted in the future.
 Tuning is not purely firmware-side. Track tension, shaft adapter alignment, motor mounting geometry, and battery state all influence drive behavior.
 
 ## Sources
-- Source file: [faulty shaft and solution.txt](../../robot-pico-platform/docs/faulty%20shaft%20and%20solution.txt)
+- Source file: [faulty-shaft-and-solution.txt](../assets/mechanical/faulty-shaft-and-solution.txt)

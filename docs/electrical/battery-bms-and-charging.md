@@ -28,7 +28,7 @@ Do not write software against the BMS UART protocol until the actual installed B
 - Verify actual charge termination voltage on the bench before unattended charging
 
 ## Sources
-- Source file: [Robot battery system.txt](../../robot-pico-platform/docs/Robot%20battery%20system.txt)
-- Manual/source file: [JGCFR18650-2200mAh-3.2V_18FC-7.04Wh_specification_.pdf](../../robot-pico-platform/docs/JGCFR18650-2200mAh-3.2V_18FC-7.04Wh_specification_.pdf)
-- Manual/source file: [Smart Active Balance BMS manual.pdf](../../robot-pico-platform/docs/Smart%20Active%20Balance%20BMS%20manual.pdf)
-- Manual/source file: [Anleitung_iQLoadEVO_EN_2021.pdf](../../robot-pico-platform/docs/Anleitung_iQLoadEVO_EN_2021.pdf)
+- Source file: [robot-battery-system.txt](../assets/electrical/robot-battery-system.txt)
+- Manual/source file: [jgcfr18650-2200mah-lifepo4-cell-specification.pdf](../assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf)
+- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
+- Manual/source file: [iqload-evo-charger-manual-en-2021.pdf](../assets/electrical/iqload-evo-charger-manual-en-2021.pdf)

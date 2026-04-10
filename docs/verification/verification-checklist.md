@@ -16,5 +16,5 @@ Track which core claims about the robot are verified and which still require con
 Use bench photos, continuity checks, running firmware behavior, and vendor manuals.
 
 ## Sources
-- Source file: [wiring reference.txt](../../robot-pico-platform/docs/wiring%20reference.txt)
-- Manual/source file: [Smart Active Balance BMS manual.pdf](../../robot-pico-platform/docs/Smart%20Active%20Balance%20BMS%20manual.pdf)
+- Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
+- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
