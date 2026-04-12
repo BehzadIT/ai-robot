@@ -6,7 +6,7 @@ Describe the current implemented architecture across the Pico, ESP32, Android ap
 ## Current status
 - `Implemented`: Pico runs the live control server and motor-control loop.
 - `Implemented`: ESP32 runs a UART-to-WebSocket telemetry bridge.
-- `Implemented`: ESP32 also forwards normalized controller snapshots over a dedicated UART to the Pico.
+- `Implemented`: ESP32 also forwards normalized joystick snapshots over a dedicated UART to the Pico.
 - `Implemented`: Android app connects to the Pico WebSocket endpoint for control.
 - `Implemented`: Pico enforces stale-command stop behavior for disconnected or silent control sessions.
 - `Needs verification`: long-term target command routing if the architecture is later changed.
@@ -15,8 +15,8 @@ Describe the current implemented architecture across the Pico, ESP32, Android ap
 ## Architecture
 ### Control plane
 - Android app sends signed throttle / turn drive intent plus stop / recover commands to the Pico over WebSocket.
-- ESP32 can now receive Xbox controller input over Bluetooth and forward normalized controller snapshots to the Pico over a dedicated UART.
-- Pico receives commands, updates navigation targets, and runs PID-based motor control.
+- ESP32 can now receive Xbox controller input over Bluetooth and forward normalized joystick snapshots to the Pico over a dedicated UART.
+- Pico receives commands, updates drive targets, and runs PID-based motor control.
 - Pico treats transport disconnect or stale command freshness as a safety event and stops until a fresh command arrives.
 - Pico also exposes legacy HTTP `/drive` and `/stop` endpoints.
 
@@ -26,12 +26,12 @@ Describe the current implemented architecture across the Pico, ESP32, Android ap
 - ESP32 broadcasts received lines to WebSocket clients on `/ws`.
 
 ### Controller transport plane
-- ESP32 transmits framed controller snapshots on `GPIO25/26`.
+- ESP32 transmits framed joystick snapshots on `GPIO25/26`.
 - Pico receives those snapshots on `GP4/5`.
 - Pico stores and validates the new transport input, but robot mapping from that input is still a later phase.
 
 ### Hardware ownership split
-- Pico owns motors, encoders, navigation targets, and stop behavior.
+- Pico owns motors, encoders, drive targets, and stop behavior.
 - ESP32 may own controller connectivity, normalization, and controller transport, but it must not own motor control, safety control, or timing-sensitive logic.
 - Android acts as operator input only.
 
