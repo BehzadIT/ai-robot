@@ -32,6 +32,11 @@ Provide the canonical wiring reference to support bench work and future firmware
 - Pico `GP1 RX` -> ESP32 `GPIO17 TX`
 - Common GND
 
+## Controller UART
+- ESP32 `GPIO25 TX` -> Pico `GP5 RX`
+- Pico `GP4 TX` -> ESP32 `GPIO26 RX`
+- Common GND
+
 ## Verification note
 The current PIO encoder implementation in code uses `GP10/11` for the right encoder and `GP20/21` for the left encoder. Bench verification is required before changing firmware around this area.
 

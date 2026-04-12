@@ -4,18 +4,18 @@
 Capture durable design intent that should survive code churn.
 
 ## Current status
-- `Implemented`: passive ESP32 telemetry bridge.
+- `Implemented`: ESP32 telemetry bridge plus controller-input transport.
 - `Implemented`: Pico-side UART mirroring designed to preserve REPL compatibility.
 - `Project note`: robot should own its own timeout and stale-command behavior.
 - `Needs verification`: some intended behaviors are not fully implemented yet.
-- `Project note`: the ESP32 firmware repo is now named `robot-esp32-platform` so the codebase can grow beyond one capability without hiding that telemetry bridge is still the only implemented runtime role.
+- `Project note`: the ESP32 firmware repo is now named `robot-esp32-platform` because the codebase now includes both telemetry bridging and controller transport without moving control authority away from the Pico.
 
 ## Decisions
 ### Pico is the source of truth
 The Pico is the real-time controller and should remain the owner of motor control, encoder handling, and time-sensitive logic.
 
-### ESP32 is passive
-The ESP32 is a log transport and network bridge. It should not take control responsibilities or safety responsibilities.
+### ESP32 is transport-only, not control-authoritative
+The ESP32 may own log transport, network bridging, controller connectivity, and controller-state forwarding. It should not take control responsibilities or safety responsibilities.
 
 ### Non-halting debug is preferred
 Breakpoint-style debugging is avoided for control-loop work because halting execution distorts PWM, encoder timing, and robot behavior.

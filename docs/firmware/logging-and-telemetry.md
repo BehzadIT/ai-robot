@@ -12,6 +12,9 @@ live in `../../robot-esp32-platform/docs/telemetry-bridge.md`.
 - ESP32 bridges Pico UART output to WebSocket clients for bench diagnostics.
 - Logging must preserve the Pico REPL and avoid blocking safety-critical control
   behavior.
+- The Pico's normal USB REPL/stdout path must stay direct. Only the custom UART
+  logging path should be serialized; lock-coupling USB stdout to the logger was
+  bench-verified to break `mpremote` raw-REPL access.
 - Telemetry should help diagnose transport, control, hardware, and safety state
   without moving ownership away from the Pico.
 

@@ -15,6 +15,8 @@ Define the preferred debugging workflow for this robot.
 
 ## Notes
 Any logging change that breaks REPL tooling or IDE memory probes is a regression.
+In particular, do not put the normal Pico USB REPL/stdout path behind a shared
+logger lock; only the custom UART logging path should be serialized.
 
 ## Related Docs
 - Logging and telemetry: `../firmware/logging-and-telemetry.md`
