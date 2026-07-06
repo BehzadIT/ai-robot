@@ -9,6 +9,8 @@ Document the current control commands that future tooling must respect.
 - `Implemented`: WebSocket drive and stop commands use a compact JSON schema on the active control path.
 - `Implemented`: drive commands include freshness metadata for recoverability.
 - `Implemented`: malformed or invalid WebSocket commands return protocol errors without breaking the WebSocket session.
+- `Planned`: clean-start architecture keeps the same operator-intent semantics
+  while moving the wireless hop to `Android -> ESP32 WebSocket -> Pico UART`.
 
 ## Current drive command
 WebSocket JSON object containing:
@@ -48,10 +50,21 @@ HTTP JSON object remains legacy:
 - HTTP PUT: `/drive`
 - HTTP PUT: `/stop`
 
+## Target clean-start routing
+- Android remains a WebSocket client.
+- ESP32 becomes the target WebSocket server for Android operator traffic.
+- ESP32 forwards bounded operator-intent DTOs to the Pico over UART.
+- Pico remains the command-admission, stale-input, recover, safety, and motor
+  authority.
+- The target transport move must not change the meaning of `throttle` / `turn`
+  intent. It changes where the wireless socket terminates.
+
 ## Notes
 - The active WebSocket protocol is now operator-intent based, not RPM / direction / angle based.
 - HTTP remains a legacy debug / compatibility path and is not the primary operator protocol.
 - Pico-side timeout enforcement is authoritative for stale or disconnected control.
+- ESP32-routed command transport must be small, bounded, and prioritized
+  separately from log or stats WebSocket traffic.
 - Protocol errors such as `invalid_json`, `bad_drive_command`, and `unknown_command` are recoverable session-level events, not transport failures.
 - WebSocket control is compact-schema only.
 - The earlier WebSocket `r/d/a` payload shape is retired.

@@ -14,8 +14,10 @@ Platform implementation details live in the child repositories.
 - `reference/source-index.md`: where source material and platform repos live.
 
 ## Interfaces
-- `interfaces/command-protocol.md`: Android-to-Pico control semantics.
-- `interfaces/telemetry-protocol.md`: Pico-to-ESP32 telemetry semantics.
+- `interfaces/command-protocol.md`: operator-intent command semantics and
+  current/target transport routing.
+- `interfaces/telemetry-protocol.md`: Pico-to-ESP32 logs plus target ESP32
+  gateway stats/diagnostics semantics.
 - `interfaces/hardware-interfaces.md`: hardware-facing integration points.
 
 ## Hardware And Inventory
@@ -31,6 +33,9 @@ Platform implementation details live in the child repositories.
 ## Operations And Verification
 - `operations/`: bring-up, troubleshooting, calibration, maintenance, and bench
   debugging workflows.
+- `operations/esp32-gateway-pico-control-clean-start-plan.md`: staged plan for
+  moving wireless gateway duties to ESP32 while keeping Pico as the control and
+  safety authority.
 - `verification/`: known issues, checklists, and project change notes.
 
 ## Platform Implementation Docs

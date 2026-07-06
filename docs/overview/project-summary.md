@@ -7,6 +7,9 @@ This documentation set is the canonical working reference for the DIY tracked ro
 - `Implemented`: Raspberry Pi Pico 2 W firmware in MicroPython drives the robot, exposes control endpoints, and emits logs.
 - `Implemented`: ESP32 firmware relays Pico UART logs over Wi-Fi via WebSocket.
 - `Implemented`: Android app sends drive and stop commands over WebSocket.
+- `Planned`: next clean-start C++ architecture moves robot wireless gateway
+  duties to the ESP32 and keeps Pico Wi-Fi/CYW43 out of the reliable control
+  firmware dependency path.
 - `Bench-verified / project note`: current robot uses Pololu 37D motors, Cytron MDD10A, 4S2P LiFePO4 battery pack, and tracked chassis.
 - `Needs verification`: exact BMS model, exact encoder supply voltage, and exact live pinout for the second encoder.
 
@@ -16,9 +19,9 @@ This documentation set is the canonical working reference for the DIY tracked ro
 - Which unknowns still block deeper engineering work.
 
 ## Project snapshot
-The robot is a tracked crawler platform with the Pico as the real-time controller. The Pico owns motors, encoder feedback, drive behavior, logging policy, and the current control API. The ESP32 is intentionally a passive telemetry bridge. The Android app is an operator client, not an autonomy layer.
+The robot is a tracked crawler platform with the Pico as the real-time controller. The Pico owns motors, encoder feedback, drive behavior, command admission, stale-input stop behavior, and safety authority. The current Pico firmware still exposes the live control API, but the target clean-start architecture moves robot wireless endpoints to the ESP32 gateway. The Android app is an operator client, not an autonomy layer.
 
-The ESP32 firmware code now lives in the broader `robot-esp32-platform` repo. That repo identity is intentionally wider than today's implementation so future ESP32 capabilities can be added without renaming the project again.
+The ESP32 firmware code now lives in the broader `robot-esp32-platform` repo. That repo identity is intentionally wider than the original telemetry bridge because ESP32 is the target owner for Wi-Fi/WebSocket gateway duties, controller transport, diagnostics, and best-effort logs/stats while preserving Pico control authority.
 
 The project is not purely software. Future work depends on consistent documentation of the mechanical stack, battery system, charger and BMS constraints, wiring, firmware behavior, and the distinction between intended design and current implementation.
 

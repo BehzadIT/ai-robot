@@ -17,7 +17,8 @@ control surface:
 - all motion commands remain operator intent, not motor authority
 
 The Pico remains responsible for translating intent into safe drivetrain
-behavior. ESP32 is not part of this control path.
+behavior. ESP32 may transport operator intent in the target clean-start
+architecture, but it is not control-authoritative.
 
 ## Implementation Owner
 Android implementation details live in:

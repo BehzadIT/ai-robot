@@ -1,4 +1,4 @@
-# ESP32 Telemetry Bridge
+# ESP32 Wireless Gateway
 
 ## Purpose
 Describe the ESP32 subsystem's role in the overall robot system.
@@ -13,12 +13,19 @@ Detailed ESP32 bridge implementation notes live in
 - ESP32 may own platform support for Wi-Fi, diagnostics, telemetry transport,
   Bluetooth controller connectivity, and dedicated controller UART transport,
   but it does not own robot motion control.
+- In the target clean-start architecture, ESP32 becomes the robot wireless
+  gateway for logs, structured stats, diagnostics, and optionally Android
+  command transport.
+- If ESP32 receives Android operator commands, it forwards bounded intent DTOs
+  to the Pico and does not make safety or actuator decisions.
 
 ## Boundary
 - No motor control.
-- No command arbitration.
+- No command-source arbitration or motion permission decisions.
 - No safety-loop authority.
 - No timing-sensitive drivetrain behavior.
+- Logs and stats are best-effort. Command freshness and controller heartbeat
+  traffic must not be blocked by log broadcast backpressure.
 
 Any future ESP32 capability must preserve this boundary unless the parent
 architecture docs are intentionally updated.

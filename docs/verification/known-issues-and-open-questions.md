@@ -5,6 +5,10 @@ Collect every conflict, missing fact, and unresolved assumption that future engi
 
 ## Current status
 - `High priority`: several project facts are currently inconsistent across code, notes, and vendor material.
+- `High priority`: Pico 2 W / CYW43 Wi-Fi bring-up appears optimization-sensitive on some dual-core FreeRTOS builds, so the firmware now has a diagnostic `-O1` profile until that boundary is proven stable.
+- `High priority`: next clean-start C++ control firmware should avoid making
+  Pico Wi-Fi/CYW43 a boot dependency; ESP32 wireless gateway routing is the
+  preferred repair path unless bench evidence overturns this decision.
 
 ## Conflicts
 ### BMS identity conflict
@@ -22,10 +26,25 @@ Collect every conflict, missing fact, and unresolved assumption that future engi
 - Current PIO code path: left encoder on `GP20/21`.
 - Impact: firmware changes in this area are unsafe without bench verification.
 
-### Current architecture versus intended architecture
-- Intended subsystem split says ESP32 is passive telemetry-only.
+### Current architecture versus target gateway architecture
+- Older subsystem notes described ESP32 as a passive telemetry bridge.
 - Current code shows the Pico itself exposing the live control WebSocket and HTTP endpoints.
-- Impact: future work must not assume command arbitration happens on the ESP32.
+- New target split moves wireless gateway duties to the ESP32 while preserving
+  Pico command admission, stale-input stop behavior, and motor authority.
+- Impact: future work must distinguish current Pico WebSocket control from the
+  planned ESP32 WebSocket-to-Pico-UART gateway path. Do not assume command
+  arbitration or safety decisions happen on the ESP32.
+
+### Pico 2 W CYW43 / FreeRTOS startup fragility
+- Bench investigation found that basic Pico USB CDC, UF2 flashing, project
+  CMake, and basic FreeRTOS work, while CYW43/lwIP FreeRTOS startup can prevent
+  reliable full firmware progress.
+- USB-settle probes and deeper traces narrowed the failure area into CYW43/lwIP
+  FreeRTOS initialization rather than the bootloader, cable, USB CDC, or basic
+  RTOS scheduler.
+- Impact: the clean-start Pico C++ control firmware should boot and enumerate
+  without CYW43. Robot Wi-Fi/WebSocket responsibilities should move to ESP32
+  gateway stages first.
 
 ### Current Android app versus intended operator model
 - Intended model includes throttle, steering angle, auto-centering turn control, and stale-command stop semantics.
