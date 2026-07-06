@@ -6,6 +6,7 @@ Capture the intended operator model and distinguish it from the current live imp
 ## Current status
 - `Project note`: intended model is stateful on the robot and stateless on the UI.
 - `Implemented`: current app sends signed throttle / turn intent over WebSocket plus stop / recover.
+- `Implemented`: Pico also maps Xbox controller transport snapshots into the same robot-level throttle / turn intent model.
 - `Needs verification / future work`: richer throttle / turn input and stale-command handling are not fully represented in the current code.
 
 ## Intended model
@@ -20,6 +21,7 @@ Capture the intended operator model and distinguish it from the current live imp
 ## Ownership boundary
 - Android owns the operator-facing abstraction and touch mapping.
 - Pico owns the translation from operator intent into controller variables.
+- Pico also owns the translation from normalized controller transport snapshots into the same robot-level intent.
 - That means Android should send `throttle` / `turn` intent, while Pico may internally convert that into RPM targets, PWM output, direction bits, startup thresholds, or other drivetrain-specific control values.
 - The UI and protocol should not leak PID internals or motor-control implementation details unless there is a real operator need.
 

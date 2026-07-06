@@ -23,10 +23,16 @@ For system-level or cross-project work, start with:
 - `docs/overview/project-summary.md`
 - `docs/overview/current-architecture.md`
 - `docs/overview/design-decisions.md`
+- `docs/operations/agentic-development-workflow.md`
 - `docs/interfaces/command-protocol.md`
 - `docs/interfaces/telemetry-protocol.md`
 - `docs/electrical/wiring-and-pinout.md`
 - `docs/verification/known-issues-and-open-questions.md`
+
+The agentic development workflow doc is a deferred post-C++-migration plan.
+Use it as optional guidance for task sizing, evidence depth, verification
+handoff, and durable learning, but do not treat it as the active operating model
+until the Pico C++ migration and ESP32 gateway clean-start path are stable.
 
 For platform-specific work, also read the nearest `AGENTS.md` inside the target
 submodule.
@@ -35,7 +41,10 @@ submodule.
 - Android owns operator UI, app state, and client transport lifecycle.
 - Pico owns real-time control, safety behavior, motor authority, encoders, and
   timing-sensitive hardware interaction.
-- ESP32 currently owns passive telemetry bridging and platform support only.
+- ESP32 owns telemetry bridging, controller-input transport, controller
+  connectivity, normalization, diagnostics, platform support, and target
+  wireless gateway responsibilities; it does not own motor control, safety
+  control, or timing-sensitive logic.
 - Shared docs own architecture, protocol, hardware, verification, and known
   cross-project decisions.
 
