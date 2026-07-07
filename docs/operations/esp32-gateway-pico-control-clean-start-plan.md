@@ -38,6 +38,17 @@ Wi-Fi/CYW43 initialization.
 - Prefer dropping best-effort logs/status over delaying command freshness or
   the control loop.
 
+## Sequencing policy
+- Prioritize the clean Pico no-Wi-Fi control firmware until its boot, USB
+  logging, RTOS task layout, and control-loop skeleton are stable.
+- Use small ESP32 gateway ripples only where they protect the final subsystem
+  boundary, especially moving WebSocket ownership away from the Pico before
+  Pico control logic is rebuilt around the wrong transport shape.
+- Import old Pico control and motor logic only after the clean app has a proven
+  no-network runtime skeleton and a planned bounded ESP32-to-Pico handoff.
+- Keep every step small enough that a boot, RTOS, transport, or safety failure
+  can be isolated without debugging the full old migrated firmware again.
+
 ## Step 1 (Done): C++ bench loop tooling
 Add a clean Pico SDK app and host-side flash/reboot helper before rebuilding
 the control stages.
@@ -98,8 +109,30 @@ Completed checks:
 - New targets are visible in build configuration or documentation.
 - No current bench workflow is broken.
 
-## Step 3: ESP32 WebSocket gateway skeleton
-Extend the ESP32 bridge toward a gateway while preserving current log viewing.
+## Step 3: Pico no-Wi-Fi RTOS heartbeat/control skeleton
+Create the first clean Pico RTOS shape before importing old control logic.
+
+Implementation requirements:
+- Do not call `cyw43_arch_init()` or start Pico Wi-Fi.
+- Do not add Pico Bluetooth, HTTP, or WebSocket service in this clean-start
+  target.
+- Bring up USB serial logging through the clean app.
+- Bring up pinned FreeRTOS tasks with a service task on core 0 and a control
+  heartbeat/control task on core 1.
+- Print deterministic service/control heartbeat logs over USB.
+- Keep the control task as a skeleton only: no motor output, no encoders, no
+  watchdog-controlled motion, and no old control-core import yet.
+- Document the clean app structure and the intended next integration point.
+
+Success checks:
+- UF2 flashes normally.
+- Pico enumerates as `/dev/ttyACM*` after reboot.
+- `minicom` shows boot, service heartbeat, and control heartbeat logs.
+- Repeated reboot/flash cycles do not lose USB enumeration.
+
+## Step 4: ESP32 WebSocket gateway skeleton
+Add the smallest ESP32 gateway shape needed before Pico control logic depends
+on the new transport boundary.
 
 Implementation requirements:
 - Keep current `/ws` telemetry behavior working for existing bench tools.
@@ -108,40 +141,23 @@ Implementation requirements:
   multiple independent servers.
 - Introduce planned routes in this order:
   - `/ws/logs` for line-oriented logs
-  - `/ws/stats` for structured status
+  - `/ws/stats` later for structured status
   - `/ws/control` later for Android operator-intent transport
 - Keep `/healthz` available.
+- Do not forward Android control commands to the Pico in this step.
 
 Success checks:
-- Two clients can connect at the same time.
-- Logs remain visible.
+- Two WebSocket clients can connect at the same time.
+- Logs remain visible on `/ws` and the new log route.
 - `/healthz` reports bridge readiness.
 - Disconnecting one client does not break the other client.
 
-## Step 4: Pico no-Wi-Fi C++ heartbeat/control skeleton
-Create a Pico C++ target that proves reliable boot without CYW43.
+## Step 5: ESP32-to-Pico UART heartbeat/status pipe
+Create the first bounded gateway-to-control transport without operator motion
+commands.
 
 Implementation requirements:
-- Do not call `cyw43_arch_init()` or start Pico Wi-Fi.
-- Do not add Pico Bluetooth, HTTP, or WebSocket service in this clean-start
-  target.
-- Bring up USB serial logging.
-- Bring up pinned FreeRTOS tasks with a service task on core 0 and a control
-  heartbeat/control task on core 1.
-- Print a deterministic heartbeat over USB.
-- Do not enable live motor output in this step.
-
-Success checks:
-- UF2 flashes normally.
-- Pico enumerates as `/dev/ttyACM*` after reboot.
-- `minicom` shows heartbeat logs.
-- Repeated reboot/flash cycles do not lose USB enumeration.
-
-## Step 5: ESP32-to-Pico UART status/control pipe
-Create the first bounded gateway-to-control transport.
-
-Implementation requirements:
-- Define a tiny UART frame for gateway heartbeat and operator-intent DTOs.
+- Define a tiny UART frame for gateway heartbeat/status.
 - Include enough metadata for Pico-side freshness checks.
 - Core 0 receives ESP32 UART bytes, parses frames, validates CRC/schema/ranges,
   and publishes fixed-size DTOs into a bounded mailbox.
@@ -149,6 +165,7 @@ Implementation requirements:
   or adopts neutral state.
 - Bad frames must be rejected without disrupting the receive loop.
 - UART ingress/parsing must not run inside the core 1 control loop.
+- Do not enable Android operator-intent forwarding or motor output yet.
 
 Success checks:
 - ESP32 sends test heartbeat frames to Pico.
@@ -156,44 +173,56 @@ Success checks:
 - No motor output is enabled.
 - Log flooding does not block UART heartbeat processing or core 1 ticks.
 
-## Step 6: Pico command admission and safety
-Connect the UART intent DTO to Pico control ownership.
+## Step 6: Pico command admission without motor output
+Import the old Pico command-admission semantics into the clean control task,
+but keep actuator output disabled.
 
 Implementation requirements:
-- Core 1 admits ESP32-routed operator intent into the existing
-  command-admission boundary.
+- Add the bounded operator-intent DTO to the ESP32-to-Pico UART frame.
+- Core 1 admits ESP32-routed operator intent into the clean command-admission
+  boundary.
 - Pico owns stale-command stop behavior.
 - Pico owns recover semantics.
-- Pico owns final motor permission and actuator output.
+- Pico owns final motor permission, but actuator output remains disabled in
+  this step.
 - ESP32 never decides whether motion is safe.
-- The fixed-period control task owns encoder sampling, drivetrain state, PID,
-  watchdog feed, and motor writes.
+- The fixed-period control task owns the command-admission state machine and
+  safe neutral/stale states.
 
 Success checks:
-- Fresh UART intent can update Pico drive targets on a safe bench setup.
-- Missing or stale ESP32 input causes Pico-side stop.
+- Fresh UART intent can update admitted drive targets in logs/status.
+- Missing or stale ESP32 input causes Pico-side neutral/stop state.
 - ESP32 reconnect does not resume motion without a fresh operator command.
-- Stop behavior is verified before live driving.
+- No motor output is enabled.
 
-## Step 7: Android through ESP32
-Move Android wireless connection to the ESP32 gateway.
+## Step 7: Pico drivetrain logic and hardware-safe motor bring-up
+Import drivetrain, encoder, PID, watchdog, and motor-output logic from the old
+Pico C++ tree into the clean app in hardware-safe slices.
+
+Implementation requirements:
+- Reuse old Pico control logic only through the clean control-task boundary.
+- Keep transport/protocol code outside the drivetrain and motor authority.
+- Add encoder sampling before closed-loop motor writes.
+- Add motor output only after neutral, stop, stale, and recover behavior are
+  visible and verified.
+- Keep first motion tests on a lifted or otherwise safe bench setup.
+
+Success checks:
+- Encoder readings are visible and stable before motor enable.
+- Fresh admitted intent can update drive targets on a safe bench setup.
+- Missing or stale ESP32 input causes Pico-side stop.
+- Stop behavior is verified before live driving.
+- Pico remains the only subsystem that writes motor output.
+
+## Step 8: Android through ESP32 and gateway diagnostics
+Move Android wireless control to the ESP32 gateway after the Pico clean control
+path has proven command admission and safe motor behavior.
 
 Implementation requirements:
 - Android remains a WebSocket client.
 - Android sends the same operator-intent semantics as the current protocol.
 - ESP32 forwards only bounded command DTOs to Pico, not UI internals.
 - Keep Android reconnect behavior: reconnect must not auto-resume robot motion.
-
-Success checks:
-- Android can connect to ESP32 gateway.
-- Android can send drive, stop, and recover intent through ESP32 to Pico.
-- Pico remains the system that admits, rejects, times out, and executes motion.
-- Current direct-Pico path remains available until the new path is bench-proven.
-
-## Step 8: Stats and diagnostics
-Add structured robot observability without coupling it to control freshness.
-
-Implementation requirements:
 - Add structured `/ws/stats` output for Android and Linux clients.
 - Include gateway health and Pico-reported control status when available.
 - Keep log and stats delivery best-effort and droppable under backpressure.
@@ -201,6 +230,9 @@ Implementation requirements:
   work.
 
 Success checks:
+- Android can connect to ESP32 gateway.
+- Android can send drive, stop, and recover intent through ESP32 to Pico.
+- Pico remains the system that admits, rejects, times out, and executes motion.
 - Android or a Linux client can view stats while logs are active.
 - Log flooding does not block command heartbeat.
 - Stats continue across client reconnects.
