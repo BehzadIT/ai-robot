@@ -38,6 +38,30 @@ Wi-Fi/CYW43 initialization.
 - Prefer dropping best-effort logs/status over delaying command freshness or
   the control loop.
 
+## Pre-stage: C++ bench loop tooling
+Add a clean Pico SDK app and host-side flash/reboot helper before rebuilding
+the control stages.
+
+Implementation requirements:
+- Add the clean Pico app in a new directory, separate from the existing migrated
+  C++ runtime sources.
+- Use the initial target name `robot_pico_control_no_wifi`.
+- Keep the initial clean app minimal: USB stdio, picotool USB reset support,
+  startup banner, and heartbeat only.
+- Do not initialize CYW43, Wi-Fi, Bluetooth, HTTP, WebSocket, UART command
+  transport, motors, encoders, or watchdog-controlled motion in this pre-stage.
+- Add a repo-owned helper for build, UF2 flashing, reboot to BOOTSEL, reboot to
+  normal app mode, and serial monitoring.
+- Use host `picotool`; do not vendor Raspberry Pi host tools into the repo.
+
+Success checks:
+- The clean app builds and produces `robot_pico_control_no_wifi.uf2`.
+- The helper fails clearly when `picotool` is unavailable.
+- With `picotool` installed, the helper can flash the clean UF2 without pressing
+  BOOTSEL.
+- Repeated reboot/flash cycles preserve `/dev/ttyACM*` enumeration and show
+  heartbeat logs.
+
 ## Stage 0: Baseline and naming
 Add parallel targets and names without deleting or rewriting the current
 firmware paths.
