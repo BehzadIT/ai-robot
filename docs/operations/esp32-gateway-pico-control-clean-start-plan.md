@@ -69,19 +69,31 @@ Completed checks:
 - `picotool reboot -f -u` can request BOOTSEL / UF2 mode.
 - `minicom` can observe the clean app startup and heartbeat logs.
 
-## Step 2: Baseline and naming
+## Step 2 (Done): Baseline and naming
 Add parallel targets and names without deleting or rewriting the current
 firmware paths.
 
+Status:
+- `Done`: the current Pico firmware path remains separate from the clean Pico
+  no-Wi-Fi app target.
+- `Done`: the ESP32 platform keeps its existing build identity while its docs
+  describe the target gateway capability.
+- `Done`: the clean-start split is visible in build configuration and
+  documentation without changing motor behavior.
+
 Implementation requirements:
 - Keep the current Pico firmware and current ESP32 bridge buildable.
-- Add new clean-start targets beside existing targets.
-- Use names that make the split obvious, for example:
-  - ESP32 gateway app: `robot_esp32_gateway`
+- Add new clean-start targets beside existing targets where the build system
+  naturally supports parallel targets.
+- Use names that make the split obvious:
+  - Current ESP32 platform app: `robot_esp32_platform`
+  - Target ESP32 gateway role: documented as `robot_esp32_gateway` until the
+    ESP-IDF project is intentionally renamed or split.
+  - Current migrated Pico firmware: `robot_pico_firmware`
   - Pico no-Wi-Fi control app: `robot_pico_control_no_wifi`
 - Do not change motor behavior in this step.
 
-Success checks:
+Completed checks:
 - Existing builds still build.
 - New targets are visible in build configuration or documentation.
 - No current bench workflow is broken.
