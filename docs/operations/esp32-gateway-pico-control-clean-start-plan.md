@@ -38,9 +38,15 @@ Wi-Fi/CYW43 initialization.
 - Prefer dropping best-effort logs/status over delaying command freshness or
   the control loop.
 
-## Pre-stage: C++ bench loop tooling
+## Step 1 (Done): C++ bench loop tooling
 Add a clean Pico SDK app and host-side flash/reboot helper before rebuilding
 the control stages.
+
+Status:
+- `Done`: clean Pico app target, local build/flash helper, `picotool` install
+  notes, BOOTSEL/app reboot commands, and `minicom` observation notes exist.
+- `Verified`: clean app builds, flashes, emits heartbeat logs, and can be
+  inspected through `picotool info -a`.
 
 Implementation requirements:
 - Add the clean Pico app in a new directory, separate from the existing migrated
@@ -49,20 +55,21 @@ Implementation requirements:
 - Keep the initial clean app minimal: USB stdio, picotool USB reset support,
   startup banner, and heartbeat only.
 - Do not initialize CYW43, Wi-Fi, Bluetooth, HTTP, WebSocket, UART command
-  transport, motors, encoders, or watchdog-controlled motion in this pre-stage.
+  transport, motors, encoders, or watchdog-controlled motion in this step.
 - Add a repo-owned helper for build, UF2 flashing, reboot to BOOTSEL, reboot to
   normal app mode, and serial monitoring.
 - Use host `picotool`; do not vendor Raspberry Pi host tools into the repo.
 
-Success checks:
+Completed checks:
 - The clean app builds and produces `robot_pico_control_no_wifi.uf2`.
-- The helper fails clearly when `picotool` is unavailable.
-- With `picotool` installed, the helper can flash the clean UF2 without pressing
-  BOOTSEL.
-- Repeated reboot/flash cycles preserve `/dev/ttyACM*` enumeration and show
-  heartbeat logs.
+- The helper fails clearly when `picotool` is unavailable or lacks USB support.
+- `picotool` v2.3.0 is installed locally with USB support.
+- `picotool info -a` reports the clean app on RP2350 / Pico 2 W.
+- `picotool reboot -f` can request app-mode reboot.
+- `picotool reboot -f -u` can request BOOTSEL / UF2 mode.
+- `minicom` can observe the clean app startup and heartbeat logs.
 
-## Stage 0: Baseline and naming
+## Step 2: Baseline and naming
 Add parallel targets and names without deleting or rewriting the current
 firmware paths.
 
@@ -72,14 +79,14 @@ Implementation requirements:
 - Use names that make the split obvious, for example:
   - ESP32 gateway app: `robot_esp32_gateway`
   - Pico no-Wi-Fi control app: `robot_pico_control_no_wifi`
-- Do not change motor behavior in this stage.
+- Do not change motor behavior in this step.
 
 Success checks:
 - Existing builds still build.
 - New targets are visible in build configuration or documentation.
 - No current bench workflow is broken.
 
-## Stage 1: ESP32 WebSocket gateway skeleton
+## Step 3: ESP32 WebSocket gateway skeleton
 Extend the ESP32 bridge toward a gateway while preserving current log viewing.
 
 Implementation requirements:
@@ -99,7 +106,7 @@ Success checks:
 - `/healthz` reports bridge readiness.
 - Disconnecting one client does not break the other client.
 
-## Stage 2: Pico no-Wi-Fi C++ heartbeat/control skeleton
+## Step 4: Pico no-Wi-Fi C++ heartbeat/control skeleton
 Create a Pico C++ target that proves reliable boot without CYW43.
 
 Implementation requirements:
@@ -110,7 +117,7 @@ Implementation requirements:
 - Bring up pinned FreeRTOS tasks with a service task on core 0 and a control
   heartbeat/control task on core 1.
 - Print a deterministic heartbeat over USB.
-- Do not enable live motor output in this stage.
+- Do not enable live motor output in this step.
 
 Success checks:
 - UF2 flashes normally.
@@ -118,7 +125,7 @@ Success checks:
 - `minicom` shows heartbeat logs.
 - Repeated reboot/flash cycles do not lose USB enumeration.
 
-## Stage 3: ESP32-to-Pico UART status/control pipe
+## Step 5: ESP32-to-Pico UART status/control pipe
 Create the first bounded gateway-to-control transport.
 
 Implementation requirements:
@@ -137,7 +144,7 @@ Success checks:
 - No motor output is enabled.
 - Log flooding does not block UART heartbeat processing or core 1 ticks.
 
-## Stage 4: Pico command admission and safety
+## Step 6: Pico command admission and safety
 Connect the UART intent DTO to Pico control ownership.
 
 Implementation requirements:
@@ -156,7 +163,7 @@ Success checks:
 - ESP32 reconnect does not resume motion without a fresh operator command.
 - Stop behavior is verified before live driving.
 
-## Stage 5: Android through ESP32
+## Step 7: Android through ESP32
 Move Android wireless connection to the ESP32 gateway.
 
 Implementation requirements:
@@ -171,7 +178,7 @@ Success checks:
 - Pico remains the system that admits, rejects, times out, and executes motion.
 - Current direct-Pico path remains available until the new path is bench-proven.
 
-## Stage 6: Stats and diagnostics
+## Step 8: Stats and diagnostics
 Add structured robot observability without coupling it to control freshness.
 
 Implementation requirements:
@@ -190,7 +197,7 @@ Success checks:
 ## Verification rules
 - Documentation review: docs must distinguish current Pico WebSocket control
   from the target ESP32 gateway path.
-- Ownership review: every stage must preserve Pico motor and safety authority.
+- Ownership review: every step must preserve Pico motor and safety authority.
 - ESP32 verification: build, multi-client WebSocket test, `/healthz`, client
   disconnect cleanup.
 - Pico verification: UF2 flash, `/dev/ttyACM*` enumeration, `minicom`
