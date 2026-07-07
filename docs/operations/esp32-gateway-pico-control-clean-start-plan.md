@@ -109,8 +109,14 @@ Completed checks:
 - New targets are visible in build configuration or documentation.
 - No current bench workflow is broken.
 
-## Step 3: Pico no-Wi-Fi RTOS heartbeat/control skeleton
+## Step 3 (Done): Pico no-Wi-Fi RTOS heartbeat/control skeleton
 Create the first clean Pico RTOS shape before importing old control logic.
+
+Status:
+- `Done`: the clean app now links FreeRTOS, starts pinned service/control
+  skeleton tasks, and builds as `robot_pico_control_no_wifi`.
+- `Verified`: UF2 flash, app-mode reboot, `/dev/ttyACM0` serial observation,
+  boot banner, service heartbeat on core 0, and control heartbeat on core 1.
 
 Implementation requirements:
 - Do not call `cyw43_arch_init()` or start Pico Wi-Fi.
@@ -125,10 +131,11 @@ Implementation requirements:
 - Document the clean app structure and the intended next integration point.
 
 Success checks:
-- UF2 flashes normally.
-- Pico enumerates as `/dev/ttyACM*` after reboot.
-- `minicom` shows boot, service heartbeat, and control heartbeat logs.
-- Repeated reboot/flash cycles do not lose USB enumeration.
+- `Done`: UF2 flashes normally.
+- `Done`: Pico enumerates as `/dev/ttyACM0` after reboot.
+- `Done`: serial monitor shows boot, service heartbeat, and control heartbeat
+  logs.
+- `Done`: repeated flash/reboot/observe cycles preserved USB enumeration.
 
 ## Step 4: ESP32 WebSocket gateway skeleton
 Add the smallest ESP32 gateway shape needed before Pico control logic depends
