@@ -1,0 +1,66 @@
+schema_version: 1
+scenarios:
+  - id: PICO-BOOT-001
+    version: 1
+    target: pico-firmware
+    gate: 1
+    minimum_level: device
+    adapter_action: PICO-BOOT-001
+  - id: PICO-STALE-001
+    version: 1
+    target: pico-host
+    gate: 0
+    minimum_level: host
+    adapter_action: PICO-STALE-001
+  - id: UART-FRAME-001
+    version: 1
+    target: pico-host
+    gate: 0
+    minimum_level: host
+    adapter_action: UART-FRAME-001
+  - id: ESP32-WS-001
+    version: 1
+    target: esp32
+    gate: 1
+    minimum_level: device
+    adapter_action: ESP32-WS-001
+  - id: BACKPRESSURE-001
+    version: 1
+    target: esp32
+    gate: 2
+    minimum_level: hil
+    adapter_action: BACKPRESSURE-001
+  - id: ANDROID-RECONNECT-001
+    version: 1
+    target: android
+    gate: 1
+    minimum_level: device
+    adapter_action: ANDROID-RECONNECT-001
+  - id: ENCODER-SIGN-001
+    version: 1
+    target: pico-firmware
+    gate: 3
+    minimum_level: physical
+    physical_stage: safe_bench
+    adapter_action: ENCODER-SIGN-001
+  - id: STOP-001
+    version: 1
+    target: pico-firmware
+    gate: 3
+    minimum_level: physical
+    physical_stage: safe_bench
+    adapter_action: STOP-001
+  - id: RECOVER-001
+    version: 1
+    target: pico-firmware
+    gate: 3
+    minimum_level: physical
+    physical_stage: safe_bench
+    adapter_action: RECOVER-001
+  - id: ESTOP-001
+    version: 1
+    target: pico-firmware
+    gate: 3
+    minimum_level: physical
+    physical_stage: safe_bench
+    adapter_action: ESTOP-001

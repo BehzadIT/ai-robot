@@ -14,3 +14,6 @@ __pycache__/
 *.log
 /tmp/
 /temp/
+
+# US-003 machine-local toolchain and device aliases
+.robot/local.yaml

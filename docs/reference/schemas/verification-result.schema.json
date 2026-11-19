@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "verification-result.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "command", "started_at", "finished_at", "outcome", "verification_level", "environment", "repositories", "devices", "checks", "artifacts", "evidence_id", "safe_next_action"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "command": {"type": "string", "minLength": 1},
+    "scenario": {"type": ["string", "null"]},
+    "scenario_version": {"type": ["integer", "null"], "minimum": 1},
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": "string", "format": "date-time"},
+    "outcome": {"enum": ["pass", "fail", "blocked", "skipped", "inconclusive"]},
+    "verification_level": {"enum": ["static", "compile", "host", "simulation", "device", "hil", "physical"]},
+    "physical_stage": {"type": ["string", "null"], "enum": [null, "safe_bench", "operational"]},
+    "environment": {"type": "object"},
+    "repositories": {"type": "array"},
+    "devices": {"type": "array"},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "outcome", "expected_signal", "observed", "duration_ms", "failure_category"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "outcome": {"enum": ["pass", "fail", "blocked", "skipped", "inconclusive"]},
+          "expected_signal": {"type": "string"},
+          "observed": {"type": "string"},
+          "duration_ms": {"type": "integer", "minimum": 0},
+          "failure_category": {"type": ["string", "null"]},
+          "exit_code": {"type": ["integer", "null"]},
+          "command": {"type": ["array", "null"], "items": {"type": "string"}}
+        }
+      }
+    },
+    "artifacts": {"type": "array"},
+    "approvals": {"type": "array", "items": {"type": "string"}},
+    "evidence_id": {"type": ["string", "null"]},
+    "safe_next_action": {"type": ["string", "null"]}
+  }
+}

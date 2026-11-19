@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "toolchain-requirements.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "host", "platforms"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "python"],
+      "properties": {"os": {"const": "linux"}, "python": {"type": "string"}}
+    },
+    "platforms": {
+      "type": "object",
+      "required": ["parent", "android", "esp32", "pico"],
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  }
+}

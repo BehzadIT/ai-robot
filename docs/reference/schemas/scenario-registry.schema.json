@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenario-registry.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scenarios"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "target", "gate", "minimum_level", "adapter_action"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+          "version": {"type": "integer", "minimum": 1},
+          "target": {"enum": ["android", "esp32", "pico-host", "pico-firmware"]},
+          "gate": {"type": "integer", "minimum": 0, "maximum": 4},
+          "minimum_level": {"enum": ["static", "compile", "host", "simulation", "device", "hil", "physical"]},
+          "physical_stage": {"enum": ["safe_bench", "operational"]},
+          "adapter_action": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

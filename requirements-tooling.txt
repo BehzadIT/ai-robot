@@ -1,0 +1,2 @@
+-r requirements-docs.txt
+pyserial==3.5

@@ -46,6 +46,8 @@ Platform implementation details live in the child repositories.
   debugging workflows.
 - `operations/development-workspace.md`: canonical integrated VS Code workspace,
   repository boundaries, and platform tooling ownership.
+- `operations/agentic-toolchain.md`: US-003 discovery, verification, safety
+  gates, result contracts, and staged evidence workflow.
 - `operations/esp32-gateway-pico-control-clean-start-plan.md`: staged plan for
   moving wireless gateway duties to ESP32 while keeping Pico as the control and
   safety authority.

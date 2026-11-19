@@ -5,13 +5,27 @@
 | Field | Value |
 | --- | --- |
 | ID | `US-003` |
-| Status | `Refined` |
+| Status | `In Progress` |
 | Priority | `High` |
 | Horizon | `Now` |
 | Risk class | `System / tooling`; individual operations inherit the risk of the behavior or hardware they affect |
 | Owner | Parent orchestration plus platform-owned adapters in Android, ESP32, and Pico repositories |
 | Depends on | `US-001`, `US-002`, platform build systems, connected-device access, and evidence storage |
 | Last refined | 2026-11-19 |
+
+## Implementation Progress
+
+- Implemented: versioned result, scenario, toolchain, local configuration, and
+  evidence contracts.
+- Implemented: read-only parent `doctor`/`inventory`, platform-owned Android,
+  ESP32, and Pico adapters, host/default verification, safety prompts, staged
+  evidence, explicit promotion, and deterministic CI definitions.
+- Implemented: Pico UART valid, truncated, bad-checksum, bad-version, and
+  receive-loop recovery host assertions.
+- Awaiting connected hardware and the scenario-specific integration fixtures:
+  Pico boot capture, Android reconnect, ESP32 runtime/WebSocket and
+  backpressure, HIL, safe-bench, and ground-motion qualification. These remain
+  fail-closed at their declared gates.
 
 ## User Story
 

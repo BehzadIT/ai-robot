@@ -34,9 +34,24 @@ REGISTRIES = {
         REFERENCE / "source-registry.yaml",
         SCHEMAS / "source-registry.schema.json",
     ),
-    "questions": (
+    "questions_us002": (
         ROOT / "docs" / "verification" / "questions" / "US-002.yaml",
         SCHEMAS / "question-registry.schema.json",
+    ),
+    "questions_us003": (
+        ROOT / "docs" / "verification" / "questions" / "US-003.yaml",
+        SCHEMAS / "us003-question-registry.schema.json",
+    ),
+}
+
+ADDITIONAL_RECORDS = {
+    "toolchain_requirements": (
+        REFERENCE / "toolchain-requirements.yaml",
+        SCHEMAS / "toolchain-requirements.schema.json",
+    ),
+    "scenario_registry": (
+        REFERENCE / "scenario-registry.yaml",
+        SCHEMAS / "scenario-registry.schema.json",
     ),
 }
 
@@ -89,12 +104,15 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
     components = data["components"]["components"]
     tools = data["tools"]["tools"]
     sources = data["sources"]["sources"]
-    questions = data["questions"]["questions"]
+    questions_us002 = data["questions_us002"]["questions"]
+    questions_us003 = data["questions_us003"]["questions"]
+    questions = [*questions_us002, *questions_us003]
 
     component_ids = collect_ids(components, "components", errors)
     tool_ids = collect_ids(tools, "tools", errors)
     source_ids = collect_ids(sources, "sources", errors)
     question_ids = collect_ids(questions, "questions", errors)
+    us002_question_ids = {question["id"] for question in questions_us002}
 
     all_ids: set[str] = set()
     for namespace, ids in (
@@ -111,7 +129,7 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
     for record in [*components, *tools]:
         record_id = record["id"]
         for question_id in record.get("question_ids", []):
-            if question_id not in question_ids:
+            if question_id not in us002_question_ids:
                 errors.append(f"{record_id}: unknown question reference {question_id}")
         for provenance in provenance_refs(record):
             source_id = provenance.get("source_id")
@@ -135,7 +153,7 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
         ):
             errors.append(f"{record_id}: installed item with unresolved identity needs a question")
 
-    for question in questions:
+    for question in questions_us002:
         for source_id in question.get("source_ids", []):
             if source_id not in source_ids:
                 errors.append(f"{question['id']}: unknown source reference {source_id}")
@@ -329,6 +347,12 @@ def main() -> int:
         except (OSError, ValueError, yaml.YAMLError, json.JSONDecodeError) as exc:
             errors.append(f"{name}: {exc}")
 
+    for name, (record_path, schema_path) in ADDITIONAL_RECORDS.items():
+        try:
+            validate_schema(name, load_yaml(record_path), schema_path, errors)
+        except (OSError, ValueError, yaml.YAMLError, json.JSONDecodeError) as exc:
+            errors.append(f"{name}: {exc}")
+
     if len(data) == len(REGISTRIES):
         validate_references(data, errors)
         check_or_write_indexes(data, args.write_indexes, errors)
@@ -347,7 +371,7 @@ def main() -> int:
         f"{len(data['components']['components'])} components, "
         f"{len(data['tools']['tools'])} tools, "
         f"{len(data['sources']['sources'])} sources, "
-        f"{len(data['questions']['questions'])} questions."
+        f"{len(data['questions_us002']['questions']) + len(data['questions_us003']['questions'])} questions."
     )
     return 0
 

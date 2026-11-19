@@ -1,13 +1,15 @@
-schema_version: 1
+schema_version: 2
 id: EV-YYYY-NNN
+run_id: RUN-YYYYMMDDTHHMMSSZ-scenario-id
 started_at: 2000-01-01T00:00:00Z
 finished_at: 2000-01-01T00:00:00Z
 operator: replace-me
 observation_origin: [human]
-procedure:
+scenario:
   id: replace-me
   version: 1
 verification_level: physical
+physical_stage: safe_bench
 outcome: blocked
 system_identity:
   hardware_revision: null
@@ -18,9 +20,12 @@ system_identity:
   calibration: null
   repositories: []
 tools: []
+software_tools: []
+commands: []
 preconditions: []
 approvals: []
 measurements: []
+checks: []
 links:
   backlog_ids: [US-002]
   component_ids: []

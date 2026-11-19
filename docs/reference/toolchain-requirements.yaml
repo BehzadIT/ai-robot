@@ -1,0 +1,25 @@
+schema_version: 1
+host:
+  os: linux
+  python: ">=3.11"
+platforms:
+  parent:
+    required: [git, python3]
+    python_requirements: requirements-tooling.txt
+  android:
+    required: [java]
+    repository_tools: [gradlew]
+    baselines:
+      gradle: 8.11.1
+      android_gradle_plugin: 8.9.2
+  esp32:
+    required: [cmake, ninja]
+    sdk: esp-idf
+    baseline: "5.5"
+    target: esp32
+  pico:
+    required: [cmake, picotool]
+    optional: [mpremote]
+    sdk: pico-sdk
+    baseline: 2.2.0
+    board: pico2_w

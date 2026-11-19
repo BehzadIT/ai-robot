@@ -1,5 +1,15 @@
 # Change Log
 
+## US-003 implementation started
+- Added the thin parent discovery, verification, and evidence CLI plus
+  versioned JSON result and local configuration contracts.
+- Added independently runnable Android, ESP32, and Pico adapters while
+  preserving platform build ownership and Pico control/safety authority.
+- Added read-only doctor/inventory behavior, staged evidence promotion,
+  US-003 owner-question support, and schema-compatible structured checks.
+- Kept connected-device, HIL, and physical scenarios fail-closed until stable
+  identity, fixtures, and required physical preconditions exist.
+
 ## Purpose
 Track documentation-level changes and major shifts in the understood state of the robot.
 

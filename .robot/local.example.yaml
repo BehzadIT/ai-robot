@@ -1,0 +1,17 @@
+schema_version: 1
+sdk_paths:
+  android: null
+  esp_idf: null
+  pico: null
+device_aliases: {}
+# Add aliases only after inventory reports the stable identity. For example:
+# device_aliases:
+#   pico_control:
+#     kind: pico
+#     usb_serial: owner-local-value
+#   esp32_gateway:
+#     kind: esp32
+#     usb_serial: owner-local-value
+#   android_operator:
+#     kind: adb
+#     serial: owner-local-value

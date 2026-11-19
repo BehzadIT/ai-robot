@@ -27,6 +27,7 @@ For system-level or cross-project work, start with:
 - `docs/backlog/README.md`
 - `docs/operations/human-agent-working-contract.md`
 - `docs/operations/agentic-development-workflow.md`
+- `docs/operations/agentic-toolchain.md`
 - `docs/interfaces/command-protocol.md`
 - `docs/interfaces/telemetry-protocol.md`
 - `docs/electrical/wiring-and-pinout.md`
