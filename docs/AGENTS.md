@@ -44,6 +44,7 @@ project.
 - `overview/system-architecture.md`
 - `overview/capability-roadmap.md`
 - `backlog/README.md`
+- `backlog/workflow.md`
 - `operations/human-agent-working-contract.md`
 - `electrical/wiring-and-pinout.md`
 - `verification/known-issues-and-open-questions.md`
@@ -57,3 +58,7 @@ For hardware, wiring, power, fabrication, or workshop procedures, use the
 registries and live question queue rather than inferring availability or exact
 identity from the generated BOM view. Link verified physical claims to an
 append-only evidence bundle.
+
+Use Mermaid diagrams with explicit `layout: elk` when they materially clarify
+system structure, state, timing, dependencies, or wiring. Diagrams do not
+replace schematics, harness drawings, measurements, or as-built evidence.

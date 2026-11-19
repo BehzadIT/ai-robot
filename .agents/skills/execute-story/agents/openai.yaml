@@ -1,0 +1,6 @@
+interface:
+  display_name: "Execute Robot Story"
+  short_description: "Deliver a story with risk-matched evidence"
+  default_prompt: "Use $execute-story to implement this Ready robot story safely."
+policy:
+  allow_implicit_invocation: true

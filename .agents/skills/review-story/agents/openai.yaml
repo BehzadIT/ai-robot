@@ -1,0 +1,6 @@
+interface:
+  display_name: "Review Robot Story"
+  short_description: "Review readiness, changes, and evidence"
+  default_prompt: "Use $review-story to review this story and its evidence by risk."
+policy:
+  allow_implicit_invocation: true

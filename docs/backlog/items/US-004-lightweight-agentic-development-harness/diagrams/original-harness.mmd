@@ -1,0 +1,9 @@
+---
+config:
+  layout: elk
+---
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Ready
+  Ready --> InProgress
+  InProgress --> Done

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Refine Robot Story"
+  short_description: "Refine a robot story definition"
+  default_prompt: "Use $refine-story to refine this robot backlog item interactively."
+policy:
+  allow_implicit_invocation: true

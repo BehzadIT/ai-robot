@@ -2,9 +2,8 @@
 
 ## Purpose
 
-Define the active collaboration baseline for this robot project. This contract
-applies now; the broader workflow experiments in
-`agentic-development-workflow.md` remain deferred.
+Define the active collaboration baseline for this robot project. The lightweight
+workflow and repository skills in `agentic-development-workflow.md` apply now.
 
 ## Owner Context
 
@@ -48,7 +47,7 @@ when it remains safe and within scope.
 
 ## Task Treatment
 
-Use the risk classes and Ready/Done rules in `../backlog/README.md`. Apply the
+Use the risk classes and Ready/Done rules in `../backlog/workflow.md`. Apply the
 smallest useful artifact:
 
 - `Tiny`: state intent, affected boundary, and focused check.
@@ -117,9 +116,14 @@ Preserve only lessons that are likely to recur or expensive to relearn:
 | Integrated system state | Parent submodule pointers and change log |
 
 Prefer executable checks over prose when both express the lesson accurately.
+When a physical or real-time concept affects a decision, explain it concisely
+at the owner's software/AI level: concept, robot relevance, analogy and limit,
+failure symptom, measurement or observation, tool limitation, and authoritative
+source. Promote only reusable material to `../learning/`.
 
 ## Related Docs
 
-- Backlog contract: `../backlog/README.md`
+- Backlog index: `../backlog/README.md`
+- Backlog contract: `../backlog/workflow.md`
 - System architecture: `../overview/system-architecture.md`
-- Deferred agentic workflow: `agentic-development-workflow.md`
+- Active agentic harness: `agentic-development-workflow.md`

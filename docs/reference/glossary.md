@@ -20,7 +20,8 @@ are recorded.
 | `Unknown` | Required information has not been established |
 
 These claim states are distinct from backlog lifecycle states such as
-`Refined`, `In Progress`, and `Done`.
+`Draft`, `Ready`, `In Progress`, and `Done`. Refinement and verification are
+activities rather than separate backlog states.
 
 ## BMS
 Battery Management System. Handles pack protection and, depending on model, balancing and communication.

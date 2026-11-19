@@ -1,0 +1,6 @@
+interface:
+  display_name: "Plan Robot Story"
+  short_description: "Create a deterministic Ready plan"
+  default_prompt: "Use $plan-story to create and review the implementation plan for this robot story."
+policy:
+  allow_implicit_invocation: true

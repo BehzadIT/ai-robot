@@ -1,17 +1,22 @@
+---
+id: US-002
+title: Hardware, Workshop, Manuals, And Evidence
+status: in-progress
+priority: high
+risk_class: safety-control
+owner: parent-workspace
+created: "2026-11-19"
+updated: "2026-11-19"
+dependencies:
+  - id: US-001
+    kind: blocks
+references:
+  - docs/reference/component-registry.yaml
+  - docs/reference/tool-registry.yaml
+  - docs/verification/questions/US-002.yaml
+diagram: required
+---
 # US-002: Hardware, Workshop, Manuals, And Evidence
-
-## Backlog Metadata
-
-| Field | Value |
-| --- | --- |
-| ID | `US-002` |
-| Status | `In Progress` |
-| Priority | `High` |
-| Horizon | `Now` |
-| Risk class | `Safety/control` for installed hardware, power, wiring, fabrication, and motion-related evidence |
-| Owner | Parent `ai-robot` workspace |
-| Depends on | `US-001`; current BOM, source index, wiring docs, manuals, photos, code, and physical owner input |
-| Last refined | 2026-11-19; repository foundation implemented 2026-11-19 |
 
 ## User Story
 
@@ -39,6 +44,22 @@ notes, and a concise current BOM. It does not yet reliably answer:
 This prevents agents from fully using the owner's workshop and creates a risk
 of selecting incorrect manuals, voltage assumptions, interfaces, fasteners, or
 fabrication procedures.
+
+## Information Flow
+
+```mermaid
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Sources[Manuals, code, labels, owner reports] --> Registries[Component and tool registries]
+    Registries --> Questions[Structured owner questions]
+    Questions --> Procedures[Qualified procedures]
+    Procedures --> Evidence[Append-only evidence bundles]
+    Evidence --> Registries
+    Registries --> Decisions[Design and implementation decisions]
+```
 
 ## Current Known Inventory
 
@@ -77,8 +98,8 @@ fabrication procedures.
 
 This list is a discovery seed, not proof that each item is present, complete,
 safe to use for a proposed task, or represented by the correct exact model.
-The current machine-readable state is in `../reference/component-registry.yaml`
-and `../reference/tool-registry.yaml`; this backlog summary is not an inventory
+The current machine-readable state is in `../../reference/component-registry.yaml`
+and `../../reference/tool-registry.yaml`; this backlog summary is not an inventory
 database.
 
 ## Required Artifact Vocabulary
@@ -333,8 +354,8 @@ inventory, tools, materials, and legacy parts.
 ### Question record
 
 The live queue and schema are implemented at
-`../verification/questions/US-002.yaml` and
-`../reference/schemas/question-registry.schema.json`. The following shape is
+`../../verification/questions/US-002.yaml` and
+`../../reference/schemas/question-registry.schema.json`. The following shape is
 retained as the contract:
 
 ```yaml
@@ -477,7 +498,7 @@ where known, and the evidence that qualified it.
 ## Evidence Bundle Contract
 
 Evidence uses the implemented append-only directory contract and metadata
-schema under `../verification/evidence/` and `../reference/schemas/`:
+schema under `../../verification/evidence/` and `../../reference/schemas/`:
 
 ```text
 docs/verification/evidence/EV-YYYY-NNN/

@@ -67,6 +67,6 @@ block reliable-control, documentation, or independent verification work.
 ## Related Docs
 
 - System architecture: `system-architecture.md`
-- Backlog contract: `../backlog/README.md`
+- Backlog contract: `../backlog/workflow.md`
 - Clean-start plan:
   `../operations/esp32-gateway-pico-control-clean-start-plan.md`

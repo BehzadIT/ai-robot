@@ -1,0 +1,6 @@
+interface:
+  display_name: "Embedded Robot Mentor"
+  short_description: "Teach physical concepts behind robot decisions"
+  default_prompt: "Use $embedded-mentor to explain this robot concept with a concise mental model."
+policy:
+  allow_implicit_invocation: true

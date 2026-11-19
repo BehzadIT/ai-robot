@@ -1,0 +1,13 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+  Idea[Idea] --> Draft
+  Draft -->|refine-story| Defined[Definition complete]
+  Defined -->|plan-story| Ready
+  Ready -->|execute-story| Progress[In progress]
+  Progress -->|review-story + evidence| Done
+  Draft -.-> Blocked
+  Ready -.-> Blocked
+  Progress -.-> Blocked

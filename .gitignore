@@ -17,3 +17,4 @@ __pycache__/
 
 # US-003 machine-local toolchain and device aliases
 .robot/local.yaml
+node_modules/

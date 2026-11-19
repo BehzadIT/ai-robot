@@ -13,8 +13,9 @@ Platform implementation details live in the child repositories.
 - `overview/capability-roadmap.md`: Now/Next/Later/Explore capability horizons
   and open product-direction questions.
 - `overview/design-decisions.md`: durable cross-project design decisions.
-- `backlog/README.md`: active backlog lifecycle, risk classes, Ready/Done
-  definitions, and traceability contract.
+- `backlog/README.md`: generated concise backlog grouped by story status.
+- `backlog/workflow.md`: active lifecycle, risk classes, Ready/Done
+  definitions, dependency semantics, and traceability contract.
 - `reference/source-index.md`: where source material and platform repos live.
 
 ## Interfaces
@@ -53,8 +54,10 @@ Platform implementation details live in the child repositories.
   safety authority.
 - `operations/human-agent-working-contract.md`: active collaboration,
   communication, approval, and minimum evidence guardrails.
-- `operations/agentic-development-workflow.md`: deferred post-C++-migration
-  workflow enhancements, templates, and evaluation guidance.
+- `operations/agentic-development-workflow.md`: active lightweight harness,
+  repository skills, evidence ladder, learning, and diagram conventions.
+- `learning/`: concise reusable embedded, electrical, control, measurement, and
+  mechanical learning notes.
 - `verification/`: known issues, checklists, and project change notes.
 - `verification/questions/US-002.yaml`: live hardware/workshop discovery queue.
 - `verification/procedures/` and `verification/evidence/`: reusable physical

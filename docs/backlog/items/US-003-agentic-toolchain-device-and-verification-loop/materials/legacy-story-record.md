@@ -1,17 +1,23 @@
+---
+id: US-003
+title: Agentic Toolchain, Devices, And Verification Loop
+status: in-progress
+priority: high
+risk_class: normal
+owner: parent-plus-platform-adapters
+created: "2026-11-19"
+updated: "2026-11-19"
+dependencies:
+  - id: US-001
+    kind: blocks
+  - id: US-002
+    kind: informs
+references:
+  - docs/operations/agentic-toolchain.md
+  - docs/reference/scenario-registry.yaml
+diagram: required
+---
 # US-003: Agentic Toolchain, Devices, And Verification Loop
-
-## Backlog Metadata
-
-| Field | Value |
-| --- | --- |
-| ID | `US-003` |
-| Status | `In Progress` |
-| Priority | `High` |
-| Horizon | `Now` |
-| Risk class | `System / tooling`; individual operations inherit the risk of the behavior or hardware they affect |
-| Owner | Parent orchestration plus platform-owned adapters in Android, ESP32, and Pico repositories |
-| Depends on | `US-001`, `US-002`, platform build systems, connected-device access, and evidence storage |
-| Last refined | 2026-11-19 |
 
 ## Implementation Progress
 
@@ -105,12 +111,20 @@ control authority into the parent repository.
 
 Use a thin parent orchestrator with platform-owned adapters.
 
-```text
-parent robot CLI
-  -> Android adapter -> Gradle / adb / logcat
-  -> ESP32 adapter   -> idf.py / esptool / serial / WebSocket probes
-  -> Pico adapter    -> CMake / CTest / picotool / deploy helpers / serial
-  -> evidence writer -> versioned metadata and raw artifacts
+```mermaid
+---
+config:
+  layout: elk
+---
+flowchart LR
+    CLI[Parent robot CLI] --> Android[Android adapter]
+    CLI --> ESP32[ESP32 adapter]
+    CLI --> Pico[Pico adapter]
+    CLI --> Evidence[Evidence writer]
+    Android --> AndroidTools[Gradle, adb, logcat]
+    ESP32 --> ESPTools[idf.py, esptool, serial, WebSocket probes]
+    Pico --> PicoTools[CMake, CTest, picotool, deploy helpers, serial]
+    Evidence --> Artifacts[Versioned metadata and raw artifacts]
 ```
 
 The parent layer may discover, sequence, and report. It must not reimplement

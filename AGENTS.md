@@ -25,6 +25,7 @@ For system-level or cross-project work, start with:
 - `docs/overview/capability-roadmap.md`
 - `docs/overview/design-decisions.md`
 - `docs/backlog/README.md`
+- `docs/backlog/workflow.md`
 - `docs/operations/human-agent-working-contract.md`
 - `docs/operations/agentic-development-workflow.md`
 - `docs/operations/agentic-toolchain.md`
@@ -36,9 +37,9 @@ For system-level or cross-project work, start with:
 - `docs/reference/tool-registry.yaml`
 - `docs/verification/questions/US-002.yaml`
 
-The backlog and human-agent working contracts are active. The agentic
-development workflow doc contains deferred post-C++-migration enhancements;
-do not treat those future enhancements as current requirements.
+The backlog, human-agent contract, and lightweight agentic development harness
+are active. Formal agent evaluation remains deferred until repeated failures
+justify it.
 
 For platform-specific work, also read the nearest `AGENTS.md` inside the target
 submodule.
@@ -95,3 +96,11 @@ architecture docs are intentionally updated in the same change.
   rewrite old evidence to describe a later hardware or software state.
 - Before non-trivial edits, state the subsystem boundary being preserved or
   changed, the implementation pattern being used, and the engineering reason.
+- Use stable story files and the lifecycle in `docs/backlog/workflow.md` for
+  backlog work. Refinement produces Ready; testing and evidence occur during In
+  Progress and gate Done.
+- Use Mermaid with explicit `layout: elk` when an important structure, flow,
+  state, timing sequence, wiring relationship, or dependency is materially
+  clearer visually.
+- Use repository skills in `.agents/skills/` for story refinement, execution,
+  review, and decision-relevant embedded mentoring.

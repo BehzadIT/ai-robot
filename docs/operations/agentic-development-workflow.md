@@ -1,395 +1,117 @@
-# Agentic Development Workflow
+# Agentic Development Harness
 
-## Current status
-- `Status`: Deferred enhancements. The active baseline lives in the backlog and
-  human-agent working contracts.
-- `Priority`: Planned / post-migration.
-- `Owner`: Parent `ai-robot` workspace.
-- `Scope`: Future templates, evidence-matrix refinements, workflow experiments,
-  and evaluation guidance.
-- `Current task`: Preserve optional enhancements to validate after the C++
-  migration stabilizes.
+## Status And Purpose
 
-## Purpose
-This document is a deferred workflow-improvement plan for enhancements to use
-after the current Pico C++ migration and ESP32 gateway clean-start work have
-stabilized.
+This is the active lightweight development harness for the AI robot workspace.
+It adapts software-development lifecycle practices to firmware, electronics,
+mechanics, and physical verification without adding team-sized ceremonies.
 
-The goal is not to add heavy process. The goal is to make future robot work
-safer, clearer, and faster by using the right amount of specification, context,
-verification, and durable learning for the project's actual scale.
+The canonical backlog lifecycle and transition rules live in
+`../backlog/workflow.md`. The human-agent contract owns collaboration and
+approval boundaries. `agentic-toolchain.md` owns executable discovery,
+verification, and evidence interfaces.
 
-The active rules for backlog lifecycle, risk classification, communication,
-approval boundaries, and minimum evidence are in `../backlog/README.md` and
-`human-agent-working-contract.md`. Those rules apply now. Until the C++
-migration is complete, treat the additional templates, detailed evidence
-matrix, and evaluation guidance below as optional. The immediate project
-priority remains reliable firmware architecture: ESP32 as wireless gateway and
-Pico as no-network real-time control authority.
+## Operating Model
 
-## Project scale classification
-The AI robot project is currently:
-- solo-developed;
-- multi-repository;
-- multi-platform;
-- physical-system work;
-- safety-sensitive around motion, power, wiring, and control authority;
-- likely to grow later with edge AI, perception, and autonomy.
-
-That combination needs a different balance than either a small toy app or a
-large engineering organization.
-
-The sweet spot is:
-
-```text
-lightweight process for normal code
-+ strict evidence for hardware, control, protocol, safety, and integration work
-+ selective durable learning
-+ no formal evaluation platform until repeated agent workflow failures justify it
+```mermaid
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Idea[Idea or problem] --> Draft[Draft story]
+    Draft --> Refine[Interactive refinement]
+    Refine --> Ready[Ready story]
+    Ready --> Execute[Implementation and evidence]
+    Execute --> Review[Risk-proportional review]
+    Review --> Execute
+    Review --> Done[Done with fresh evidence]
+    Mentor[Embedded mentor] --> Refine
+    Mentor --> Execute
 ```
 
-## Goal
-Future robot work should be easy to start, hard to mis-scope, and clear to hand
-off.
+Use skills for repeatable work rather than persistent specialist personas:
 
-A future agent or human should be able to:
-- classify the task risk before editing;
-- load the right project context without wandering through unrelated files;
-- choose the right specification depth;
-- preserve Pico, ESP32, Android, and parent-doc ownership boundaries;
-- know what verification evidence is expected;
-- record unresolved hardware or implementation uncertainty;
-- promote only valuable lessons into durable project memory.
-
-## Success criteria
-This workflow task is successful when:
-- future agents start from the parent docs and nearest repo `AGENTS.md`;
-- normal tasks use small task notes instead of long generated plans;
-- cross-repo, protocol, hardware, and control changes use stronger specs;
-- safety and control changes include explicit failure modes and bench evidence;
-- handoffs say what changed, what was verified, what was not run, and what still
-  needs hardware confirmation;
-- repeated mistakes become tests, checklists, docs, or instructions instead of
-  repeated chat history;
-- the project does not adopt heavy context packaging or formal eval tooling
-  before the scale justifies it.
-
-## Core ownership rule
-Preserve the current system boundary unless the architecture docs are
-intentionally updated in the same change.
-
-- Android owns operator UI, app state, and client transport lifecycle.
-- ESP32 owns telemetry bridging, controller connectivity, controller
-  normalization, diagnostics, and transport support.
-- Pico owns real-time control, safety behavior, motor authority, encoders,
-  command admission, stale-input stop behavior, and timing-sensitive hardware
-  interaction.
-- Parent docs own shared architecture, protocols, hardware facts, operations,
-  verification expectations, and known cross-project decisions.
-
-Do not move control or safety authority from the Pico to Android or ESP32 unless
-that is the explicit purpose of the task and the shared architecture docs are
-updated with the tradeoff.
-
-## Five recommendations
-
-### 1. Context engineering: keep context layered and navigational
-Use the parent repository as the shared system context and child repositories as
-platform implementation context.
-
-Start with:
-- `../../README.md`
-- `../../AGENTS.md`
-- `../README.md`
-- `../overview/project-summary.md`
-- `../overview/system-architecture.md`
-- `../overview/capability-roadmap.md`
-- `../backlog/README.md`
-- `human-agent-working-contract.md`
-- `../overview/design-decisions.md`
-- `../verification/known-issues-and-open-questions.md`
-
-Then read the nearest child repo `AGENTS.md` and relevant child repo docs for
-platform-specific implementation work.
-
-Keep `AGENTS.md` files short and navigational. Put durable detail in docs,
-tests, code comments, or checklists.
-
-Avoid wasting context on:
-- build directories;
-- vendored third-party source unless the task explicitly touches it;
-- generated files;
-- type stubs;
-- old experiments unless the task is explicitly exploratory.
-
-### 2. Spec-driven work: use the smallest useful spec
-Small changes need small specs. Risky changes need stronger specs.
-
-Use a tiny task note when:
-- the change is local;
-- behavior is already clear;
-- no hardware, protocol, or ownership boundary changes.
-
-Use a normal change spec when:
-- the change crosses repos or modules;
-- command or telemetry behavior changes;
-- Android, ESP32, and Pico expectations need to stay aligned;
-- docs and implementation must move together.
-
-Use a safety/control spec when:
-- Pico control behavior changes;
-- stale-command, disconnect, recovery, watchdog, PID, encoder, motor, or
-  actuator behavior changes;
-- wiring, power, battery, BMS, charger, or pinout assumptions change;
-- future autonomy or perception output can influence robot motion.
-
-### 3. Harness engineering: invest most in evidence
-For this project, the highest-leverage agentic development work is verification
-and handoff, not a larger prompt system.
-
-Expected evidence should match risk:
-- static checks: build, unit tests, lint, typecheck, compile checks;
-- runtime checks: local execution, protocol tests, transport tests, serial logs,
-  emulator/device checks;
-- bench checks: observed robot behavior, continuity checks, voltage
-  measurements, photos, boot logs, stop behavior, hardware labels;
-- system checks: parent docs updated, submodule state understood, unresolved
-  questions recorded.
-
-Done means the required evidence exists or the missing evidence is explicitly
-called out.
-
-### 4. Compound engineering: preserve only valuable lessons
-Do not preserve every observation. Preserve lessons that are likely to recur or
-expensive to relearn.
-
-Use this rule of thumb:
-
-| Lesson shape | Preserve as |
+| Skill | Responsibility |
 | --- | --- |
-| Exact bug | Regression test |
-| Repeated implementation pattern | Platform doc or solution note |
-| Broad project convention | `AGENTS.md` or parent operations doc |
-| Repeated review concern | Checklist |
-| Safety-critical issue | Test, guardrail, bench checklist, or approval note |
-| Architectural tradeoff | `docs/overview/design-decisions.md` |
-| Hardware uncertainty | `docs/verification/known-issues-and-open-questions.md` |
-| Integrated system state | Parent submodule pointer and change log |
+| `refine-story` | Capture a Draft, discover context, ask consequential questions, and produce a decision-complete Ready story |
+| `execute-story` | Implement a Ready story within ownership and approval boundaries, collecting claim-matched evidence |
+| `review-story` | Review readiness or delivery using only the technical lenses relevant to the risk |
+| `embedded-mentor` | Teach concise decision-relevant physical and real-time concepts and create useful Mermaid+ELK explanations |
 
-Prefer executable memory where practical. A test or checklist that catches a
-future mistake is stronger than prose alone.
+A fresh isolated reviewer is useful for broad, cross-subsystem, or
+safety-relevant changes. A standing fleet of firmware, electrical, mechanical,
+documentation, and safety agents would duplicate context and is not justified
+for the current solo project.
 
-### 5. Evaluation-driven development: stay lightweight for now
-Do not introduce a formal evaluation platform yet.
+## Embedded Evidence Ladder
 
-For the current solo project, evaluation should start as a small task bank only
-after repeated agent workflow failures appear. Good candidates are tasks where
-agents repeatedly:
-- miss the Pico control authority boundary;
-- confuse intended architecture with current implementation;
-- ignore known hardware uncertainty;
-- update platform code without updating shared docs;
-- fail to produce useful verification evidence.
+Software and physical development share specification, implementation,
+testing, review, and learning loops. They differ in what evidence can support a
+claim:
 
-Formal evals become more useful when:
-- multiple people or agents work on the project;
-- autonomy or perception enters the control path;
-- agent behavior becomes inconsistent enough to measure;
-- prompt, model, context, or harness changes need comparison across repeated
-  tasks.
+| Level | Can establish | Cannot establish by itself |
+| --- | --- | --- |
+| Static/host | Parsing, algorithms, compilation, lint, deterministic host behavior | Connected-board behavior or physical correctness |
+| Runtime/simulation | Process interactions, simulated timing and failure cases | As-built wiring, voltage, fit, or real actuator behavior |
+| Connected device | Firmware boot, protocol exchange, device-specific behavior | Safe energized power or motion behavior unless the scenario includes it |
+| Bench/HIL | Named electrical signals, restrained actuation, stop/recovery under a controlled setup | Unrestrained ground behavior outside the setup |
+| Ground motion | Integrated behavior in a qualified clear area | Behavior outside the tested configuration and conditions |
 
-## Task sizing rules
+Evidence never promotes itself upward. A passing build is still a build; an
+owner observation is not an instrument measurement; simulation is not as-built
+qualification.
 
-### Tiny task
-Use for local documentation edits, obvious code cleanup, or small tests.
+## Learning Contract
 
-Expected artifact:
-- short task note or final handoff only.
+The owner is a senior software and AI engineer building deeper embedded,
+electrical, and mechanical knowledge. Explanations should focus on the delta:
 
-Expected evidence:
-- relevant focused check if code changed;
-- documentation review if docs changed.
+- define the physical or real-time concept;
+- locate it in this robot and its ownership boundary;
+- use a software analogy and state where the analogy fails;
+- explain cause, failure mode, severity, and observable symptom;
+- name an expected measurement or behavior, suitable tool, and limitation;
+- link an authoritative standard, manual, datasheet, or project source;
+- distinguish documentation from evidence about the installed robot.
 
-### Normal task
-Use for non-trivial platform changes that do not alter safety authority.
+Keep ordinary explanations short. Promote only reusable or expensive-to-relearn
+concepts to `../learning/`; link canonical source material instead of copying it.
 
-Expected artifact:
-- concise spec with intent, boundary, files, evidence, and non-goals.
+## Diagram Contract
 
-Expected evidence:
-- platform build or tests;
-- relevant protocol or docs review;
-- handoff with unverified items.
+Use Mermaid when an important flow, hierarchy, state change, timing sequence,
+wiring relationship, dependency graph, or set of interacting elements is
+materially easier to understand visually. Every diagram explicitly declares
+`layout: elk` even when the renderer uses ELK by default. Simple local changes
+need no diagram.
 
-### Safety/control task
-Use for Pico control, hardware, power, wiring, or robot motion behavior.
+Mermaid diagrams explain structure; they do not replace electrical schematics,
+wiring/harness drawings, mechanical drawings, timing captures, or retained
+physical evidence.
 
-Expected artifact:
-- safety/control spec.
+## External Patterns Adapted
 
-Expected evidence:
-- static and runtime checks where possible;
-- bench evidence when hardware behavior is involved;
-- explicit stop/fault/recovery behavior;
-- unresolved assumptions recorded in verification docs.
+- [GitHub Spec Kit](https://github.com/github/spec-kit): durable feature
+  specifications and measurable acceptance, reduced from many stages to Draft,
+  Ready, In Progress, and Done.
+- [PX4](https://github.com/PX4/PX4-Autopilot/tree/main/.agents):
+  repository-owned focused skills, path-scoped instructions, and
+  risk-proportional review.
+- [Superpowers](https://github.com/obra/superpowers/tree/main/skills): inspect
+  before asking, conversational refinement, systematic execution, and evidence
+  before completion; mandatory agent fan-out omitted.
+- [ArduPilot](https://github.com/ArduPilot/ardupilot/blob/master/AGENTS.md) and
+  [LeRobot](https://github.com/huggingface/lerobot/blob/main/AGENTS.md): explicit
+  AI accountability and separation of host, simulation, hardware, and
+  live-system evidence.
 
-### Future autonomy task
-Use when perception, edge AI, or autonomy can influence motion.
+Formal agent evaluation remains deferred. Start a small regression bank only
+after repeated failures show which behavior needs measurement.
 
-Expected artifact:
-- safety/control spec plus autonomy-specific risk review.
+## Related Docs
 
-Expected evidence:
-- clear separation between perception confidence and motion authority;
-- bounded command admission into Pico-owned control;
-- failure modes for stale, low-confidence, or contradictory perception;
-- manual override and stop behavior.
-
-## Evidence matrix
-
-| Task type | Required evidence |
-| --- | --- |
-| Parent docs only | Link check by inspection, consistency with architecture and known issues |
-| Android UI or operator model | Gradle tests when relevant, command protocol check, operator docs update |
-| Android transport | Transport/protocol test or manual connection evidence, command protocol check |
-| ESP32 telemetry bridge | ESP-IDF build, telemetry protocol check, bridge diagnostics evidence |
-| ESP32 controller transport | ESP-IDF build, controller snapshot/transport evidence, Pico authority preserved |
-| Pico protocol parsing | Unit/host tests where available, command protocol update, malformed-input behavior |
-| Pico control behavior | Unit/host tests, bench stop/recovery evidence, safety behavior documented |
-| Pico C++ migration | Host CTest, firmware build when relevant, migration parity docs update |
-| Wiring, pinout, battery, BMS, charger | Bench measurement, photo/manual/source evidence, known issues update |
-| Integrated robot state | Child repo commits complete, parent submodule pointer update only when known-good |
-
-## Agent working flow
-For meaningful work, follow this flow:
-
-1. Orient from parent docs and nearest repo `AGENTS.md`.
-2. Classify the task as tiny, normal, safety/control, or future autonomy.
-3. State the subsystem boundary being preserved or changed.
-4. Write the smallest useful spec for the task class.
-5. Edit only the owning repo or docs layer.
-6. Run the evidence path that matches the task risk.
-7. Update shared docs when protocol, wiring, safety behavior, or subsystem
-   boundaries change.
-8. Record unresolved facts in known issues instead of smoothing them over.
-9. Leave a handoff with changed scope, verification, skipped checks, and
-   remaining risk.
-10. Run a short compound learning pass if the task exposed a reusable lesson.
-
-## Task templates
-
-### Tiny task note
-```md
-## Intent
-
-## Boundary
-- Affects:
-- Does not affect:
-
-## Evidence
-- Required:
-- Not required because:
-```
-
-### Normal cross-repo change spec
-```md
-## Intent
-
-## Current behavior
-
-## Desired behavior
-
-## Ownership boundary
-- Android:
-- ESP32:
-- Pico:
-- Parent docs:
-
-## Non-goals
-
-## Expected evidence
-- Static:
-- Runtime:
-- Docs:
-- Handoff:
-```
-
-### Safety/control change spec
-```md
-## Intent
-
-## Safety boundary
-- Pico authority preserved or intentionally changed:
-- Motion, motor, encoder, watchdog, or stop behavior affected:
-
-## Failure modes
-- Disconnect:
-- Stale input:
-- Malformed command:
-- Hardware mismatch:
-- Recovery:
-
-## Bench assumptions
-- Verified:
-- Needs verification:
-
-## Expected evidence
-- Static:
-- Runtime:
-- Bench:
-- Docs:
-- Remaining risk:
-```
-
-### Agent handoff note
-```md
-## Changed
-
-## Boundary
-
-## Verified
-
-## Not run
-
-## Hardware or bench evidence
-
-## Remaining risks
-
-## Follow-up
-```
-
-### Compound learning pass
-```md
-## What surprised us?
-
-## What did the agent or workflow miss?
-
-## Is this likely to recur?
-
-## Is recurrence costly?
-
-## Where should this learning live?
-
-## Can it become executable?
-```
-
-## Enhancement activation criteria
-The deferred enhancements in this document should become candidates for
-activation after:
-- the clean-start Pico C++ control firmware boots without Pico Wi-Fi/CYW43;
-- ESP32 gateway routing is implemented far enough to carry logs/stats and the
-  intended bounded Pico UART handoff;
-- Pico/ESP32/Android ownership boundaries are stable in code and docs;
-- at least one real post-migration robot task can exercise the templates and
-  evidence matrix.
-
-## Completion criteria for the deferred enhancements
-After activation, this workflow task can move out of `Deferred` when:
-- the enhancements have been tested on a real post-migration task;
-- they complement rather than duplicate the active backlog and working
-  contracts;
-- at least one real future robot task has used the templates or evidence matrix
-  and the workflow has been adjusted based on that experience.
-
-Until activation, keep these enhancements parked and do not let them distract
-from the Pico C++ migration and ESP32 gateway bring-up.
+- Backlog lifecycle: `../backlog/workflow.md`
+- Human-agent contract: `human-agent-working-contract.md`
+- Verification CLI: `agentic-toolchain.md`
+- Skill sources: `../../.agents/skills/`

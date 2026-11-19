@@ -1,0 +1,12 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+  Agent --> Contract[Parent contracts]
+  Contract --> Android
+  Contract --> ESP32
+  Contract --> Pico
+  Android --> Evidence
+  ESP32 --> Evidence
+  Pico --> Evidence

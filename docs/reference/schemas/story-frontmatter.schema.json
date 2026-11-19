@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "story-frontmatter.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "status",
+    "priority",
+    "risk_class",
+    "owner",
+    "created",
+    "updated",
+    "dependencies",
+    "references",
+    "diagrams"
+  ],
+  "properties": {
+    "id": {"type": "string", "pattern": "^US-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 1},
+    "status": {
+      "enum": ["draft", "ready", "in-progress", "blocked", "done", "deferred"]
+    },
+    "priority": {"enum": ["high", "medium", "low"]},
+    "risk_class": {
+      "enum": ["tiny", "normal", "safety-control", "future-autonomy"]
+    },
+    "owner": {"type": "string", "minLength": 1},
+    "created": {"type": "string", "format": "date"},
+    "updated": {"type": "string", "format": "date"},
+    "completed": {"type": "string", "format": "date"},
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^US-[0-9]{3}$"},
+          "kind": {"enum": ["blocks", "informs"]}
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "diagrams": {
+      "type": "array",
+      "items": {"type":"object","additionalProperties":false,"required":["path","kind"],"properties":{"path":{"type":"string","pattern":"^diagrams/.+\\.mmd$"},"kind":{"enum":["system-context","deployment","data-flow","sequence","state","power-signal","task-graph","test-architecture","fault-response","traceability"]}}}
+    },
+    "blocked_from": {"enum": ["draft", "ready", "in-progress"]},
+    "blocker": {"type": "string", "minLength": 1},
+    "unblock_condition": {"type": "string", "minLength": 1},
+    "deferral_reason": {"type": "string", "minLength": 1},
+    "reactivation_trigger": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "done"}}},
+      "then": {"required": ["completed", "evidence"]}
+    },
+    {
+      "if": {"properties": {"status": {"const": "blocked"}}},
+      "then": {"required": ["blocked_from", "blocker", "unblock_condition"]}
+    },
+    {
+      "if": {"properties": {"status": {"const": "deferred"}}},
+      "then": {"required": ["deferral_reason", "reactivation_trigger"]}
+    }
+  ]
+}

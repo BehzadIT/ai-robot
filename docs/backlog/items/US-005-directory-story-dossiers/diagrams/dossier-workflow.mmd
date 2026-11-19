@@ -1,0 +1,11 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+  Idea --> Definition[README definition]
+  Definition --> Plan[implementation-plan.md]
+  Plan --> Tasks[Validated task DAG]
+  Tasks --> Evidence
+  Diagrams[.mmd + generated .svg] --> Plan
+  Materials --> Definition

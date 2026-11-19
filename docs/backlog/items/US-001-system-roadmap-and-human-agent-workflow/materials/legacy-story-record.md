@@ -1,18 +1,22 @@
+---
+id: US-001
+title: System Roadmap And Human-Agent Workflow
+status: done
+priority: high
+risk_class: normal
+owner: parent-workspace
+created: "2026-11-19"
+updated: "2026-11-19"
+completed: "2026-11-19"
+dependencies: []
+references:
+  - docs/overview/system-architecture.md
+  - docs/operations/human-agent-working-contract.md
+evidence:
+  - docs/verification/change-log.md
+diagram: not-needed
+---
 # US-001: System Roadmap And Human-Agent Workflow
-
-## Backlog Metadata
-
-| Field | Value |
-| --- | --- |
-| ID | `US-001` |
-| Status | `Done` |
-| Priority | `High` |
-| Horizon | `Now` |
-| Risk class | `System / process`; becomes `Safety/control` when applied to motion, power, wiring, or control authority |
-| Owner | Parent `ai-robot` workspace |
-| Depends on | System architecture, design decisions, known issues, and child-repository instructions |
-| Last refined | 2026-11-19 |
-| Completed | 2026-11-19 |
 
 ## Implementation Outcome
 
@@ -20,15 +24,15 @@ Completed on 2026-11-19 as a parent-documentation change. The implemented
 artifacts are:
 
 - component-oriented system model:
-  `../overview/system-architecture.md`;
+  `../../overview/system-architecture.md`;
 - capability horizons and durable roadmap questions:
-  `../overview/capability-roadmap.md`;
+  `../../overview/capability-roadmap.md`;
 - active backlog lifecycle, risk, Ready/Done, decision, and traceability rules:
-  `README.md`;
+  `../workflow.md`;
 - active owner profile, collaboration rules, physical approval boundaries, and
   minimum evidence expectations:
-  `../operations/human-agent-working-contract.md`;
-- shared claim vocabulary: `../reference/glossary.md`.
+  `../../operations/human-agent-working-contract.md`;
+- shared claim vocabulary: `../../reference/glossary.md`.
 
 The previous architecture path remains as a compatibility link for
 independently released child repositories. The detailed agentic workflow stays
@@ -197,7 +201,7 @@ Agents require owner participation or explicit approval before:
   established.
 
 The durable owner profile and detailed working contract now live in
-`../operations/human-agent-working-contract.md`. Agent entry points should stay
+`../../operations/human-agent-working-contract.md`. Agent entry points should stay
 short and link to it while retaining concise ownership and physical-safety
 boundaries.
 
@@ -296,23 +300,26 @@ repeatable.
 
 ## Canonical Backlog Lifecycle
 
+US-004 later simplified the original lifecycle while preserving its risk,
+evidence, and traceability intent. The active contract is `../workflow.md`:
+
 ```text
-Discovered -> Draft -> Refined -> Ready -> In Progress -> Verification -> Done
-                                      \-> Blocked
-Any pre-Done state -> Deferred
+Draft -> Ready -> In Progress -> Done
+          \-> Blocked
+Any active state -> Deferred
 ```
 
 | State | Exit requirement |
 | --- | --- |
-| `Discovered` | Problem or opportunity is recorded without pretending it is understood |
-| `Draft` | Initial outcome, scope, and owner are described |
-| `Refined` | Current state, target state, dependencies, risks, and unknowns are explicit |
-| `Ready` | Definition of Ready is satisfied |
-| `In Progress` | An implementation task owns the work and reports evidence status |
+| `Draft` | Stable ID, user story, and initial outcome exist |
+| `Ready` | Interactive refinement is complete and the Definition of Ready is satisfied |
+| `In Progress` | Implementation, testing, review, device work, and evidence collection own the work |
 | `Blocked` | Blocking fact, owner, and unblock condition are explicit |
-| `Verification` | Implementation is complete enough to execute the required evidence plan |
 | `Done` | Definition of Done and acceptance criteria are satisfied |
 | `Deferred` | Reason and reactivation trigger are recorded |
+
+Refinement and verification remain required activities; they are not separate
+status columns for this solo project.
 
 ### Definition of Ready
 
@@ -372,7 +379,7 @@ unrelated documentation, tests, or software work.
 
 These questions remain intentionally unanswered, but no longer keep this
 foundational story open. Their canonical location is
-`../overview/capability-roadmap.md`; the table below is retained as historical
+`../../overview/capability-roadmap.md`; the table below is retained as historical
 story context.
 
 | ID | Question | Why it matters | Preferred answer | Status |
@@ -441,8 +448,8 @@ for the initial comparison.
 
 ## Remaining Risks
 
-- Detailed workflow templates and evaluation guidance remain deferred, while
-  the minimum migration guardrails are active.
+- Formal agent evaluation remains deferred until repeated failures justify a
+  regression bank; the lightweight workflow and skills are active.
 - Long-range goals have not yet been prioritized by the owner.
 - Integrated software versions are represented by submodule pointers, but
   hardware, calibration, and evidence identity are not yet part of the same

@@ -1,0 +1,9 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+  Manuals --> Registries
+  Owner[Owner observations] --> Evidence[Append-only evidence]
+  Evidence --> Registries
+  Registries --> Decisions[Safe engineering decisions]

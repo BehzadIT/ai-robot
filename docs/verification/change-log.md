@@ -1,5 +1,19 @@
 # Change Log
 
+## US-004 lightweight agentic harness implemented
+
+- Simplified the solo backlog lifecycle to Draft, Ready, In Progress, and Done,
+  with Blocked and Deferred exception states; refinement and verification are
+  activities rather than separate columns.
+- Moved durable stories to stable paths, added machine-readable front matter,
+  blocking/informational dependencies, a generated index, and CI validation.
+- Added repository skills for refinement, execution, review, and concise
+  embedded mentoring without introducing persistent specialist-agent personas.
+- Adopted Mermaid diagrams with explicit ELK layout when structure is
+  materially clearer visually.
+- Preserved all Android, ESP32, Pico, physical approval, and append-only
+  evidence boundaries; no platform code or hardware state changed.
+
 ## US-003 implementation started
 - Added the thin parent discovery, verification, and evidence CLI plus
   versioned JSON result and local configuration contracts.

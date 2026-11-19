@@ -73,7 +73,7 @@ physical risk. A successful build alone is not evidence of safe robot behavior.
 ## Related Docs
 - System architecture: `system-architecture.md`
 - Capability roadmap: `capability-roadmap.md`
-- Backlog contract: `../backlog/README.md`
+- Backlog contract: `../backlog/workflow.md`
 - Human-agent working contract:
   `../operations/human-agent-working-contract.md`
 - Known issues and open questions: `../verification/known-issues-and-open-questions.md`
