@@ -37,6 +37,6 @@ Current `telemetry()` output contains:
 The telemetry path is optimized for observability during live robot motion without halting execution.
 
 ## Related Docs
-- Current architecture: `../overview/current-architecture.md`
+- System architecture: `../overview/system-architecture.md`
 - Logging and telemetry: `../firmware/logging-and-telemetry.md`
 - ESP32 telemetry bridge: `../control-and-apps/esp32-telemetry-bridge.md`

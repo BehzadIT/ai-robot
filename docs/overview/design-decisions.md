@@ -6,11 +6,16 @@ Capture durable design intent that should survive code churn.
 ## Current status
 - `Implemented`: ESP32 telemetry bridge plus controller-input transport.
 - `Implemented`: Pico-side UART mirroring designed to preserve REPL compatibility.
-- `Project note`: robot should own its own timeout and stale-command behavior.
+- `Implemented`: Pico owns timeout and stale-command behavior on the active
+  control path.
 - `Planned`: ESP32 becomes the robot wireless gateway for the next clean-start
   C++ architecture while Pico remains the real-time control and safety owner.
-- `Needs verification`: some intended behaviors are not fully implemented yet.
-- `Project note`: the ESP32 firmware repo is now named `robot-esp32-platform` because the codebase now includes both telemetry bridging and controller transport without moving control authority away from the Pico.
+- `Planned`: ESP32-routed Android control and the bounded Pico UART handoff are
+  not yet implemented or qualified.
+- `Documented / unverified`: the ESP32 firmware repo is named
+  `robot-esp32-platform` because its intended scope includes telemetry,
+  controller transport, and gateway capabilities without Pico control
+  authority.
 
 ## Decisions
 ### Pico is the source of truth
@@ -48,7 +53,28 @@ The print-mirroring design preserves IDE and REPL compatibility by keeping USB o
 ### Canonical docs must preserve uncertainty
 Conflicts and unresolved facts should be documented explicitly instead of normalized away.
 
+### Current and target behavior share one system model
+The canonical system architecture is component-oriented. Each major component
+or capability records purpose, current behavior, target behavior, ownership,
+non-responsibilities, interfaces, failure behavior, maturity, evidence, and
+evolution triggers.
+
+Current behavior, approved target direction, and exploratory capabilities must
+remain visibly distinct. Architecture describes the durable boundary and
+intended interactions; platform repositories retain implementation detail, and
+the capability roadmap retains sequencing and exploration.
+
+### Risk and evidence depth follow physical impact
+Local documentation and code cleanup may use lightweight checks. Motion,
+control, wiring, power, battery, and future autonomy work requires explicit
+failure behavior, approval boundaries, and evidence appropriate to the
+physical risk. A successful build alone is not evidence of safe robot behavior.
+
 ## Related Docs
-- Current architecture: `current-architecture.md`
+- System architecture: `system-architecture.md`
+- Capability roadmap: `capability-roadmap.md`
+- Backlog contract: `../backlog/README.md`
+- Human-agent working contract:
+  `../operations/human-agent-working-contract.md`
 - Known issues and open questions: `../verification/known-issues-and-open-questions.md`
 - Pico drivetrain review: `../../robot-pico-platform/docs/drivetrain-pid-pio-reliability-review.md`

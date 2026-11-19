@@ -10,8 +10,11 @@ This documentation set is the canonical working reference for the DIY tracked ro
 - `Planned`: next clean-start C++ architecture moves robot wireless gateway
   duties to the ESP32 and keeps Pico Wi-Fi/CYW43 out of the reliable control
   firmware dependency path.
-- `Bench-verified / project note`: current robot uses Pololu 37D motors, Cytron MDD10A, 4S2P LiFePO4 battery pack, and tracked chassis.
-- `Needs verification`: exact BMS model, exact encoder supply voltage, and exact live pinout for the second encoder.
+- `Owner reported`: the current robot uses Pololu 37D motors, Cytron MDD10A,
+  a 4S2P LiFePO4 battery pack, and a tracked chassis.
+- `Conflicting`: available sources disagree about the exact BMS model and the
+  live pinout for the second encoder.
+- `Unknown`: the exact encoder supply voltage has not been bench-confirmed.
 
 ## What this file is the source of truth for
 - Overall identity and current project scope.
@@ -25,6 +28,11 @@ The ESP32 firmware code now lives in the broader `robot-esp32-platform` repo. Th
 
 The project is not purely software. Future work depends on consistent documentation of the mechanical stack, battery system, charger and BMS constraints, wiring, firmware behavior, and the distinction between intended design and current implementation.
 
+The canonical component-by-component current and target behavior is maintained
+in [`system-architecture.md`](system-architecture.md). Capability sequencing and
+exploratory direction are maintained separately in
+[`capability-roadmap.md`](capability-roadmap.md).
+
 ## Current primary stack
 - Chassis: suspension crawler platform, double-layer aluminum structure.
 - Motor stack: 2x Pololu 37D 30:1 metal gearmotors with integrated encoders.
@@ -37,3 +45,9 @@ The project is not purely software. Future work depends on consistent documentat
 ## Sources
 - Manual/source file: [robot-project-components-updated.pdf](../assets/reference/robot-project-components-updated.pdf)
 - Manual/source file: [robot-project-complete-component-list.txt](../assets/reference/robot-project-complete-component-list.txt)
+
+## Related Docs
+
+- System architecture: `system-architecture.md`
+- Capability roadmap: `capability-roadmap.md`
+- Known issues: `../verification/known-issues-and-open-questions.md`

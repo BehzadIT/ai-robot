@@ -19,7 +19,7 @@ Detailed Pico module layout and runtime implementation notes live in
 - Parent protocol docs define shared command and telemetry semantics.
 
 ## Related Docs
-- Parent architecture: `../overview/current-architecture.md`
+- Parent architecture: `../overview/system-architecture.md`
 - Parent command protocol: `../interfaces/command-protocol.md`
 - Parent telemetry protocol: `../interfaces/telemetry-protocol.md`
 - Pico implementation: `../../robot-pico-platform/docs/firmware-architecture.md`

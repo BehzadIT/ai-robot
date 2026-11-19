@@ -21,18 +21,20 @@ context; it does not replace the child repositories.
 For system-level or cross-project work, start with:
 - `docs/README.md`
 - `docs/overview/project-summary.md`
-- `docs/overview/current-architecture.md`
+- `docs/overview/system-architecture.md`
+- `docs/overview/capability-roadmap.md`
 - `docs/overview/design-decisions.md`
+- `docs/backlog/README.md`
+- `docs/operations/human-agent-working-contract.md`
 - `docs/operations/agentic-development-workflow.md`
 - `docs/interfaces/command-protocol.md`
 - `docs/interfaces/telemetry-protocol.md`
 - `docs/electrical/wiring-and-pinout.md`
 - `docs/verification/known-issues-and-open-questions.md`
 
-The agentic development workflow doc is a deferred post-C++-migration plan.
-Use it as optional guidance for task sizing, evidence depth, verification
-handoff, and durable learning, but do not treat it as the active operating model
-until the Pico C++ migration and ESP32 gateway clean-start path are stable.
+The backlog and human-agent working contracts are active. The agentic
+development workflow doc contains deferred post-C++-migration enhancements;
+do not treat those future enhancements as current requirements.
 
 For platform-specific work, also read the nearest `AGENTS.md` inside the target
 submodule.

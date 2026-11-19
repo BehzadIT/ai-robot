@@ -8,9 +8,13 @@ Platform implementation details live in the child repositories.
 
 ## Start Here
 - `overview/project-summary.md`: current system identity and stack.
-- `overview/current-architecture.md`: control plane, telemetry plane, and
-  ownership boundaries.
+- `overview/system-architecture.md`: component-oriented current and target
+  behavior, interfaces, failure behavior, and ownership boundaries.
+- `overview/capability-roadmap.md`: Now/Next/Later/Explore capability horizons
+  and open product-direction questions.
 - `overview/design-decisions.md`: durable cross-project design decisions.
+- `backlog/README.md`: active backlog lifecycle, risk classes, Ready/Done
+  definitions, and traceability contract.
 - `reference/source-index.md`: where source material and platform repos live.
 
 ## Interfaces
@@ -38,9 +42,10 @@ Platform implementation details live in the child repositories.
 - `operations/esp32-gateway-pico-control-clean-start-plan.md`: staged plan for
   moving wireless gateway duties to ESP32 while keeping Pico as the control and
   safety authority.
+- `operations/human-agent-working-contract.md`: active collaboration,
+  communication, approval, and minimum evidence guardrails.
 - `operations/agentic-development-workflow.md`: deferred post-C++-migration
-  plan for right-sized agentic development, evidence depth, task sizing,
-  handoff, and durable learning.
+  workflow enhancements, templates, and evaluation guidance.
 - `verification/`: known issues, checklists, and project change notes.
 
 ## Platform Implementation Docs

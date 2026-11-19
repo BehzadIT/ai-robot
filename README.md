@@ -50,7 +50,9 @@ Start with:
 - `AGENTS.md`
 - `docs/README.md`
 - `docs/overview/project-summary.md`
-- `docs/overview/current-architecture.md`
+- `docs/overview/system-architecture.md`
+- `docs/overview/capability-roadmap.md`
+- `docs/operations/human-agent-working-contract.md`
 - `docs/reference/source-index.md`
 
 For platform-specific work, read the `AGENTS.md` inside the target submodule.

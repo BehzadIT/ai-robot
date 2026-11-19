@@ -31,6 +31,6 @@ Any future ESP32 capability must preserve this boundary unless the parent
 architecture docs are intentionally updated.
 
 ## Related Docs
-- Parent architecture: `../overview/current-architecture.md`
+- Parent architecture: `../overview/system-architecture.md`
 - Parent telemetry protocol: `../interfaces/telemetry-protocol.md`
 - ESP32 implementation: `../../robot-esp32-platform/docs/telemetry-bridge.md`

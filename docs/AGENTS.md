@@ -41,7 +41,10 @@ project.
 ## Key files
 - `README.md`
 - `overview/project-summary.md`
-- `overview/current-architecture.md`
+- `overview/system-architecture.md`
+- `overview/capability-roadmap.md`
+- `backlog/README.md`
+- `operations/human-agent-working-contract.md`
 - `electrical/wiring-and-pinout.md`
 - `verification/known-issues-and-open-questions.md`
 - `reference/source-index.md`

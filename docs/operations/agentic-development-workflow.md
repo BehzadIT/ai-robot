@@ -1,30 +1,31 @@
 # Agentic Development Workflow
 
 ## Current status
-- `Status`: Deferred until the Pico C++ migration and ESP32 gateway clean-start
-  path are complete enough to validate the workflow against real tasks.
+- `Status`: Deferred enhancements. The active baseline lives in the backlog and
+  human-agent working contracts.
 - `Priority`: Planned / post-migration.
 - `Owner`: Parent `ai-robot` workspace.
-- `Scope`: Agentic development workflow, verification depth, context usage, and durable learning.
-- `Current task`: Preserve a proposed operating model to revisit after the C++
+- `Scope`: Future templates, evidence-matrix refinements, workflow experiments,
+  and evaluation guidance.
+- `Current task`: Preserve optional enhancements to validate after the C++
   migration stabilizes.
 
 ## Purpose
-This document is a deferred workflow-improvement plan for how AI agents and
-humans should work inside the AI robot project after the current Pico C++
-migration and ESP32 gateway clean-start work have stabilized.
+This document is a deferred workflow-improvement plan for enhancements to use
+after the current Pico C++ migration and ESP32 gateway clean-start work have
+stabilized.
 
 The goal is not to add heavy process. The goal is to make future robot work
 safer, clearer, and faster by using the right amount of specification, context,
 verification, and durable learning for the project's actual scale.
 
-This document is self-contained. A future agent should be able to use it without
-reading the separate `agentic-workspace` research repository.
-
-Until the C++ migration is complete, treat this document as guidance, not as a
-required operating model. The immediate project priority is reliable firmware
-architecture: ESP32 as wireless gateway and Pico as no-network real-time
-control authority.
+The active rules for backlog lifecycle, risk classification, communication,
+approval boundaries, and minimum evidence are in `../backlog/README.md` and
+`human-agent-working-contract.md`. Those rules apply now. Until the C++
+migration is complete, treat the additional templates, detailed evidence
+matrix, and evaluation guidance below as optional. The immediate project
+priority remains reliable firmware architecture: ESP32 as wireless gateway and
+Pico as no-network real-time control authority.
 
 ## Project scale classification
 The AI robot project is currently:
@@ -101,7 +102,10 @@ Start with:
 - `../../AGENTS.md`
 - `../README.md`
 - `../overview/project-summary.md`
-- `../overview/current-architecture.md`
+- `../overview/system-architecture.md`
+- `../overview/capability-roadmap.md`
+- `../backlog/README.md`
+- `human-agent-working-contract.md`
 - `../overview/design-decisions.md`
 - `../verification/known-issues-and-open-questions.md`
 
@@ -369,8 +373,9 @@ For meaningful work, follow this flow:
 ## Can it become executable?
 ```
 
-## Activation criteria
-This workflow plan should become active after:
+## Enhancement activation criteria
+The deferred enhancements in this document should become candidates for
+activation after:
 - the clean-start Pico C++ control firmware boots without Pico Wi-Fi/CYW43;
 - ESP32 gateway routing is implemented far enough to carry logs/stats and the
   intended bounded Pico UART handoff;
@@ -378,14 +383,13 @@ This workflow plan should become active after:
 - at least one real post-migration robot task can exercise the templates and
   evidence matrix.
 
-## Completion criteria for this task
+## Completion criteria for the deferred enhancements
 After activation, this workflow task can move out of `Deferred` when:
-- this document is linked from `docs/README.md`;
-- the root `AGENTS.md` points future agents here for task sizing, evidence
-  depth, and handoff expectations;
-- future work can use this document without reading `agentic-workspace`;
+- the enhancements have been tested on a real post-migration task;
+- they complement rather than duplicate the active backlog and working
+  contracts;
 - at least one real future robot task has used the templates or evidence matrix
   and the workflow has been adjusted based on that experience.
 
-Until activation, keep this as a parked plan and do not let it distract from the
-Pico C++ migration and ESP32 gateway bring-up.
+Until activation, keep these enhancements parked and do not let them distract
+from the Pico C++ migration and ESP32 gateway bring-up.

@@ -70,7 +70,7 @@ HTTP JSON object remains legacy:
 - The earlier WebSocket `r/d/a` payload shape is retired.
 
 ## Related Docs
-- Current architecture: `../overview/current-architecture.md`
+- System architecture: `../overview/system-architecture.md`
 - Operator model: `../control-and-apps/operator-control-model.md`
 - Android implementation: `../../robot-android-app/docs/operator-control-ui.md`
 - Pico implementation: `../../robot-pico-platform/docs/firmware-architecture.md`

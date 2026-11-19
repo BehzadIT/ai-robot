@@ -25,6 +25,23 @@ Track documentation-level changes and major shifts in the understood state of th
 - Documented how to use the integrated workspace without changing subsystem
   ownership boundaries.
 
+## US-001 system model and working contract adopted
+
+- Replaced the mixed current/target architecture page with one canonical,
+  component-oriented system model while retaining the old path as a child-repo
+  compatibility link.
+- Added capability horizons and moved unresolved product-direction questions
+  into the durable roadmap.
+- Activated lightweight backlog, risk, Ready/Done, traceability,
+  communication, approval, and evidence guardrails.
+- Kept detailed post-migration workflow enhancements deferred and preserved
+  US-002 hardware/evidence and US-003 toolchain/device responsibilities as
+  separate stories.
+- Preserved Pico command-admission, motor, and safety authority; no runtime,
+  protocol, wiring, or submodule revision changed.
+
 ## Related Docs
 - Project summary: `../overview/project-summary.md`
+- System architecture: `../overview/system-architecture.md`
+- Capability roadmap: `../overview/capability-roadmap.md`
 - Source index: `../reference/source-index.md`
