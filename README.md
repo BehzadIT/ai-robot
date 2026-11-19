@@ -28,6 +28,21 @@ If the repository was cloned without submodules:
 git submodule update --init --recursive
 ```
 
+## VS Code Workspace
+
+Open `ai-robot-system.code-workspace` for the integrated development view:
+
+```sh
+code ai-robot-system.code-workspace
+```
+
+It presents the parent integration repository and the Android, ESP32, and Pico
+submodules as separate workspace roots. This keeps shared context readily
+available without merging the child repositories' Git histories, build
+workflows, or release cycles. See
+[`docs/operations/development-workspace.md`](docs/operations/development-workspace.md)
+for workspace behavior and ownership guidance.
+
 ## Shared Context
 
 Start with:

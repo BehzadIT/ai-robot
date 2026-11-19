@@ -17,6 +17,14 @@ Track documentation-level changes and major shifts in the understood state of th
   future agents can revisit it after the Pico C++ migration and ESP32 gateway
   clean-start path are stable.
 
+## Integrated VS Code workspace introduced
+- Added a portable multi-root workspace for the parent integration repository
+  and the Android, ESP32, and Pico platform repositories.
+- Kept platform Git histories, build workflows, SDK configuration, and hardware
+  deployment settings independently owned.
+- Documented how to use the integrated workspace without changing subsystem
+  ownership boundaries.
+
 ## Related Docs
 - Project summary: `../overview/project-summary.md`
 - Source index: `../reference/source-index.md`

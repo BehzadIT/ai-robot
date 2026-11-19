@@ -33,6 +33,8 @@ Platform implementation details live in the child repositories.
 ## Operations And Verification
 - `operations/`: bring-up, troubleshooting, calibration, maintenance, and bench
   debugging workflows.
+- `operations/development-workspace.md`: canonical integrated VS Code workspace,
+  repository boundaries, and platform tooling ownership.
 - `operations/esp32-gateway-pico-control-clean-start-plan.md`: staged plan for
   moving wireless gateway duties to ESP32 while keeping Pico as the control and
   safety authority.

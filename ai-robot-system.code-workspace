@@ -1,0 +1,41 @@
+{
+	"folders": [
+		{
+			"name": "AI Robot System",
+			"path": "."
+		},
+		{
+			"name": "Android Operator App",
+			"path": "robot-android-app"
+		},
+		{
+			"name": "ESP32 Platform",
+			"path": "robot-esp32-platform"
+		},
+		{
+			"name": "Pico Control Platform",
+			"path": "robot-pico-platform"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"robot-android-app": true,
+			"robot-esp32-platform": true,
+			"robot-pico-platform": true
+		},
+		"search.exclude": {
+			"robot-android-app": true,
+			"robot-esp32-platform": true,
+			"robot-pico-platform": true
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"espressif.esp-idf-extension",
+			"ms-python.python",
+			"ms-python.vscode-pylance",
+			"ms-vscode.cmake-tools",
+			"ms-vscode.cpptools"
+		]
+	}
+}
