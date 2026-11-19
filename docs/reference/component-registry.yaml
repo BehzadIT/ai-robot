@@ -1,0 +1,879 @@
+schema_version: 1
+components:
+  - id: component-raspberry-pi-pico-2w-01
+    name: Raspberry Pi Pico 2 W
+    aliases: [Pico, control controller]
+    category: controller
+    manufacturer: Raspberry Pi
+    model: Pico 2 W
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: owner-reported
+      inventory: available
+      installation: owner-reported
+      connection: conflicting
+      functional: implemented
+    physical_location: Robot control electronics; exact mounting position unverified
+    system_role: Real-time command admission, encoder, drivetrain, motor-output, and safety authority.
+    owner_subsystem: pico
+    software_links:
+      - robot-pico-platform/src/control/drivetrain_constants.py
+      - robot-pico-platform/cpp/include/robot/control/constants.hpp
+    safety_constraints:
+      - GPIO inputs and outputs use 3.3 V logic and are not 5 V tolerant.
+      - Firmware pin changes require reconciliation with the as-built harness before powered control.
+    known_failure_modes:
+      - Incorrect pin mapping can invalidate encoder feedback or motor output.
+      - Pico Wi-Fi/CYW43 startup is intentionally excluded from the target reliable control dependency path.
+    claims:
+      - key: identity.board
+        value: Raspberry Pi Pico 2 W
+        state: owner-reported
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 2, Microcontroller
+      - key: identity.mcu
+        value: RP2350
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 2, Raspberry Pi Pico 2 W entry
+        notes: The historical text list incorrectly says RP2040.
+    question_ids: [Q-US002-003, Q-US002-016]
+    dossier: docs/reference/components/component-raspberry-pi-pico-2w-01.md
+    notes: []
+  - id: component-esp32-dev-board-01
+    name: ESP32 development board
+    aliases: [ESP32-DevKitC-class board, wireless gateway]
+    category: controller
+    manufacturer: null
+    model: null
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: unknown
+      inventory: available
+      installation: owner-reported
+      connection: documented-unverified
+      functional: implemented
+    physical_location: Robot gateway electronics; exact mounting position unverified
+    system_role: Wi-Fi/WebSocket gateway, telemetry bridge, Bluetooth controller connectivity, and bounded transport.
+    owner_subsystem: esp32
+    software_links:
+      - robot-esp32-platform/sdkconfig
+      - robot-esp32-platform/components/telemetry_bridge/telemetry_bridge.c
+      - robot-esp32-platform/components/controller_transport/controller_transport.c
+    safety_constraints:
+      - Must not assume motor-control or safety authority.
+      - Board-specific GPIO and USB behavior cannot be finalized until the exact board and module are identified.
+    known_failure_modes: [Wrong board target or unavailable GPIO assignment]
+    claims:
+      - key: software.target
+        value: esp32
+        state: software-verified
+        provenance:
+          - source_id: source-esp32-sdkconfig
+            locator: CONFIG_IDF_TARGET="esp32"
+    question_ids: [Q-US002-004]
+    dossier: docs/reference/components/component-esp32-dev-board-01.md
+    notes: []
+  - id: component-pololu-37d-motors-01
+    name: Pololu 37D 30:1 gearmotors with encoders
+    aliases: [left motor, right motor, 37D drivetrain]
+    category: actuator
+    manufacturer: Pololu
+    model: 37D metal gearmotor
+    variant: 30:1, 12 V, integrated quadrature encoder; exact order number unknown
+    revision: null
+    quantity: 2
+    instances:
+      - id: motor-right
+        role: Right track actuator and encoder
+        physical_location: Right drivetrain
+      - id: motor-left
+        role: Left track actuator and encoder
+        physical_location: Left drivetrain
+    states:
+      identity: owner-reported
+      inventory: available
+      installation: owner-reported
+      connection: conflicting
+      functional: owner-reported
+    physical_location: Left and right tracked drivetrain
+    system_role: Produce track motion and quadrature feedback under Pico authority.
+    owner_subsystem: pico
+    software_links:
+      - robot-pico-platform/src/control/drivetrain_constants.py
+      - robot-pico-platform/cpp/include/robot/control/constants.hpp
+    safety_constraints:
+      - Encoder supply and logic levels must be measured before assuming 3.3 V operation is reliable.
+      - Tracks must be secured before powered motor testing.
+    known_failure_modes:
+      - Incorrect gearbox or CPR identity produces wrong velocity scaling.
+      - Incorrect A/B mapping or supply can produce missing or reversed feedback.
+    claims:
+      - key: motor.nominal_voltage
+        value: 12
+        unit: V
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 1, Pololu 37D entry
+      - key: gearbox.ratio
+        value: 30
+        state: owner-reported
+        provenance:
+          - source_id: source-pololu-37d-project-note
+            locator: MOTOR, model
+      - key: encoder.counts_per_motor_revolution
+        value: 64
+        unit: fully decoded counts/rev
+        state: documented-unverified
+        provenance:
+          - source_id: source-pololu-37d-project-note
+            locator: ENCODER, resolution
+      - key: encoder.supply_documented
+        value: 3.5-20
+        unit: V
+        state: documented-unverified
+        provenance:
+          - source_id: source-pololu-37d-project-note
+            locator: ENCODER, voltage requirements
+      - key: encoder.supply_as_built
+        value: unknown
+        unit: V
+        state: conflicting
+        provenance:
+          - source_id: source-wiring-reference
+            locator: Motor encoder wiring says 3.3 V
+          - source_id: source-pololu-37d-project-note
+            locator: ENCODER says 3.5 V minimum
+      - key: encoder.left_pin_mapping
+        value: unknown
+        state: conflicting
+        provenance:
+          - source_id: source-wiring-reference
+            locator: Motor 2 says GP12/GP13
+          - source_id: source-pico-micropython-drivetrain-constants
+            locator: EncoderPins.LEFT_PIN_A/LEFT_PIN_B are GP20/GP21
+          - source_id: source-pico-cpp-drivetrain-constants
+            locator: EncoderPins::kLeftPinA/kLeftPinB are GP20/GP21
+    question_ids: [Q-US002-002, Q-US002-003, Q-US002-005]
+    dossier: docs/reference/components/component-pololu-37d-motors-01.md
+    notes: []
+  - id: component-cytron-mdd10a-01
+    name: Cytron MDD10A dual-channel motor driver
+    aliases: [motor driver, Cytron]
+    category: interface
+    manufacturer: Cytron
+    model: MDD10A
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: owner-reported
+      inventory: available
+      installation: owner-reported
+      connection: conflicting
+      functional: owner-reported
+    physical_location: Robot motor-power electronics; exact mounting position unverified
+    system_role: Convert Pico PWM/direction outputs into left and right motor power.
+    owner_subsystem: pico
+    software_links:
+      - robot-pico-platform/src/control/drivetrain_constants.py
+      - robot-pico-platform/cpp/include/robot/control/constants.hpp
+    safety_constraints:
+      - Motor power must be independently disconnectable during control bring-up.
+      - Logic pin assignments require continuity evidence before firmware changes.
+    known_failure_modes: [Swapped PWM and direction signals, channel reversal, overcurrent, thermal shutdown]
+    claims:
+      - key: power.input_range
+        value: 7-30
+        unit: V DC
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 1, Cytron MDD10A
+      - key: output.continuous_current_per_channel
+        value: 10
+        unit: A
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 1, Cytron MDD10A
+      - key: control.pin_mapping
+        value: unknown
+        state: conflicting
+        provenance:
+          - source_id: source-wiring-reference
+            locator: Motor Driver to Raspberry Pi Pico section
+          - source_id: source-pico-micropython-drivetrain-constants
+            locator: MotorPins maps right PWM/DIR to GP7/GP6 and left to GP9/GP8
+          - source_id: source-pico-cpp-drivetrain-constants
+            locator: MotorPins maps right PWM/DIR to GP7/GP6 and left to GP9/GP8
+    question_ids: [Q-US002-005, Q-US002-006, Q-US002-016]
+    dossier: docs/reference/components/component-cytron-mdd10a-01.md
+    notes: []
+  - id: component-lifepo4-pack-01
+    name: 4S2P LiFePO4 battery pack
+    aliases: [robot battery, traction pack]
+    category: power
+    manufacturer: null
+    model: custom pack
+    variant: 4S2P 18650 LiFePO4; exact cells and revision unknown
+    revision: null
+    quantity: 1
+    states:
+      identity: owner-reported
+      inventory: available
+      installation: owner-reported
+      connection: unknown
+      functional: owner-reported
+    physical_location: Reported at chassis base
+    system_role: Supply motor and robot electrical power.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints:
+      - Do not dismantle or unwrap solely for documentation.
+      - Charging remains blocked until exact cells, BMS, charger program, protection, and current compatibility are established.
+      - First power after a power-path change requires owner approval.
+    known_failure_modes: [Short circuit, overcurrent, overcharge, cell imbalance, inadequate insulation, loose high-current termination]
+    claims:
+      - key: pack.configuration
+        value: 4S2P
+        state: owner-reported
+        provenance:
+          - source_id: source-battery-system-note
+            locator: Battery Cells, configuration
+      - key: pack.nominal_voltage
+        value: 12.8
+        unit: V
+        state: documented-unverified
+        provenance:
+          - source_id: source-battery-system-note
+            locator: Battery Cells, configuration
+      - key: pack.capacity
+        value: 4.4
+        unit: Ah
+        state: documented-unverified
+        provenance:
+          - source_id: source-battery-system-note
+            locator: Battery Cells, configuration
+      - key: cell.identity
+        value: unknown
+        state: unknown
+        provenance:
+          - source_id: source-goldencell-18650-spec
+            locator: Candidate datasheet only; applicability is unverified
+    question_ids: [Q-US002-006, Q-US002-017, Q-US002-018, Q-US002-019]
+    dossier: docs/reference/components/component-lifepo4-pack-01.md
+    notes: []
+  - id: component-daly-bms-01
+    name: Installed DALY-family BMS
+    aliases: [battery management system]
+    category: power
+    manufacturer: DALY
+    model: null
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: conflicting
+      inventory: available
+      installation: owner-reported
+      connection: unknown
+      functional: owner-reported
+    physical_location: Reported at chassis base with battery pack
+    system_role: Battery protection and possibly balancing/communications, subject to exact model.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints:
+      - Do not apply a family manual wiring sequence until exact label and harness compatibility are confirmed.
+      - Do not assume the BMS limits charger current.
+    known_failure_modes: [Incorrect sampling-wire order, wrong cell-count configuration, overcurrent, thermal protection, incompatible accessory cable]
+    claims:
+      - key: identity.candidate_a
+        value: DALY Smart BMS 4S 12V 30A
+        state: conflicting
+        provenance:
+          - source_id: source-battery-system-note
+            locator: BMS section
+      - key: identity.candidate_b
+        value: R24TK1A-17S100A, described as 4-8S active-balance BMS
+        state: conflicting
+        provenance:
+          - source_id: source-complete-component-list
+            locator: DALY Smart Active Balance BMS
+    question_ids: [Q-US002-001, Q-US002-006, Q-US002-017]
+    dossier: docs/reference/components/component-daly-bms-01.md
+    notes: []
+  - id: component-panther-iqload-evo-charger-01
+    name: Panther iQLoad EVO charger
+    aliases: [battery charger]
+    category: power
+    manufacturer: Panther
+    model: iQLoad EVO 5
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: owner-reported
+      inventory: available
+      installation: not-applicable
+      connection: not-tested
+      functional: owner-reported
+    physical_location: Workshop; location unknown
+    system_role: External charging of the robot battery pack when compatibility and settings are qualified.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints:
+      - Do not charge until pack identity, BMS, protection, selected mode, fire readiness, and current compatibility are established.
+      - Use the exact physical charger label and display rather than assuming the retained manual applies.
+    known_failure_modes: [Wrong chemistry mode, excessive charge current, wrong polarity, damaged battery, heat or fire]
+    claims:
+      - key: output.maximum_current_12v
+        value: 5
+        unit: A
+        state: documented-unverified
+        provenance:
+          - source_id: source-iqload-evo-manual
+            locator: page 9, technical data
+      - key: charge.maximum_voltage_lifepo4
+        value: 14.6
+        unit: V
+        state: documented-unverified
+        provenance:
+          - source_id: source-iqload-evo-manual
+            locator: charging-phase description
+      - key: charge.maintenance_behavior
+        value: monitoring and repeated limited charging described
+        state: conflicting
+        provenance:
+          - source_id: source-iqload-evo-manual
+            locator: charging levels 7-9
+          - source_id: source-battery-system-note
+            locator: Battery Charger says trickle mode disabled
+    question_ids: [Q-US002-007, Q-US002-014, Q-US002-017]
+    dossier: docs/reference/components/component-panther-iqload-evo-charger-01.md
+    notes: []
+  - id: component-tracked-chassis-01
+    name: Double-layer suspension crawler chassis
+    aliases: [tracked chassis]
+    category: mechanical
+    manufacturer: null
+    model: null
+    variant: upgraded for Pololu 37D drivetrain
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: available
+      installation: owner-reported
+      connection: owner-reported
+      functional: owner-reported
+    physical_location: Robot base
+    system_role: Mechanical structure, tracks, motor mounting, and equipment support.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: [Secure tracks and chassis before powered motion or drilling, deburr and inspect modified metal]
+    known_failure_modes: [Track misalignment, insufficient motor clearance, loose brackets, shaft-adapter runout]
+    claims:
+      - key: base.material
+        value: 2 mm aluminum alloy
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 1, Chassis
+      - key: modification.expanded_width
+        value: 172
+        unit: mm
+        state: documented-unverified
+        provenance:
+          - source_id: source-chassis-expansion-note
+            locator: Chassis Dimensions
+    question_ids: [Q-US002-012, Q-US002-013]
+    dossier: docs/reference/components/component-tracked-chassis-01.md
+    notes: []
+  - id: component-xbox-compatible-controller-01
+    name: Xbox-compatible game controller
+    aliases: [Bluetooth controller]
+    category: interface
+    manufacturer: null
+    model: null
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: unknown
+      inventory: available
+      installation: not-applicable
+      connection: implemented
+      functional: owner-reported
+    physical_location: Workshop/operator equipment
+    system_role: Bluetooth operator-intent source through ESP32/Bluepad32.
+    owner_subsystem: esp32
+    software_links: [robot-esp32-platform/components/controller_gateway]
+    safety_constraints: [Controller connection does not grant motor authority; Pico freshness and admission remain authoritative.]
+    known_failure_modes: [Disconnect, stale snapshots, unsupported controller mapping]
+    claims: []
+    question_ids: []
+    notes: [Exact controller identity is lower priority than current power and control hardware.]
+  - id: component-hcsr04-sensors-01
+    name: HC-SR04 ultrasonic sensors
+    aliases: []
+    category: sensor
+    manufacturer: null
+    model: HC-SR04
+    variant: 5 V
+    revision: null
+    quantity: 2
+    states:
+      identity: documented-unverified
+      inventory: available
+      installation: unknown
+      connection: unknown
+      functional: not-tested
+    physical_location: unknown
+    system_role: Available distance-sensing inventory; not an active control dependency.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: [Do not connect a 5 V echo output directly to a Pico GPIO.]
+    known_failure_modes: [5 V logic incompatibility, acoustic crosstalk, poor soft-target response]
+    claims:
+      - key: interface.logic_level
+        value: 5
+        unit: V
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 2, Sensors
+    question_ids: []
+    notes: []
+  - id: component-vl53l0x-sensors-01
+    name: VL53L0X time-of-flight sensor modules
+    aliases: []
+    category: sensor
+    manufacturer: null
+    model: VL53L0X module
+    variant: Samiore Robot candidate
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: available
+      installation: unknown
+      connection: unknown
+      functional: not-tested
+    physical_location: unknown
+    system_role: Available distance-sensing inventory; not an active control dependency.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: []
+    known_failure_modes: [Optical cover interference, address collision with multiple modules, ambient-light limitations]
+    claims:
+      - key: inventory.candidate
+        value: VL53L0X module with optical cover and M2 mounting
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: VL53L0X entries
+    question_ids: []
+    notes: []
+  - id: component-dyp-a02-sensor-01
+    name: DYP-A02-V2.0 waterproof ultrasonic sensor
+    aliases: []
+    category: sensor
+    manufacturer: null
+    model: DYP-A02-V2.0
+    variant: Interface option unknown
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: available
+      installation: unknown
+      connection: unknown
+      functional: not-tested
+    physical_location: unknown
+    system_role: Available outdoor distance-sensing inventory; not an active control dependency.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: [Confirm exact interface variant and logic levels before connection.]
+    known_failure_modes: [Wrong interface variant, acoustic blind zone, environmental reflections]
+    claims:
+      - key: interface.candidates
+        value: [RS485, I2C, PWM]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: DYP-A02-V2.0 entry
+    question_ids: []
+    notes: []
+  - id: component-legacy-520-motors-01
+    name: Legacy 520 encoder DC gearmotors
+    aliases: [JGB3865-520R45-12]
+    category: actuator
+    manufacturer: null
+    model: JGB3865-520R45-12
+    variant: "45:1"
+    revision: null
+    quantity: 2
+    states:
+      identity: documented-unverified
+      inventory: legacy
+      installation: legacy
+      connection: legacy
+      functional: unknown
+    physical_location: unknown
+    system_role: Historical stock drivetrain reference; must not supply current control constants.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: []
+    known_failure_modes: [Legacy constants leaking into current drivetrain assumptions]
+    claims:
+      - key: gearbox.ratio
+        value: 45
+        state: documented-unverified
+        provenance:
+          - source_id: source-suspended-chassis-manual
+            locator: page 3, 520 encoder DC gear motor
+    question_ids: []
+    notes: []
+  - id: component-power-protection-01
+    name: Power fuse, disconnect, switch, connectors, and high-current wiring
+    aliases: [power protection and distribution]
+    category: power
+    manufacturer: null
+    model: null
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: suspected-missing
+      inventory: unknown
+      installation: unknown
+      connection: unknown
+      functional: unknown
+    physical_location: unknown
+    system_role: Protect and isolate the battery, BMS, motor driver, and logic power paths.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: [Powered testing remains blocked until a reachable disconnect and protection path are established.]
+    known_failure_modes: [No overcurrent protection, inaccessible disconnect, undersized conductor, loose termination, reversed polarity]
+    claims:
+      - key: protection.as_built
+        value: unknown
+        state: suspected-missing
+        provenance:
+          - source_id: source-battery-system-note
+            locator: Battery Connection Hardware lacks a fuse/disconnect as-built record
+    question_ids: [Q-US002-006, Q-US002-019]
+    dossier: docs/reference/components/component-power-protection-01.md
+    notes: []
+  - id: component-prototyping-stock-01
+    name: Electronics prototyping stock
+    aliases: [breadboards, prototyping PCBs, headers, capacitors, jumpers]
+    category: consumable
+    manufacturer: null
+    model: mixed kits
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate workshop stock for low-voltage prototyping and test fixtures.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Verify capacitor polarity and voltage rating, do not use solderless breadboards for motor or battery current]
+    known_failure_modes: [Loose contacts, underrated components, reversed electrolytic capacitor]
+    claims:
+      - key: inventory.documented_items
+        value: [ceramic capacitor kit, electrolytic capacitor kit, breadboard and jumpers, double-sided prototyping PCB kit, 2.54 mm headers]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: capacitor, breadboard, Goldpin, and PCB prototyping entries
+    question_ids: [Q-US002-013]
+    notes: []
+  - id: component-wire-cable-stock-01
+    name: Low-voltage wire and cable stock
+    aliases: [20 AWG solid-core wire, silicone ribbon cable]
+    category: consumable
+    manufacturer: null
+    model: mixed stock
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate stock for prototypes and low-voltage harnesses after conductor/rating verification.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Conductor gauge, strand/solid construction, insulation, temperature, flex, and current rating must fit the task]
+    known_failure_modes: [Solid wire fatigue in moving harnesses, excess voltage drop, insulation damage]
+    claims:
+      - key: inventory.documented_items
+        value: [Fermery 20 AWG PVC solid-core kit, 6-core tinned-copper silicone ribbon cable]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: Fermery wire and Sourcing Map ribbon cable entries
+    question_ids: [Q-US002-013]
+    notes: []
+  - id: component-connector-stock-01
+    name: Connector and test-clip stock
+    aliases: [JST PH2.0 kit, alligator clips, screw terminals]
+    category: consumable
+    manufacturer: null
+    model: mixed stock
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate low-voltage connection and temporary-test inventory.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Match terminal, housing, pitch, crimp die, wire size, current, and mating orientation]
+    known_failure_modes: [Mismatched JST family, poor crimp, exposed clip short, inadequate current rating]
+    claims:
+      - key: inventory.documented_items
+        value: [Taiss JST PH2.0 2-6 pin kit, mini alligator clips, PCB screw terminals and headers]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: connector, PCB kit, and alligator clip entries
+    question_ids: [Q-US002-013]
+    notes: []
+  - id: component-fastener-stock-01
+    name: Fastener, spacer, and washer stock
+    aliases: [screw sets, metal washers, nylon washers, rubber washers, copper washers]
+    category: mechanical
+    manufacturer: null
+    model: mixed stock
+    variant: M2-M22 ranges across separate kits
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate assembly, spacing, isolation, grounding, and adapter hardware.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Material, grade, dimensions, thread pitch, electrical role, torque, and vibration retention must be selected per joint]
+    known_failure_modes: [Wrong pitch, galvanic corrosion, creep, loose vibration joint, conductive washer used where insulation is required]
+    claims:
+      - key: inventory.documented_items
+        value: [M2-M5 grade 10.9 screw/nut kit, stainless washers, nylon washers, rubber washers, copper washers]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: screw, nut, and washer entries
+    question_ids: [Q-US002-013]
+    notes: []
+  - id: component-sheet-material-stock-01
+    name: Sheet, plate, and foam material stock
+    aliases: [FR-4, ABS, EVA foam]
+    category: mechanical
+    manufacturer: null
+    model: mixed stock
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate insulating adapters, mounting plates, spacers, and cushioning materials.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [FR-4 cutting/drilling requires dust control and respiratory assessment; material strength and flammability must fit the use]
+    known_failure_modes: [FR-4 dust exposure, ABS heat deformation, adhesive foam creep, inadequate structural thickness]
+    claims:
+      - key: inventory.documented_items
+        value: [2 mm FR-4 sheet 300x170 mm, 10 mm ABS plate 100x200 mm, 1 mm EVA sheets, 3 mm EVA foam tape]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: FR-4, ABS, EVA sheet, and EVA tape entries
+    question_ids: [Q-US002-013, Q-US002-014]
+    notes: []
+  - id: component-insulation-adhesive-stock-01
+    name: Insulation, tape, and heat-shrink stock
+    aliases: [PVC electrical tape, polyimide tape, heat-shrink]
+    category: consumable
+    manufacturer: null
+    model: mixed stock
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate insulation, strain relief, abrasion protection, and temporary assembly stock.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Do not treat tape as primary high-current termination protection; verify adhesive, temperature, voltage, and abrasion suitability]
+    known_failure_modes: [Adhesive creep, heat damage, abrasion, hidden poor joint]
+    claims:
+      - key: inventory.documented_items
+        value: [tesa PVC electrical tape, SACONELL heat-resistant tape, Eventronic heat-shrink kit, blue pack wrap]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: tape entries
+          - source_id: source-battery-system-note
+            locator: Battery Connection Hardware
+    question_ids: [Q-US002-013]
+    notes: []
+  - id: component-solder-consumables-01
+    name: Soldering consumables
+    aliases: [lead-free solder, soldering grease, tip cleaner]
+    category: consumable
+    manufacturer: null
+    model: mixed stock
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate electronics-assembly consumables.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Use ventilation/fume extraction and verify flux suitability and residues]
+    known_failure_modes: [Poor wetting, corrosive residue, overheated insulation, cold joint]
+    claims:
+      - key: inventory.documented_items
+        value: [CFH EL 324 1.0 mm lead-free solder, Felder soldering grease, brass tip cleaner]
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 2, soldering equipment
+    question_ids: [Q-US002-010, Q-US002-013, Q-US002-014]
+    notes: []
+  - id: component-battery-construction-stock-01
+    name: Battery-construction material stock
+    aliases: [nickel-plated steel strip, cable lugs]
+    category: consumable
+    manufacturer: null
+    model: mixed stock
+    variant: null
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: not-applicable
+      connection: not-applicable
+      functional: not-tested
+    physical_location: unknown
+    system_role: Historically documented battery and high-current connection materials; not pre-approved for pack work.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Battery construction or rework requires a separate reviewed design, equipment, PPE, and explicit approval]
+    known_failure_modes: [Short circuit, cell heating, unsuitable nickel-plated steel resistance, inadequate lug crimp, fire]
+    claims:
+      - key: inventory.documented_items
+        value: [0.15x8 mm nickel-plated steel strip, copper cable lugs, insulating sleeves]
+        state: documented-unverified
+        provenance:
+          - source_id: source-complete-component-list
+            locator: Nickel-Plated Steel Strip
+          - source_id: source-battery-system-note
+            locator: Battery Connection Hardware
+    question_ids: [Q-US002-013, Q-US002-014, Q-US002-015]
+    notes: []
+  - id: component-pololu-shaft-adapter-01
+    name: Candidate Pololu 6 mm D-shaft to 12 mm hex adapter
+    aliases: [Pololu product 2687, replacement shaft adapter]
+    category: mechanical
+    manufacturer: Pololu
+    model: "2687"
+    variant: 6 mm D input to 12 mm hex output
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: unknown
+      connection: unknown
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate replacement for a reported misaligned sprocket adapter.
+    owner_subsystem: shared-hardware
+    software_links: []
+    safety_constraints: [Do not file or modify without verified dimensions, secure workholding, PPE, and a fit/runout acceptance plan]
+    known_failure_modes: [Runout, poor sprocket retention, weakened adapter, loose set screw]
+    claims:
+      - key: proposed.modification
+        value: shorten from 35 mm to 32 mm and recreate stop geometry
+        state: documented-unverified
+        provenance:
+          - source_id: source-shaft-adapter-note
+            locator: Custom Adapter Solution
+    question_ids: [Q-US002-012, Q-US002-013, Q-US002-014]
+    notes: []
+  - id: component-pololu-motor-brackets-01
+    name: Pololu aluminum motor brackets
+    aliases: []
+    category: mechanical
+    manufacturer: Pololu
+    model: null
+    variant: for future motor upgrades; exact part unknown
+    revision: null
+    quantity: 1
+    states:
+      identity: documented-unverified
+      inventory: unknown
+      installation: unknown
+      connection: unknown
+      functional: not-tested
+    physical_location: unknown
+    system_role: Candidate motor-mounting inventory.
+    owner_subsystem: workshop
+    software_links: []
+    safety_constraints: [Verify exact motor fit, hole geometry, plate clearance, fasteners, and load path before use]
+    known_failure_modes: [Incorrect bracket size, shaft interference, loose fasteners]
+    claims:
+      - key: inventory.candidate
+        value: Pololu aluminum brackets
+        state: documented-unverified
+        provenance:
+          - source_id: source-project-components-updated
+            locator: page 2, Tools and Miscellaneous
+    question_ids: [Q-US002-013]
+    notes: []

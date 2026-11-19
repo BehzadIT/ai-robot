@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "component-registry.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "components"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "components": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/component"}
+    }
+  },
+  "$defs": {
+    "state": {
+      "enum": [
+        "bench-verified", "software-verified", "owner-reported",
+        "documented-unverified", "implemented", "planned", "legacy",
+        "conflicting", "suspected-missing", "unknown", "not-applicable",
+        "not-tested", "available", "unavailable", "faulty"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^source-[a-z0-9-]+$"},
+        "locator": {"type": "string", "minLength": 1},
+        "evidence_id": {"type": "string", "pattern": "^EV-[0-9]{4}-[0-9]{3}$"},
+        "owner_report": {"type": "string", "minLength": 1}
+      },
+      "anyOf": [
+        {"required": ["source_id", "locator"]},
+        {"required": ["evidence_id"]},
+        {"required": ["owner_report"]}
+      ]
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "value", "state", "provenance"],
+      "properties": {
+        "key": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"},
+        "value": {},
+        "unit": {"type": "string"},
+        "state": {"$ref": "#/$defs/state"},
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/provenance"}
+        },
+        "notes": {"type": "string"}
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "category", "manufacturer", "model", "variant",
+        "quantity", "states", "system_role", "owner_subsystem", "claims",
+        "question_ids"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^component-[a-z0-9-]+$"},
+        "name": {"type": "string", "minLength": 1},
+        "aliases": {"type": "array", "items": {"type": "string"}},
+        "category": {
+          "enum": ["controller", "power", "actuator", "sensor", "interface", "mechanical", "consumable"]
+        },
+        "manufacturer": {"type": ["string", "null"]},
+        "model": {"type": ["string", "null"]},
+        "variant": {"type": ["string", "null"]},
+        "revision": {"type": ["string", "null"]},
+        "quantity": {"type": "integer", "minimum": 1},
+        "instances": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "role"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+              "role": {"type": "string"},
+              "physical_location": {"type": ["string", "null"]}
+            }
+          }
+        },
+        "states": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity", "inventory", "installation", "connection", "functional"],
+          "properties": {
+            "identity": {"$ref": "#/$defs/state"},
+            "inventory": {"$ref": "#/$defs/state"},
+            "installation": {"$ref": "#/$defs/state"},
+            "connection": {"$ref": "#/$defs/state"},
+            "functional": {"$ref": "#/$defs/state"}
+          }
+        },
+        "physical_location": {"type": ["string", "null"]},
+        "system_role": {"type": "string", "minLength": 1},
+        "owner_subsystem": {"enum": ["pico", "esp32", "android", "shared-hardware", "workshop"]},
+        "software_links": {"type": "array", "items": {"type": "string"}},
+        "safety_constraints": {"type": "array", "items": {"type": "string"}},
+        "known_failure_modes": {"type": "array", "items": {"type": "string"}},
+        "claims": {"type": "array", "items": {"$ref": "#/$defs/claim"}},
+        "question_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^Q-US002-[0-9]{3}$"}
+        },
+        "dossier": {"type": "string"},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

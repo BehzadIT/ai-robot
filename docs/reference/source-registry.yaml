@@ -1,0 +1,241 @@
+schema_version: 1
+sources:
+  - id: source-pico-micropython-drivetrain-constants
+    title: Active MicroPython Drivetrain Constants
+    kind: code
+    path: robot-pico-platform/src/control/drivetrain_constants.py
+    sha256: 146bac0263b14ea0b06ffa7226521307fa050656eb5ad24797f6ba61ac002f8a
+    manufacturer: null
+    model_scope: Active Pico MicroPython drivetrain
+    revision: repository content
+    authority: code-backed
+    extraction_status: text-reviewed
+    applicability: Implemented MicroPython motor and encoder pin assumptions.
+    limitations:
+      - Implementation does not prove the as-built harness.
+  - id: source-pico-cpp-drivetrain-constants
+    title: Migrated C++ Drivetrain Constants
+    kind: code
+    path: robot-pico-platform/cpp/include/robot/control/constants.hpp
+    sha256: 39cee8a4dedae16615fc5aaad18812263098387aebd5512f07ea8e5b04473de8
+    manufacturer: null
+    model_scope: Pico C++ migration drivetrain
+    revision: repository content
+    authority: code-backed
+    extraction_status: text-reviewed
+    applicability: Implemented C++ motor and encoder pin assumptions.
+    limitations:
+      - Implementation does not prove the as-built harness.
+  - id: source-esp32-sdkconfig
+    title: ESP32 Platform SDK Configuration
+    kind: code
+    path: robot-esp32-platform/sdkconfig
+    sha256: dd87acc6beb8b2bf5aefa751b95c11e48997edd034da17151ae1fe52c915d799
+    manufacturer: null
+    model_scope: ESP32 platform build target
+    revision: repository content
+    authority: code-backed
+    extraction_status: text-reviewed
+    applicability: Proves the current ESP-IDF target is classic ESP32, not the exact physical board.
+    limitations:
+      - Software target selection is not physical board identity.
+  - id: source-project-components-updated
+    title: Robot Project Components Reference
+    kind: project-pdf
+    path: docs/assets/reference/robot-project-components-updated.pdf
+    sha256: b26617d3939542eb00c7466a163f800e609f449b0f9cc734574654f7c4339281
+    manufacturer: null
+    model_scope: Current and historical robot inventory
+    revision: "2025-05-22"
+    authority: generated-project-note
+    extraction_status: render-reviewed
+    applicability: Candidate inventory and newer Pololu drivetrain description.
+    limitations:
+      - Contains unverified statements and an unsafe ambiguity about powering a nominal 3.5 V minimum encoder from 3.3 V.
+  - id: source-complete-component-list
+    title: Exhaustively Complete Component List
+    kind: project-note
+    path: docs/assets/reference/robot-project-complete-component-list.txt
+    sha256: ffe68710c8aa9e13943c36ed685da29c11f8a368659ccfee0630d82980221e52
+    manufacturer: null
+    model_scope: Historical inventory
+    revision: null
+    authority: generated-project-note
+    extraction_status: text-reviewed
+    applicability: Candidate parts, tools, materials, and legacy equipment only.
+    limitations:
+      - Mixes installed, available, legacy, and aspirational items.
+      - Incorrectly describes the Pico 2 W MCU as RP2040 rather than RP2350.
+  - id: source-pololu-37d-project-note
+    title: Pololu 37D Encoder Specification And RPM Test Note
+    kind: project-note
+    path: docs/assets/reference/pololu-37d-encoder-spec-and-rpm-test-code.txt
+    sha256: cd93775d7d0f4fe87c172445b3b86a3b6516afce606958ba9f18c7349c1fba9e
+    manufacturer: Pololu
+    model_scope: Candidate 37D 30:1 motor and integrated encoder
+    revision: null
+    authority: owner-project-note
+    extraction_status: text-reviewed
+    applicability: Current drivetrain assumptions and encoder conversion values.
+    limitations:
+      - Exact installed order number and encoder variant are not physically verified.
+      - This is not an original vendor datasheet.
+  - id: source-battery-system-note
+    title: Robot Battery System Component Reference
+    kind: project-note
+    path: docs/assets/electrical/robot-battery-system.txt
+    sha256: cf1c2e020939815328015f7d28e756d5f992690064556fcf1b6ebc6b4ddace3a
+    manufacturer: null
+    model_scope: Battery pack, BMS, charger, and power wiring
+    revision: null
+    authority: owner-project-note
+    extraction_status: text-reviewed
+    applicability: Candidate pack construction and installed power-system identity.
+    limitations:
+      - BMS identity conflicts with another project source.
+      - Charger current and trickle-mode statements require reconciliation with the retained manuals and physical setup.
+  - id: source-wiring-reference
+    title: Robot Wiring Reference
+    kind: project-note
+    path: docs/assets/electrical/wiring-reference.txt
+    sha256: 95555454895423765098a74fbe438d32a1d5adffa4e8465df928965a27049e48
+    manufacturer: null
+    model_scope: Motor, driver, encoder, and Pico wiring
+    revision: null
+    authority: owner-project-note
+    extraction_status: text-reviewed
+    applicability: Intended wiring, not proof of the as-built harness.
+    limitations:
+      - Left encoder pins conflict with current Pico code.
+      - PWM and direction assignments conflict with current Pico constants.
+  - id: source-motor-wire-photo
+    title: Motor Wire Connector Diagram
+    kind: photo
+    path: docs/assets/electrical/motor-wire.jpg
+    sha256: 93f5c29dee45897495af152eb2b0b8a6a64dc8ee70841ce499c79b8929496515
+    manufacturer: null
+    model_scope: Unconfirmed six-wire motor connector
+    revision: null
+    authority: unknown
+    extraction_status: render-reviewed
+    applicability: Candidate connector signal ordering only.
+    limitations:
+      - Does not identify an exact motor variant or prove wire colors on the installed robot.
+  - id: source-goldencell-18650-spec
+    title: JGCFR18650 2200 mAh 3.2 V Cell Specification
+    kind: vendor-manual
+    path: docs/assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf
+    sha256: f2b9a83af80b89f7da974eea0cbb8920d1d9148a2903863cd5ad363a30223096
+    manufacturer: Shandong Goldencell Electronics Technology Co., Ltd.
+    model_scope: 18FC-7.04Wh / JGCFR18650-2200mAh-3.2V
+    revision: R1.1
+    authority: vendor
+    extraction_status: render-reviewed
+    applicability: Electrical limits only if the installed cells match this exact model and revision.
+    limitations:
+      - Installed cell identity is not verified.
+  - id: source-daly-active-balance-manual
+    title: DALY Smart Active Balance BMS User Manual
+    kind: vendor-manual
+    path: docs/assets/electrical/smart-active-balance-bms-manual.pdf
+    sha256: 79c8c43d03d5a62b72802096019ee0910ab3299ad27c2171add4169e560d5265
+    manufacturer: DALY
+    model_scope: Smart Active Balance BMS family, 4-24S and 40-500A variants
+    revision: "2024-11-15"
+    authority: vendor
+    extraction_status: render-reviewed
+    applicability: Family-level installation and safety guidance; exact applicability depends on the installed label.
+    limitations:
+      - A family manual cannot resolve the installed model, current rating, or interface options.
+  - id: source-iqload-evo-manual
+    title: iQLoad EVO 5 And EVO 7 Charger Manual
+    kind: vendor-manual
+    path: docs/assets/electrical/iqload-evo-charger-manual-en-2021.pdf
+    sha256: 81b8bc98ff297c2fc18f394e44e26a3c5d30e1f64d24ead1f0ed4095aab839ba
+    manufacturer: Panther
+    model_scope: iQLoad EVO 5 and EVO 7
+    revision: "2021"
+    authority: vendor
+    extraction_status: render-reviewed
+    applicability: Charger features and safety instructions; physical model and selected program remain unverified.
+    limitations:
+      - Describes monitoring/trickle behavior that conflicts with the project battery note.
+      - Does not prove safe charge-current compatibility with the installed pack.
+  - id: source-suspended-chassis-manual
+    title: Suspension Crawler Vehicle Technical Parameters
+    kind: vendor-manual
+    path: docs/assets/mechanical/suspended-tracked-vehicle-technical-parameters.pdf
+    sha256: 12b91c0f66c0476213c7613e0494e0f48264786a00e544f413fd3a3ab7b41f3c
+    manufacturer: null
+    model_scope: Original tracked chassis, controller, and 520 motor package
+    revision: "2024-05-07"
+    authority: vendor
+    extraction_status: render-reviewed
+    applicability: Base-chassis geometry and legacy stock hardware only.
+    limitations:
+      - Stock controller and 520 motor specifications do not describe the upgraded drivetrain.
+  - id: source-chassis-expansion-note
+    title: Robot Chassis Expansion Design
+    kind: project-note
+    path: docs/assets/mechanical/robot-chassis-expansion-design.txt
+    sha256: f6de8bdd9466ebce2a0d6c1c1c4544ed0cb7a7be2420bc0aa029d6daa774af89
+    manufacturer: null
+    model_scope: Proposed or owner-directed chassis widening
+    revision: null
+    authority: generated-project-note
+    extraction_status: text-reviewed
+    applicability: Candidate bracket and chassis dimensions.
+    limitations:
+      - Does not prove that the described geometry was built.
+  - id: source-shaft-adapter-note
+    title: Faulty Shaft Adapter And Proposed Solution
+    kind: project-note
+    path: docs/assets/mechanical/faulty-shaft-and-solution.txt
+    sha256: 65595cb540931d51489103e166756d0a912ef4e6ada388feb77810719848c86b
+    manufacturer: null
+    model_scope: 6 mm D-shaft to track sprocket adapter
+    revision: null
+    authority: owner-project-note
+    extraction_status: text-reviewed
+    applicability: Reported fit problem and candidate hand-tool modification.
+    limitations:
+      - Completion, dimensions, and current installation are not bench verified.
+  - id: source-37d-mounting-geometry
+    title: 37D Mounting Geometry Data
+    kind: data
+    path: docs/assets/mechanical/37d-mounting-geometry-data.json
+    sha256: f23f11a5eaf7a709883bf912948dc940c7a644ade0f224ceccfbcd7a37c6e8cd
+    manufacturer: null
+    model_scope: 37D motor mounting on 2 mm plate
+    revision: null
+    authority: generated-project-note
+    extraction_status: text-reviewed
+    applicability: Candidate mounting-hole geometry and calculated clearance.
+    limitations:
+      - Dimensions and safe offset require comparison with the physical chassis and motor drawing.
+  - id: source-37d-safe-mounting-image
+    title: 37D Safe Mounting Detail
+    kind: data
+    path: docs/assets/mechanical/37d-safe-mounting-detail.png
+    sha256: c52b2d62e2bc3cbbbc3fb1a5d907224ae88a266b8cafc1e8b111afd91d83fa98
+    manufacturer: null
+    model_scope: Candidate safe mounting pattern
+    revision: null
+    authority: generated-project-note
+    extraction_status: render-reviewed
+    applicability: Visual companion to the mounting geometry data.
+    limitations:
+      - Not an as-built photograph.
+  - id: source-37d-unsafe-mounting-image
+    title: 37D Unsafe Mounting Detail
+    kind: data
+    path: docs/assets/mechanical/37d-unsafe-mounting-detail.png
+    sha256: 0be95c8853a90941364f488240aa202b6fe5b43adf34b05647520332c650433b
+    manufacturer: null
+    model_scope: Candidate unsafe mounting pattern
+    revision: null
+    authority: generated-project-note
+    extraction_status: render-reviewed
+    applicability: Visual comparison for insufficient shaft-hole clearance.
+    limitations:
+      - Not an as-built photograph.

@@ -25,7 +25,13 @@ Do not write software against the BMS UART protocol until the actual installed B
 ## Charging
 - Charger family: Panther iQLoad EVO 5
 - Intended use: LiFePO4 charge mode for the 4S pack
-- Verify actual charge termination voltage on the bench before unattended charging
+- The retained charger manual describes up to `5 A`, `14.6 V` charging, and a
+  monitoring/repeat-charge phase; this conflicts with the project note saying
+  trickle mode is disabled.
+- Charging verification is blocked until exact charger, cells, BMS, protection,
+  selected program, fire readiness, and allowable pack charge current are
+  established. The candidate cell specification lists `1.1 A` maximum charge
+  per cell, so a candidate 2P pack is not automatically qualified for 5 A.
 
 ## Sources
 - Source file: [robot-battery-system.txt](../assets/electrical/robot-battery-system.txt)

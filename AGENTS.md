@@ -31,6 +31,9 @@ For system-level or cross-project work, start with:
 - `docs/interfaces/telemetry-protocol.md`
 - `docs/electrical/wiring-and-pinout.md`
 - `docs/verification/known-issues-and-open-questions.md`
+- `docs/reference/component-registry.yaml`
+- `docs/reference/tool-registry.yaml`
+- `docs/verification/questions/US-002.yaml`
 
 The backlog and human-agent working contracts are active. The agentic
 development workflow doc contains deferred post-C++-migration enhancements;
@@ -84,5 +87,10 @@ architecture docs are intentionally updated in the same change.
   docs or code comments.
 - When changing protocols, wiring, safety behavior, or subsystem boundaries,
   update the shared docs together with the platform change.
+- Before proposing physical work or new purchases, consult the component and
+  tool registries. Treat unknown availability, condition, identity, accuracy,
+  accessories, PPE, or workholding as unresolved rather than assumed.
+- Retain physical observations in a new append-only evidence bundle. Do not
+  rewrite old evidence to describe a later hardware or software state.
 - Before non-trivial edits, state the subsystem boundary being preserved or
   changed, the implementation pattern being used, and the engineering reason.

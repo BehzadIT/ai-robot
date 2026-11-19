@@ -1,0 +1,296 @@
+schema_version: 1
+tools:
+  - id: tool-peaktech-3350-01
+    name: PeakTech 3350 digital multimeter
+    category: measurement
+    manufacturer: PeakTech
+    model: "3350"
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [AC/DC voltage, AC/DC current, resistance, continuity, capacitance, frequency, temperature]
+    ranges_and_accuracy: [6000-count display, CAT III 600 V documented in project source; exact ranges and accuracy require the exact manual]
+    limitations: [Cannot qualify digital edge timing or waveform integrity, current-input fuse state is unknown, lead and clip ratings are unknown]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Confirm jack selection, range, lead condition, and fuse state before current measurement]
+    suitable_robot_tasks: [Unpowered continuity, DC rail voltage, static encoder high/low checks]
+    unsuitable_tasks: [Encoder waveform timing, floating mains measurement without a qualified procedure]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: PeakTech 3350 Digital Multimeter
+    question_ids: [Q-US002-008, Q-US002-015]
+    dossier: docs/reference/tools/tool-peaktech-3350-01.md
+    notes: []
+  - id: tool-ruzizao-bench-supply-01
+    name: RUZIZAO adjustable bench power supply
+    category: measurement
+    manufacturer: RUZIZAO
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Adjustable DC supply, current limiting]
+    ranges_and_accuracy: [0-30 V and 0-10 A documented; resolution, regulation, overshoot, and current-limit behavior unknown]
+    limitations: [Output isolation and transient behavior unverified, not a battery charger]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Set voltage and current limit before connection, verify output with a meter, use polarity-keyed leads]
+    suitable_robot_tasks: [Current-limited logic bring-up after topology review]
+    unsuitable_tasks: [Direct charging of the LiFePO4 pack, powering unknown wiring]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: RUZIZAO Adjustable DC Power Supply
+    question_ids: [Q-US002-008, Q-US002-015]
+    dossier: docs/reference/tools/tool-ruzizao-bench-supply-01.md
+    notes: []
+  - id: tool-yihua-898bd-01
+    name: Yihua 898BD soldering and hot-air station
+    category: electronics-assembly
+    manufacturer: Yihua
+    model: 898BD
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Soldering iron, hot air]
+    ranges_and_accuracy: [700 W combined rating documented; temperature calibration unknown]
+    limitations: [Tip/nozzle inventory, extraction, temperature accuracy, and ESD behavior unknown]
+    compatible_materials: [Electronic solder joints, heat-shrink when controlled]
+    accessories: []
+    safety_requirements: [Ventilation or fume extraction, eye protection, heat-safe stand and work surface]
+    suitable_robot_tasks: [Harness and connector repair after exact materials are known]
+    unsuitable_tasks: [Battery-cell interconnect work without a dedicated qualified procedure]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Yihua 898BD Soldering Station
+    question_ids: [Q-US002-010, Q-US002-014, Q-US002-015]
+    notes: []
+  - id: tool-icrimp-micro-connector-01
+    name: iCRIMP micro-connector crimping tool
+    category: electronics-assembly
+    manufacturer: iCRIMP
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Open-barrel micro-terminal crimping]
+    ranges_and_accuracy: [0.03-0.52 mm2 documented capacity]
+    limitations: [Exact die profile must match the terminal family; ownership does not qualify a crimp]
+    compatible_materials: [Compatible Molex/JST-style open-barrel terminals when verified]
+    accessories: []
+    safety_requirements: [Inspect pull strength and conductor/insulation wings; use eye protection when cutting wire]
+    suitable_robot_tasks: [Creating serviceable low-voltage harnesses with matched terminals]
+    unsuitable_tasks: [Battery lugs, high-current closed-barrel terminals, unknown terminal families]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: iCRIMP Micro Connector Crimping Tool
+    question_ids: [Q-US002-010, Q-US002-013, Q-US002-015]
+    notes: []
+  - id: tool-wiha-side-cutters-01
+    name: Wiha electronic side cutters
+    category: hand-tool
+    manufacturer: Wiha
+    model: "26813"
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Precision cutting of suitable small wire and component leads]
+    ranges_and_accuracy: []
+    limitations: [Maximum conductor and hardened-wire compatibility unknown]
+    compatible_materials: [Small copper wire, electronic component leads when within rating]
+    accessories: []
+    safety_requirements: [Eye protection, control cut-off fragments, never cut energized conductors]
+    suitable_robot_tasks: [Low-voltage harness preparation]
+    unsuitable_tasks: [Steel wire, battery cable, energized wiring]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Wiha Electronic Side Cutters
+    question_ids: [Q-US002-010, Q-US002-015]
+    notes: []
+  - id: tool-bosch-pliers-set-01
+    name: Bosch professional pliers set
+    category: hand-tool
+    manufacturer: Bosch
+    model: 1600A011H9
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [General gripping and cutting subject to individual tool ratings]
+    ranges_and_accuracy: []
+    limitations: [Individual pliers and insulated ratings are not documented]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Do not treat as electrically insulated unless markings prove the rating]
+    suitable_robot_tasks: [General mechanical assembly]
+    unsuitable_tasks: [Live electrical work, precision connector crimping]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Bosch Pliers Set
+    question_ids: [Q-US002-010, Q-US002-015]
+    notes: []
+  - id: tool-yurinwoo-cutting-disc-set-01
+    name: YURINWOO cutting-disc set
+    category: fabrication
+    manufacturer: YURINWOO
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [HSS saw blades, resin cut-off discs, diamond discs]
+    ranges_and_accuracy: [Documented diameters 22-50 mm; speed ratings unknown]
+    limitations: [No compatible drive tool, guard, arbor fit, RPM rating, or material-specific procedure is established]
+    compatible_materials: [Unknown until each disc marking is inspected]
+    accessories: [Mandrels documented but unverified]
+    safety_requirements: [Correct guard, speed rating, workholding, eye and face protection, debris control]
+    suitable_robot_tasks: []
+    unsuitable_tasks: [Any cut until the drive tool, disc, material, workholding, and PPE are qualified]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: YURINWOO Cutting Disc Set
+    question_ids: [Q-US002-011, Q-US002-012, Q-US002-014, Q-US002-015]
+    notes: []
+  - id: tool-baer-tap-drill-set-01
+    name: Baer tap and drill set
+    category: fabrication
+    manufacturer: Baer
+    model: M3-M12 set
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Metric tapping, pilot drilling]
+    ranges_and_accuracy: [M3x0.5 through M12x1.5 documented]
+    limitations: [Exact drill sizes, sharpness, material compatibility, lubricant, and workholding unknown]
+    compatible_materials: []
+    accessories: [DIN 1814 tap wrench documented]
+    safety_requirements: [Secure workpiece, use correct pilot, alignment, lubricant, backing, eye protection, and chip control]
+    suitable_robot_tasks: [Threaded bracket or plate work after material and geometry review]
+    unsuitable_tasks: [Hand-held tapping of unsecured robot parts]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Baer Tap and Drill Set M3-M12
+    question_ids: [Q-US002-011, Q-US002-012, Q-US002-014, Q-US002-015]
+    notes: []
+  - id: tool-professional-file-set-01
+    name: Professional file set
+    category: fabrication
+    manufacturer: null
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Manual shaping, deburring, finishing]
+    ranges_and_accuracy: [Flat, round, half-round, triangular, and square files documented]
+    limitations: [Cut, size, handle security, and material loading behavior unknown]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Secure workpiece, use handled files, eye protection, control sharp swarf]
+    suitable_robot_tasks: [Deburring and controlled adapter fitting after dimensional plan]
+    unsuitable_tasks: [Freehand alteration without measurement and fit limits]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Professional File Set
+    question_ids: [Q-US002-012, Q-US002-014, Q-US002-015]
+    notes: []
+  - id: tool-newaner-protractor-01
+    name: Newaner 360-degree digital protractor
+    category: measurement
+    manufacturer: Newaner
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Relative and absolute angle measurement]
+    ranges_and_accuracy: [0-360 degrees, documented accuracy +/-0.2 degrees]
+    limitations: [Calibration and zero repeatability unverified]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Keep clear of moving machinery and energized exposed conductors]
+    suitable_robot_tasks: [Bracket alignment, sensor angle, chassis geometry checks]
+    unsuitable_tasks: [Precision machining inspection beyond documented accuracy]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Newaner 360-degree Digital Protractor
+    question_ids: [Q-US002-013]
+    notes: []
+  - id: tool-oregon-face-shield-01
+    name: Oregon polycarbonate face shield
+    category: safety
+    manufacturer: Oregon
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Face protection from appropriate low-energy debris when used within rating]
+    ranges_and_accuracy: [EN 1731 F documented in historical inventory; marking must be verified]
+    limitations: [Does not replace safety glasses, respiratory protection, hearing protection, or a machine guard]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Inspect visor, headgear, and rating; wear task-appropriate safety glasses beneath it]
+    suitable_robot_tasks: [Fabrication only when compatible with the task risk assessment]
+    unsuitable_tasks: [Electrical arc protection, welding, unsupported high-energy cutting]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Oregon Polycarbonate Face Shield
+    question_ids: [Q-US002-014]
+    notes: []
+  - id: tool-workholding-unknown-01
+    name: Workshop vise, clamps, and sacrificial backing
+    category: workholding
+    manufacturer: null
+    model: null
+    availability: unknown
+    condition: unknown
+    owner_familiarity: unknown
+    capabilities: []
+    ranges_and_accuracy: []
+    limitations: [No workholding equipment is currently documented]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Cutting and drilling remain blocked without suitable workholding]
+    suitable_robot_tasks: []
+    unsuitable_tasks: [All fabrication until availability and capacity are known]
+    provenance:
+      - owner_report: No owner report yet; this placeholder records a suspected documentation gap.
+    question_ids: [Q-US002-012, Q-US002-014]
+    notes: []
+  - id: tool-waveform-instrument-unknown-01
+    name: Oscilloscope or logic analyzer
+    category: measurement
+    manufacturer: null
+    model: null
+    availability: unknown
+    condition: unknown
+    owner_familiarity: unknown
+    capabilities: []
+    ranges_and_accuracy: []
+    limitations: [No waveform instrument or probe voltage rating is currently documented]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Ground-reference and probe ratings must be known before connection]
+    suitable_robot_tasks: [Potential encoder and UART waveform qualification after identification]
+    unsuitable_tasks: [Any connection until instrument topology and probe rating are known]
+    provenance:
+      - owner_report: No owner report yet; this placeholder records a suspected documentation gap.
+    question_ids: [Q-US002-009, Q-US002-015]
+    notes: []
+  - id: tool-enventor-wrench-set-01
+    name: Enventor ratcheting wrench set
+    category: hand-tool
+    manufacturer: Enventor
+    model: null
+    availability: unknown
+    condition: needs-check
+    owner_familiarity: unknown
+    capabilities: [Metric nut and bolt assembly]
+    ranges_and_accuracy: [Documented 6-19 mm set, 72-tooth swivel heads]
+    limitations: [No torque measurement; condition and exact included sizes are unverified]
+    compatible_materials: []
+    accessories: []
+    safety_requirements: [Use the correct size, support the opposing fastener, and use a torque tool where a specified torque matters]
+    suitable_robot_tasks: [General chassis assembly and service]
+    unsuitable_tasks: [Applying specified torque without a torque tool, energized electrical work]
+    provenance:
+      - source_id: source-complete-component-list
+        locator: Enventor Ratcheting Wrench Set
+    question_ids: [Q-US002-012, Q-US002-015]
+    notes: []

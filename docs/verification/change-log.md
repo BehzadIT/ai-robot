@@ -40,6 +40,24 @@ Track documentation-level changes and major shifts in the understood state of th
 - Preserved Pico command-admission, motor, and safety authority; no runtime,
   protocol, wiring, or submodule revision changed.
 
+## US-002 registry and evidence foundation implemented
+
+- Added versioned component, workshop-tool, source, question, and evidence
+  contracts with claim-level provenance and separate identity, inventory,
+  installation, connection, and functional state.
+- Seeded provisional records from retained project sources without promoting
+  owner reports or project notes to physical verification.
+- Added priority component/tool dossiers, curated manual summaries, reusable
+  unpowered and powered procedures, append-only evidence templates, and a
+  validator with schema, reference, source-hash, generated-index, local-link,
+  and evidence-mutation checks.
+- Exposed additional motor PWM/DIR and charger-current conflicts. Powered
+  charging, encoder measurement, firmware changes, motion, the first as-built
+  revision, and the KiCad schematic remain blocked on their documented owner
+  input, equipment, and approval gates.
+- Preserved Pico control/safety authority and made no platform-code or submodule
+  revision change.
+
 ## Related Docs
 - Project summary: `../overview/project-summary.md`
 - System architecture: `../overview/system-architecture.md`

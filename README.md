@@ -54,10 +54,18 @@ Start with:
 - `docs/overview/capability-roadmap.md`
 - `docs/operations/human-agent-working-contract.md`
 - `docs/reference/source-index.md`
+- `docs/reference/component-registry.yaml`
+- `docs/reference/tool-registry.yaml`
 
 For platform-specific work, read the `AGENTS.md` inside the target submodule.
 Detailed platform implementation docs live in each child repo's `docs/`
 directory.
+
+Validate the parent hardware/evidence records with:
+
+```sh
+python3 tools/docs/validate_us002_records.py
+```
 
 ## Submodule Workflow
 

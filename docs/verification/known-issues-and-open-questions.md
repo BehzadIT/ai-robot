@@ -25,6 +25,27 @@ Collect every conflict, missing fact, and unresolved assumption that future engi
 - Wiring notes: left encoder on `GP12/13`.
 - Current PIO code path: left encoder on `GP20/21`.
 - Impact: firmware changes in this area are unsafe without bench verification.
+- Tracked by `Q-US002-003`; use the power-isolated continuity procedure before
+  changing code or wiring docs.
+
+### Motor-driver control pin conflict
+- Wiring notes label `GP8/GP6` as PWM and `GP9/GP7` as direction.
+- Current MicroPython and C++ constants label right PWM/DIR as `GP7/GP6` and
+  left PWM/DIR as `GP9/GP8`.
+- Impact: firmware or wiring changes can swap PWM and direction semantics or
+  channel ownership. Do not infer the mapping with powered motor motion.
+- Tracked by `Q-US002-016` and the unpowered continuity procedure.
+
+### Charger behavior and charge-current compatibility
+- The project battery note says LiFePO4 trickle mode is disabled.
+- The retained iQLoad EVO manual describes monitoring and repeated limited
+  charging after the main/saturation phases and lists up to 5 A at 12 V.
+- The candidate installed-cell datasheet lists 1.1 A maximum charge per cell;
+  exact installed cells remain unverified.
+- Impact: powered charging qualification remains blocked until exact charger,
+  cells, pack construction, BMS, protection, selected program, and allowable
+  current are established.
+- Tracked by `Q-US002-007`, `Q-US002-017`, and `Q-US002-018`.
 
 ### Current architecture versus target gateway architecture
 - Older subsystem notes described ESP32 as a passive telemetry bridge.

@@ -1,0 +1,249 @@
+schema_version: 1
+questions:
+  - id: Q-US002-001
+    batch: A
+    suspected_item: Installed BMS
+    known_context: Project sources name incompatible DALY BMS variants.
+    question: What exact manufacturer, model, ratings, and label text appear on the installed BMS?
+    reason: Cell count, current rating, balancing, wiring, and interfaces cannot be selected from a family resemblance.
+    impact: [safety, compatibility, documentation]
+    preferred_evidence: [front label photo, rear label photo, connector photo]
+    acceptable_fallback: Exact owner transcription of all visible label text.
+    source_ids: [source-battery-system-note, source-complete-component-list, source-daly-active-balance-manual]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-002
+    batch: D
+    suspected_item: Motor encoders
+    known_context: Wiring notes say 3.3 V while the Pololu project note gives a nominal 3.5 V minimum.
+    question: What supply voltage is measured at each installed encoder, and what low/high levels are observed on A and B?
+    reason: Supply and logic-level compatibility affect encoder reliability and Pico input safety.
+    impact: [safety, compatibility, procedure]
+    preferred_evidence: [named-point multimeter measurement, oscilloscope or logic-analyzer capture]
+    acceptable_fallback: Supply measurement plus static low/high observation; waveform qualification remains inconclusive.
+    source_ids: [source-wiring-reference, source-pololu-37d-project-note]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-003
+    batch: C
+    suspected_item: Left encoder harness
+    known_context: Wiring notes say GP12/13 while active MicroPython and C++ constants use GP20/21.
+    question: Which Pico pins are physically continuous to left encoder A and B?
+    reason: Changing firmware or energizing closed-loop control against the wrong mapping is unsafe.
+    impact: [safety, compatibility, documentation]
+    preferred_evidence: [power-isolated continuity results, annotated harness photo]
+    acceptable_fallback: None; visual inference alone does not qualify the wiring.
+    source_ids: [source-wiring-reference]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-004
+    batch: A
+    suspected_item: Installed ESP32 board
+    known_context: The project identifies only an ESP32-DevKitC-class board; firmware targets classic ESP32.
+    question: What exact development-board and module markings appear on the installed ESP32?
+    reason: Board variant affects pin availability, USB/UART behavior, target selection, and electrical assumptions.
+    impact: [compatibility, procedure, documentation]
+    preferred_evidence: [board front photo, board rear photo, module and USB-interface markings]
+    acceptable_fallback: Exact owner transcription of all board and module markings.
+    source_ids: []
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-005
+    batch: A
+    suspected_item: Installed motors and motor driver
+    known_context: Current docs describe Pololu 37D 30:1 motors and Cytron MDD10A but exact order numbers and revision are absent.
+    question: What markings or purchase records identify both motors, their encoder variants, and the Cytron board revision?
+    reason: Gear ratio, encoder scaling, current, mounting, and driver behavior depend on exact variants.
+    impact: [safety, compatibility, documentation]
+    preferred_evidence: [motor label photos, driver front and rear photos, purchase records]
+    acceptable_fallback: Owner report retaining unknown order number and revision.
+    source_ids: [source-project-components-updated, source-pololu-37d-project-note]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-006
+    batch: A
+    suspected_item: High-current power path
+    known_context: Project notes do not establish the as-built fuse, disconnect, switch, connector, or conductor arrangement.
+    question: What fuse, disconnect, switch, connector, and wire-gauge arrangement exists between pack, BMS, driver, and controllers?
+    reason: Safe first-power, fault isolation, and emergency removal of motor authority depend on this path.
+    impact: [safety, procedure, documentation]
+    preferred_evidence: [annotated unpowered overview photos, wire and protection markings, continuity map]
+    acceptable_fallback: Owner description recorded as unverified.
+    source_ids: [source-battery-system-note, source-wiring-reference]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-007
+    batch: A
+    suspected_item: Installed charger and selected program
+    known_context: The source set names an iQLoad EVO 5 and 4S LiFePO4 mode but does not prove the physical model or current settings.
+    question: What exact charger model, label ratings, selected LiFePO4 program, and displayed settings are currently used?
+    reason: Termination voltage and available current must match the verified pack and cells.
+    impact: [safety, compatibility, procedure]
+    preferred_evidence: [charger label photo, display and selected-mode photo, manual revision]
+    acceptable_fallback: Exact owner transcription; powered charging remains blocked.
+    source_ids: [source-battery-system-note, source-iqload-evo-manual]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-008
+    batch: B
+    suspected_item: Multimeter and bench supply
+    known_context: Historical inventory lists a PeakTech 3350 and RUZIZAO 0-30 V / 0-10 A supply.
+    question: Are these tools available and working, and which probes, clips, leads, fuses, and current-limit controls are usable?
+    reason: Tool condition and accessories determine whether proposed measurements and current-limited bring-up are feasible.
+    impact: [safety, procedure, documentation]
+    preferred_evidence: [owner report, model photos, accessory photo, fuse check where safe]
+    acceptable_fallback: Owner report with condition left needs-check.
+    source_ids: [source-complete-component-list, source-project-components-updated]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-009
+    batch: B
+    suspected_item: Additional measurement and debug tools
+    known_context: No scope, logic analyzer, debugger, UART adapter, clamp meter, or thermometer is documented.
+    question: Which additional measurement or debug tools and probes are available?
+    reason: These tools materially change safe diagnostic and verification options.
+    impact: [compatibility, procedure, documentation]
+    preferred_evidence: [model names, voltage ranges, probe and accessory list]
+    acceptable_fallback: Owner report.
+    source_ids: []
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-010
+    batch: B
+    suspected_item: Electronics assembly equipment
+    known_context: Historical inventory lists a Yihua 898BD, solder, crimper, and cutters but not current condition or accessories.
+    question: What soldering, hot-air, extraction, crimping, stripping, and depinning equipment is currently usable?
+    reason: Harness and board rework require compatible tooling, consumables, ventilation, and known familiarity.
+    impact: [safety, compatibility, procedure]
+    preferred_evidence: [tool and accessory list, condition, owner familiarity]
+    acceptable_fallback: Owner report with unverified condition.
+    source_ids: [source-complete-component-list, source-project-components-updated]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-011
+    batch: C
+    suspected_item: Drilling equipment
+    known_context: The historical inventory lists taps but not a drill, stand, chuck, or complete bit inventory.
+    question: Which drill, drill-driver, rotary tool, drill stand, chuck capacity, speed control, and bit sizes/materials are available?
+    reason: Safe and accurate mounting work depends on speed control, bit compatibility, and workholding.
+    impact: [safety, compatibility, procedure]
+    preferred_evidence: [model and capacity list, bit inventory, owner familiarity]
+    acceptable_fallback: Owner report.
+    source_ids: [source-complete-component-list]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-012
+    batch: C
+    suspected_item: Cutting, finishing, and workholding equipment
+    known_context: Historical inventory lists cutting discs, files, and taps but no verified drive tool, vise, or clamps.
+    question: Which saws, cutting tools, discs, files, taps, sanding/deburring tools, vises, clamps, and backing materials are available and working?
+    reason: Material compatibility and secure workholding determine whether a fabrication procedure is acceptable.
+    impact: [safety, compatibility, procedure]
+    preferred_evidence: [owner inventory, tool markings, workholding photo]
+    acceptable_fallback: Owner report; unsupported operations remain blocked.
+    source_ids: [source-complete-component-list]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-013
+    batch: C
+    suspected_item: Materials and hardware stock
+    known_context: Historical inventory contains FR-4, ABS, foam, fasteners, washers, connector kits, wire, tapes, and adhesives.
+    question: Which materials, dimensions, fasteners, spacers, inserts, adhesives, wire, and connector families are actually on hand?
+    reason: Procedures should reuse suitable stock without assuming unverified dimensions, ratings, or availability.
+    impact: [compatibility, procedure, documentation]
+    preferred_evidence: [approximate organized inventory, labels for rated materials]
+    acceptable_fallback: Owner report; exact counts are unnecessary.
+    source_ids: [source-complete-component-list]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-014
+    batch: B
+    suspected_item: PPE and electrical/fire readiness
+    known_context: A face shield is listed, but eye protection, ventilation, fire protection, and battery-safe facilities are incomplete or unknown.
+    question: What eye and face protection, fume extraction, ventilation, fire protection, battery-safe surface/storage, and emergency disconnect equipment are available?
+    reason: Missing safety equipment blocks soldering, cutting, drilling, charging, or powered testing.
+    impact: [safety, procedure]
+    preferred_evidence: [owner report, relevant model or rating, work-area photo]
+    acceptable_fallback: Owner report; uncertain capabilities remain unavailable.
+    source_ids: [source-complete-component-list]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-015
+    batch: C
+    suspected_item: Owner workshop familiarity
+    known_context: Procedure detail should match actual experience without weakening safety requirements.
+    question: For drilling, cutting, soldering, crimping, and electrical measurement, is current familiarity expert, comfortable, learning, or new?
+    reason: Instructions need the right explanatory depth and supervision assumptions.
+    impact: [safety, procedure]
+    preferred_evidence: [owner self-report by activity]
+    acceptable_fallback: Record unknown and use learning-level instructions.
+    source_ids: []
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-016
+    batch: C
+    suspected_item: Pico-to-Cytron control harness
+    known_context: Shared wiring assigns GP8/9 and GP6/7 differently from active MicroPython and C++ constants.
+    question: Which Pico pins are physically continuous to each Cytron PWM and direction input, and which channel drives each track?
+    reason: A swapped PWM/direction interpretation can produce incorrect or uncontrolled output when firmware changes.
+    impact: [safety, compatibility, documentation]
+    preferred_evidence: [power-isolated continuity table, annotated driver and Pico photos]
+    acceptable_fallback: None; do not alter motor constants without continuity evidence.
+    source_ids: [source-wiring-reference]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-017
+    batch: D
+    suspected_item: Pack and charger current compatibility
+    known_context: The candidate cell specification gives 1.1 A maximum charge per cell while the candidate charger can supply up to 5 A.
+    question: After exact cell, pack, BMS, and charger identities are known, what charge-current limit is configured or enforced?
+    reason: A 2P pack of the candidate cells would not be qualified for an assumed 5 A charge solely from the retained documentation.
+    impact: [safety, compatibility, procedure]
+    preferred_evidence: [exact cell specification, charger program, measured or configured current, BMS settings]
+    acceptable_fallback: Keep charging verification blocked.
+    source_ids: [source-goldencell-18650-spec, source-iqload-evo-manual, source-battery-system-note]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-018
+    batch: A
+    suspected_item: Installed battery cells and pack construction
+    known_context: The pack is described as 4S2P using JGNE/Goldencell 18650 LiFePO4 cells, but installed labels are not retained.
+    question: What evidence identifies the installed cell model, pack configuration, interconnect method, insulation, temperature sensing, and pack revision?
+    reason: Cell limits and charger compatibility cannot be inferred from a candidate datasheet.
+    impact: [safety, compatibility, documentation]
+    preferred_evidence: [construction record, purchase record, pre-wrap photos, visible markings without dismantling the pack]
+    acceptable_fallback: Owner report; do not unwrap or dismantle the pack solely for documentation.
+    source_ids: [source-battery-system-note, source-goldencell-18650-spec]
+    status: open
+    resolution: null
+    evidence_ids: []
+  - id: Q-US002-019
+    batch: D
+    suspected_item: Emergency motor-power disconnect
+    known_context: The current repository has no qualified emergency-disconnect procedure.
+    question: Which reachable action reliably removes motor authority, and can it be exercised without approaching moving tracks or exposed conductors?
+    reason: Powered control and motion work require a reliable independent stop path.
+    impact: [safety, procedure, documentation]
+    preferred_evidence: [annotated location photo, unpowered continuity proof, later safe functional test]
+    acceptable_fallback: Powered motion testing remains blocked.
+    source_ids: []
+    status: open
+    resolution: null
+    evidence_ids: []

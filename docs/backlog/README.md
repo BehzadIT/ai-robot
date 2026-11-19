@@ -89,16 +89,18 @@ capability/backlog ID
   -> parent integrated snapshot when system behavior changed
 ```
 
-US-002 owns future component, tool, and evidence registries. US-003 owns future
-toolchain, device-discovery, and automated verification interfaces. Their
-absence does not weaken the ownership, risk, or honest-handoff rules here.
+US-002 owns component, tool, source, question, and evidence registries. US-003
+owns future toolchain, device-discovery, and automated verification interfaces.
+Incomplete owner/bench evidence or deferred US-003 automation does not weaken
+the ownership, risk, or honest-handoff rules here.
 
 ## Stories
 
 - `US-001-system-roadmap-and-human-agent-workflow.md`: system model, roadmap,
   backlog rules, and human-agent contract (`Done`).
 - `US-002-hardware-workshop-manual-and-evidence-system.md`: hardware,
-  workshop, manuals, and structured evidence (`Refined`).
+  workshop, manuals, and structured evidence (`In Progress`; repository
+  foundation implemented, owner/bench evidence active).
 - `US-003-agentic-toolchain-device-and-verification-loop.md`: toolchain,
   connected-device, and automated verification loop (`Refined`).
 

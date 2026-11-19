@@ -1,0 +1,18 @@
+schema_version: 1
+connections:
+  - id: replace-me
+    from:
+      component_id: component-replace-me
+      connector: unknown
+      pin: unknown
+    to:
+      component_id: component-replace-me
+      connector: unknown
+      pin: unknown
+    net: unknown
+    voltage_domain: unknown
+    wire_color: unknown
+    wire_gauge: unknown
+    termination: unknown
+    state: unknown
+    evidence_ids: []

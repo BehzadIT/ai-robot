@@ -1,0 +1,356 @@
+#!/usr/bin/env python3
+"""Validate US-002 registries, provenance, evidence, and generated indexes."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any, Iterable
+
+import jsonschema
+import yaml
+
+
+ROOT = Path(__file__).resolve().parents[2]
+REFERENCE = ROOT / "docs" / "reference"
+SCHEMAS = REFERENCE / "schemas"
+EVIDENCE = ROOT / "docs" / "verification" / "evidence"
+
+REGISTRIES = {
+    "components": (
+        REFERENCE / "component-registry.yaml",
+        SCHEMAS / "component-registry.schema.json",
+    ),
+    "tools": (
+        REFERENCE / "tool-registry.yaml",
+        SCHEMAS / "tool-registry.schema.json",
+    ),
+    "sources": (
+        REFERENCE / "source-registry.yaml",
+        SCHEMAS / "source-registry.schema.json",
+    ),
+    "questions": (
+        ROOT / "docs" / "verification" / "questions" / "US-002.yaml",
+        SCHEMAS / "question-registry.schema.json",
+    ),
+}
+
+
+def load_yaml(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as stream:
+        value = yaml.safe_load(stream)
+    if not isinstance(value, dict):
+        raise ValueError(f"{path}: root must be a mapping")
+    return value
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as stream:
+        return json.load(stream)
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def provenance_refs(record: dict[str, Any]) -> Iterable[dict[str, Any]]:
+    for claim in record.get("claims", []):
+        yield from claim.get("provenance", [])
+    yield from record.get("provenance", [])
+
+
+def validate_schema(name: str, data: dict[str, Any], schema_path: Path, errors: list[str]) -> None:
+    validator = jsonschema.Draft202012Validator(load_json(schema_path), format_checker=jsonschema.FormatChecker())
+    for error in sorted(validator.iter_errors(data), key=lambda item: list(item.absolute_path)):
+        location = ".".join(str(part) for part in error.absolute_path) or "<root>"
+        errors.append(f"{name}:{location}: {error.message}")
+
+
+def collect_ids(records: Iterable[dict[str, Any]], label: str, errors: list[str]) -> set[str]:
+    found: set[str] = set()
+    for record in records:
+        record_id = record.get("id")
+        if record_id in found:
+            errors.append(f"{label}: duplicate id {record_id}")
+        found.add(record_id)
+    return found
+
+
+def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> None:
+    components = data["components"]["components"]
+    tools = data["tools"]["tools"]
+    sources = data["sources"]["sources"]
+    questions = data["questions"]["questions"]
+
+    component_ids = collect_ids(components, "components", errors)
+    tool_ids = collect_ids(tools, "tools", errors)
+    source_ids = collect_ids(sources, "sources", errors)
+    question_ids = collect_ids(questions, "questions", errors)
+
+    all_ids: set[str] = set()
+    for namespace, ids in (
+        ("component", component_ids),
+        ("tool", tool_ids),
+        ("source", source_ids),
+        ("question", question_ids),
+    ):
+        overlap = all_ids.intersection(ids)
+        if overlap:
+            errors.append(f"{namespace}: IDs reused across namespaces: {sorted(overlap)}")
+        all_ids.update(ids)
+
+    for record in [*components, *tools]:
+        record_id = record["id"]
+        for question_id in record.get("question_ids", []):
+            if question_id not in question_ids:
+                errors.append(f"{record_id}: unknown question reference {question_id}")
+        for provenance in provenance_refs(record):
+            source_id = provenance.get("source_id")
+            if source_id and source_id not in source_ids:
+                errors.append(f"{record_id}: unknown source reference {source_id}")
+        dossier = record.get("dossier")
+        if dossier and not (ROOT / dossier).is_file():
+            errors.append(f"{record_id}: dossier does not exist: {dossier}")
+
+        claim_keys: set[str] = set()
+        for claim in record.get("claims", []):
+            if claim["key"] in claim_keys:
+                errors.append(f"{record_id}: duplicate claim key {claim['key']}")
+            claim_keys.add(claim["key"])
+
+        states = record.get("states", {})
+        if (
+            states.get("installation") == "owner-reported"
+            and states.get("identity") in {"unknown", "conflicting", "suspected-missing"}
+            and not record.get("question_ids")
+        ):
+            errors.append(f"{record_id}: installed item with unresolved identity needs a question")
+
+    for question in questions:
+        for source_id in question.get("source_ids", []):
+            if source_id not in source_ids:
+                errors.append(f"{question['id']}: unknown source reference {source_id}")
+
+    for source in sources:
+        path = ROOT / source["path"]
+        if not path.is_file():
+            errors.append(f"{source['id']}: source path does not exist: {source['path']}")
+            continue
+        observed = sha256(path)
+        if observed != source["sha256"]:
+            errors.append(
+                f"{source['id']}: sha256 mismatch for {source['path']}; "
+                f"expected {source['sha256']}, observed {observed}"
+            )
+
+    validate_evidence(component_ids, tool_ids, question_ids, errors)
+
+
+def validate_evidence(
+    component_ids: set[str], tool_ids: set[str], question_ids: set[str], errors: list[str]
+) -> None:
+    schema = load_json(SCHEMAS / "evidence-metadata.schema.json")
+    validator = jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker())
+    evidence_ids: set[str] = set()
+
+    for directory in sorted(EVIDENCE.glob("EV-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]")):
+        metadata_path = directory / "metadata.yaml"
+        if not metadata_path.is_file():
+            errors.append(f"{directory.relative_to(ROOT)}: missing metadata.yaml")
+            continue
+        metadata = load_yaml(metadata_path)
+        for error in validator.iter_errors(metadata):
+            location = ".".join(str(part) for part in error.absolute_path) or "<root>"
+            errors.append(f"{metadata_path.relative_to(ROOT)}:{location}: {error.message}")
+
+        evidence_id = metadata.get("id")
+        if evidence_id != directory.name:
+            errors.append(f"{directory.relative_to(ROOT)}: metadata id must match directory name")
+        if evidence_id in evidence_ids:
+            errors.append(f"evidence: duplicate id {evidence_id}")
+        evidence_ids.add(evidence_id)
+
+        if not (directory / "procedure.md").is_file() or not (directory / "result.md").is_file():
+            errors.append(f"{directory.relative_to(ROOT)}: procedure.md and result.md are required")
+
+        links = metadata.get("links", {})
+        for component_id in links.get("component_ids", []):
+            if component_id not in component_ids:
+                errors.append(f"{evidence_id}: unknown component reference {component_id}")
+        for question_id in links.get("question_ids", []):
+            if question_id not in question_ids:
+                errors.append(f"{evidence_id}: unknown question reference {question_id}")
+        for tool_id in metadata.get("tools", []):
+            if tool_id not in tool_ids:
+                errors.append(f"{evidence_id}: unknown tool reference {tool_id}")
+        for artifact in metadata.get("artifacts", []):
+            artifact_path = directory / artifact["path"]
+            if not artifact_path.is_file():
+                errors.append(f"{evidence_id}: missing artifact {artifact['path']}")
+            elif sha256(artifact_path) != artifact["sha256"]:
+                errors.append(f"{evidence_id}: artifact hash mismatch {artifact['path']}")
+
+
+def render_bom(data: dict[str, dict[str, Any]]) -> str:
+    components = data["components"]["components"]
+    tools = data["tools"]["tools"]
+    rows = []
+    for component in components:
+        states = component["states"]
+        rows.append(
+            f"| `{component['id']}` | {component['name']} | {component['category']} | "
+            f"{states['identity']} | {states['installation']} | {states['functional']} |"
+        )
+    tool_rows = [
+        f"| `{tool['id']}` | {tool['name']} | {tool['category']} | {tool['availability']} | {tool['condition']} |"
+        for tool in tools
+    ]
+    return "\n".join(
+        [
+            "# BOM And Parts Status",
+            "",
+            "This file is generated from `component-registry.yaml` and `tool-registry.yaml`.",
+            "Do not edit it directly; update the registries and run",
+            "`python3 tools/docs/validate_us002_records.py --write-indexes`.",
+            "",
+            "States describe evidence strength, not desired target architecture. Follow each",
+            "record's questions and claim provenance before relying on a hardware fact.",
+            "",
+            "## Components",
+            "",
+            "| ID | Name | Category | Identity | Installation | Functional |",
+            "| --- | --- | --- | --- | --- | --- |",
+            *rows,
+            "",
+            "## Workshop Tools",
+            "",
+            "| ID | Name | Category | Availability | Condition |",
+            "| --- | --- | --- | --- | --- |",
+            *tool_rows,
+            "",
+        ]
+    )
+
+
+def render_source_index(data: dict[str, dict[str, Any]]) -> str:
+    rows = [
+        f"| `{source['id']}` | [{source['title']}](../../{source['path']}) | {source['kind']} | {source['authority']} | {source['extraction_status']} |"
+        for source in data["sources"]["sources"]
+    ]
+    return "\n".join(
+        [
+            "# Source Index",
+            "",
+            "This file is generated from `source-registry.yaml`. Do not edit it directly;",
+            "update the registry and run",
+            "`python3 tools/docs/validate_us002_records.py --write-indexes`.",
+            "",
+            "## Repositories",
+            "",
+            "- [robot-pico-platform](../../robot-pico-platform)",
+            "- [robot-esp32-platform](../../robot-esp32-platform)",
+            "- [robot-android-app](../../robot-android-app)",
+            "",
+            "## Registered Sources",
+            "",
+            "| ID | Source | Kind | Authority | Extraction |",
+            "| --- | --- | --- | --- | --- |",
+            *rows,
+            "",
+            "A registered source is not automatically proof that its claims apply to the",
+            "installed robot. Applicability and limitations live in the source registry;",
+            "physical qualification lives in evidence bundles.",
+            "",
+        ]
+    )
+
+
+def check_or_write_indexes(data: dict[str, dict[str, Any]], write: bool, errors: list[str]) -> None:
+    expected = {
+        REFERENCE / "bom-and-parts-status.md": render_bom(data),
+        REFERENCE / "source-index.md": render_source_index(data),
+    }
+    for path, content in expected.items():
+        if write:
+            path.write_text(content, encoding="utf-8")
+        elif not path.is_file() or path.read_text(encoding="utf-8") != content:
+            errors.append(f"{path.relative_to(ROOT)}: generated index is stale; run with --write-indexes")
+
+
+def check_append_only(base_ref: str, errors: list[str]) -> None:
+    command = ["git", "diff", "--name-status", base_ref, "--", "docs/verification/evidence"]
+    result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
+    if result.returncode != 0:
+        errors.append(f"append-only check failed: {result.stderr.strip()}")
+        return
+    for line in result.stdout.splitlines():
+        status, *paths = line.split("\t")
+        if status.startswith(("M", "D", "R")) and any("/EV-" in path for path in paths):
+            errors.append(f"append-only violation: {line}")
+
+
+def validate_markdown_links(errors: list[str]) -> None:
+    """Check local links in the canonical parent documentation tree."""
+    pattern = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+    for markdown in sorted((ROOT / "docs").rglob("*.md")):
+        text = markdown.read_text(encoding="utf-8")
+        for raw_target in pattern.findall(text):
+            target = raw_target.strip().strip("<>").split("#", 1)[0]
+            if not target or target.startswith(("http://", "https://", "mailto:")):
+                continue
+            resolved = (markdown.parent / target).resolve()
+            if not resolved.exists():
+                errors.append(
+                    f"{markdown.relative_to(ROOT)}: broken local link {raw_target}"
+                )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--write-indexes", action="store_true", help="regenerate human-readable registry indexes")
+    parser.add_argument("--base-ref", help="reject modified/deleted evidence bundles relative to this Git ref")
+    args = parser.parse_args()
+
+    errors: list[str] = []
+    data: dict[str, dict[str, Any]] = {}
+    for name, (registry_path, schema_path) in REGISTRIES.items():
+        try:
+            data[name] = load_yaml(registry_path)
+            validate_schema(name, data[name], schema_path, errors)
+        except (OSError, ValueError, yaml.YAMLError, json.JSONDecodeError) as exc:
+            errors.append(f"{name}: {exc}")
+
+    if len(data) == len(REGISTRIES):
+        validate_references(data, errors)
+        check_or_write_indexes(data, args.write_indexes, errors)
+        validate_markdown_links(errors)
+    if args.base_ref:
+        check_append_only(args.base_ref, errors)
+
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}", file=sys.stderr)
+        print(f"US-002 validation failed with {len(errors)} error(s).", file=sys.stderr)
+        return 1
+
+    print(
+        "US-002 records valid: "
+        f"{len(data['components']['components'])} components, "
+        f"{len(data['tools']['tools'])} tools, "
+        f"{len(data['sources']['sources'])} sources, "
+        f"{len(data['questions']['questions'])} questions."
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

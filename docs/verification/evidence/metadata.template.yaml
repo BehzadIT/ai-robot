@@ -1,0 +1,30 @@
+schema_version: 1
+id: EV-YYYY-NNN
+started_at: 2000-01-01T00:00:00Z
+finished_at: 2000-01-01T00:00:00Z
+operator: replace-me
+observation_origin: [human]
+procedure:
+  id: replace-me
+  version: 1
+verification_level: physical
+outcome: blocked
+system_identity:
+  hardware_revision: null
+  harness_revision: null
+  electrical_revision: null
+  mechanical_revision: null
+  configuration: null
+  calibration: null
+  repositories: []
+tools: []
+preconditions: []
+approvals: []
+measurements: []
+links:
+  backlog_ids: [US-002]
+  component_ids: []
+  question_ids: []
+  decision_ids: []
+artifacts: []
+safe_next_action: null

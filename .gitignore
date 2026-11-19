@@ -6,6 +6,10 @@
 .DS_Store
 Thumbs.db
 
+# Python-generated cache files
+__pycache__/
+*.py[cod]
+
 # Local logs and scratch files
 *.log
 /tmp/

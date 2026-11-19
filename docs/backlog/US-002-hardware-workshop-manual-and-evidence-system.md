@@ -5,13 +5,13 @@
 | Field | Value |
 | --- | --- |
 | ID | `US-002` |
-| Status | `Refined` |
+| Status | `In Progress` |
 | Priority | `High` |
 | Horizon | `Now` |
 | Risk class | `Safety/control` for installed hardware, power, wiring, fabrication, and motion-related evidence |
 | Owner | Parent `ai-robot` workspace |
 | Depends on | `US-001`; current BOM, source index, wiring docs, manuals, photos, code, and physical owner input |
-| Last refined | 2026-11-19 |
+| Last refined | 2026-11-19; repository foundation implemented 2026-11-19 |
 
 ## User Story
 
@@ -77,6 +77,9 @@ fabrication procedures.
 
 This list is a discovery seed, not proof that each item is present, complete,
 safe to use for a proposed task, or represented by the correct exact model.
+The current machine-readable state is in `../reference/component-registry.yaml`
+and `../reference/tool-registry.yaml`; this backlog summary is not an inventory
+database.
 
 ## Required Artifact Vocabulary
 
@@ -115,40 +118,44 @@ installed or functionally tested.
 
 ## Component Registry Contract
 
-The future machine-readable registry should live at
+The machine-readable registry lives at
 `docs/reference/component-registry.yaml`. Each physical item or homogeneous
-set receives a stable, human-readable ID.
+set receives a stable, human-readable ID. Its versioned JSON Schema lives in
+`docs/reference/schemas/`.
 
 ```yaml
-id: component-id
+id: component-human-readable-id
 category: controller | power | actuator | sensor | interface | mechanical | consumable
-manufacturer: exact-or-unknown
-model: exact-or-unknown
-variant: exact-or-unknown
-revision: exact-or-unknown
+manufacturer: exact-or-null
+model: exact-or-null
+variant: exact-or-null
 quantity: 1
-inventory_state: verified-installed
-physical_location: description-or-unknown
+states:
+  identity: owner-reported
+  inventory: available
+  installation: owner-reported
+  connection: conflicting
+  functional: implemented
 system_role: concise purpose
 owner_subsystem: pico | esp32 | android | shared-hardware | workshop
-electrical:
-  supply: []
-  current: []
-  logic_levels: []
-  interfaces: []
-connectors: []
-mechanical:
-  dimensions: []
-  mounting: []
-  materials: []
 software_links: []
 safety_constraints: []
 known_failure_modes: []
-source_assets: []
-owner_reports: []
-evidence_ids: []
-status_notes: []
+claims:
+  - key: electrical.example
+    value: unknown
+    state: conflicting
+    provenance:
+      - source_id: source-id
+        locator: page, section, code symbol, or observation
+question_ids: []
 ```
+
+Identity, inventory, installation, connection, and functional state are
+separate because one dimension must not silently qualify another. Every
+decision-relevant claim has its own provenance. Global source lists are
+navigational only and cannot prove an individual voltage, pin, model, or
+capability.
 
 Required human-readable dossiers should live at
 `docs/reference/components/<component-id>.md` and explain:
@@ -167,7 +174,7 @@ rating, or compatibility materially affects a decision.
 
 ## Workshop Capability Registry
 
-The future registry should live at `docs/reference/tool-registry.yaml`. The
+The registry lives at `docs/reference/tool-registry.yaml`. The
 purpose is not only inventory. It allows an agent to choose feasible procedures
 and notice useful capabilities the owner may not think to apply.
 
@@ -325,6 +332,11 @@ inventory, tools, materials, and legacy parts.
 
 ### Question record
 
+The live queue and schema are implemented at
+`../verification/questions/US-002.yaml` and
+`../reference/schemas/question-registry.schema.json`. The following shape is
+retained as the contract:
+
 ```yaml
 id: Q-US002-001
 suspected_item: concise name
@@ -367,7 +379,11 @@ looks similar.
 
 ### Owner Input Required: initial hardware and workshop queue
 
-Ask these in the listed batches rather than as one large interview. Later
+The tables below preserve the initial discovery snapshot. Status changes,
+answers, new questions, and evidence links belong only in the live YAML queue,
+which also contains `Q-US002-016` through `Q-US002-019` for motor-control
+wiring, charger-current compatibility, installed cells, and the emergency
+disconnect. Ask these in the listed batches rather than as one large interview. Later
 questions should be generated from the answers and physical evidence instead
 of assuming that every item in the historical component list is still present.
 
@@ -429,14 +445,16 @@ PDF, or label photographs before selecting a likely manual.
 
 ## Electrical And As-Built Target Structure
 
-Future durable artifacts should use:
+Durable artifacts use:
 
 ```text
 docs/reference/component-registry.yaml
 docs/reference/tool-registry.yaml
+docs/reference/source-registry.yaml
 docs/reference/components/<component-id>.md
 docs/reference/tools/<tool-id>.md
 docs/assets/...
+docs/verification/questions/US-002.yaml
 docs/electrical/design/robot-system.kicad_sch
 docs/electrical/as-built/<hardware-revision>/...
 docs/verification/evidence/<evidence-id>/...
@@ -458,7 +476,8 @@ where known, and the evidence that qualified it.
 
 ## Evidence Bundle Contract
 
-Future evidence should use an append-only directory such as:
+Evidence uses the implemented append-only directory contract and metadata
+schema under `../verification/evidence/` and `../reference/schemas/`:
 
 ```text
 docs/verification/evidence/EV-YYYY-NNN/
@@ -503,18 +522,31 @@ because they affect present control and electrical safety.
 
 ## Implementation Stages
 
-1. Parse existing sources into candidate component, tool, material, and
-   consumable lists.
-2. Deduplicate and assign provisional IDs and inventory states.
-3. Produce the first prioritized owner-question batch.
-4. Record responses without overstating verification.
-5. Create the component and tool registries and initial dossiers.
-6. Capture the first as-built revision and system schematic.
-7. Execute the initial high-priority evidence procedures.
-8. Link verified facts back into architecture, wiring, bring-up, and known
-   issues documentation.
-9. Require future hardware additions to update registry, source material,
-   interfaces, evidence, and as-built state together.
+1. **Implemented:** parse existing sources into provisional component, tool,
+   material, consumable, legacy, and missing-documentation records.
+2. **Implemented:** assign stable IDs, separate state dimensions, and
+   claim-level provenance.
+3. **Implemented:** create the prioritized machine-readable owner-question
+   queue.
+4. **Active / owner-assisted:** record responses without overstating
+   verification.
+5. **Implemented foundation:** create component, tool, and source registries,
+   schemas, validation, and priority dossiers/manual summaries.
+6. **Blocked by identity evidence and KiCad availability:** capture the first
+   as-built revision and system schematic.
+7. **Procedures implemented; execution approval-gated:** run unpowered identity
+   and continuity evidence before any powered procedure.
+8. **Active as evidence arrives:** link verified facts into architecture,
+   wiring, bring-up, and known-issue documentation.
+9. **Implemented as contract:** future hardware additions update registry,
+   source, interfaces, evidence, and as-built state together.
+
+Validate the repository-owned records with:
+
+```text
+python3 tools/docs/validate_us002_records.py
+python3 -m unittest discover -s tools/docs/tests -v
+```
 
 ## Acceptance Criteria
 

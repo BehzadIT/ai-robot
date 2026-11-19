@@ -6,6 +6,8 @@ Provide the canonical wiring reference to support bench work and future firmware
 ## Current status
 - `Project note`: this file reflects the intended or documented wiring.
 - `Needs verification`: second encoder pins conflict with one live code path.
+- `Needs verification`: PWM/DIR roles in this note conflict with both current
+  MicroPython and C++ drivetrain constants.
 
 ## Encoder wiring
 ### Right motor
@@ -39,6 +41,15 @@ Provide the canonical wiring reference to support bench work and future firmware
 
 ## Verification note
 The current PIO encoder implementation in code uses `GP10/11` for the right encoder and `GP20/21` for the left encoder. Bench verification is required before changing firmware around this area.
+
+Current Pico implementations map right PWM/DIR to `GP7/GP6` and left PWM/DIR
+to `GP9/GP8`, while this note assigns PWM/DIR as `GP8/GP9` and `GP6/GP7`.
+Resolve `Q-US002-016` with power-isolated continuity to named Cytron inputs.
+Do not choose one source as correct or energize motors merely to infer the map.
+
+The live question queue is
+[`US-002.yaml`](../verification/questions/US-002.yaml); retained evidence will
+populate the first revision under `as-built/`.
 
 ## Sources
 - Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)

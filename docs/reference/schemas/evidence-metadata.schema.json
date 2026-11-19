@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence-metadata.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "id", "started_at", "finished_at", "operator",
+    "observation_origin", "procedure", "verification_level", "outcome",
+    "system_identity", "tools", "preconditions", "approvals", "measurements",
+    "links", "artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^EV-[0-9]{4}-[0-9]{3}$"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": "string", "format": "date-time"},
+    "operator": {"type": "string", "minLength": 1},
+    "observation_origin": {"type": "array", "minItems": 1, "items": {"enum": ["human", "agent", "instrument", "software"]}},
+    "procedure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {"id": {"type": "string"}, "version": {"type": "integer", "minimum": 1}}
+    },
+    "verification_level": {"enum": ["compile", "host", "simulation", "device", "hil", "physical"]},
+    "outcome": {"enum": ["pass", "fail", "blocked", "skipped", "inconclusive"]},
+    "system_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hardware_revision", "harness_revision", "repositories"],
+      "properties": {
+        "hardware_revision": {"type": ["string", "null"], "pattern": "^HW-[0-9]{4}-[0-9]{3}$"},
+        "harness_revision": {"type": ["string", "null"], "pattern": "^HR-[0-9]{4}-[0-9]{3}$"},
+        "electrical_revision": {"type": ["string", "null"]},
+        "mechanical_revision": {"type": ["string", "null"]},
+        "configuration": {"type": ["string", "null"]},
+        "calibration": {"type": ["string", "null"]},
+        "repositories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "sha", "dirty"],
+            "properties": {
+              "name": {"type": "string"},
+              "sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+              "dirty": {"type": "boolean"}
+            }
+          }
+        }
+      }
+    },
+    "tools": {"type": "array", "items": {"type": "string", "pattern": "^tool-[a-z0-9-]+$"}},
+    "preconditions": {"type": "array", "items": {"type": "string"}},
+    "approvals": {"type": "array", "items": {"type": "string"}},
+    "measurements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["point", "condition", "expected", "observed", "result"],
+        "properties": {
+          "point": {"type": "string"},
+          "condition": {"type": "string"},
+          "expected": {"type": ["string", "number", "null"]},
+          "tolerance": {"type": ["string", "number", "null"]},
+          "observed": {"type": ["string", "number", "null"]},
+          "unit": {"type": ["string", "null"]},
+          "uncertainty": {"type": ["string", "null"]},
+          "result": {"enum": ["pass", "fail", "blocked", "skipped", "inconclusive"]}
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["backlog_ids", "component_ids", "question_ids"],
+      "properties": {
+        "backlog_ids": {"type": "array", "items": {"type": "string"}},
+        "component_ids": {"type": "array", "items": {"type": "string", "pattern": "^component-[a-z0-9-]+$"}},
+        "question_ids": {"type": "array", "items": {"type": "string", "pattern": "^Q-US002-[0-9]{3}$"}},
+        "decision_ids": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "kind": {"type": "string"}
+        }
+      }
+    },
+    "safe_next_action": {"type": ["string", "null"]}
+  }
+}

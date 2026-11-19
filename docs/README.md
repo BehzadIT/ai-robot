@@ -27,8 +27,15 @@ Platform implementation details live in the child repositories.
 ## Hardware And Inventory
 - `electrical/`: power, wiring, BMS, charging, and electrical risks.
 - `mechanical/`: chassis, drivetrain, mounting fitment, and physical build notes.
-- `reference/bom-and-parts-status.md`: current parts, available inventory, and
-  legacy component-list status.
+- `reference/component-registry.yaml`: canonical component identity, state,
+  claims, provenance, and blocking questions.
+- `reference/tool-registry.yaml`: workshop capability, condition, limits,
+  accessories, familiarity, and safe-use constraints.
+- `reference/source-registry.yaml`: local source identity, hashes,
+  applicability, and extraction status.
+- `reference/hardware-records.md`: record update, provenance, evidence, and
+  validation workflow.
+- `reference/bom-and-parts-status.md`: generated human-readable registry view.
 - `assets/electrical/`: battery, wiring, charger, BMS, and cell source files.
 - `assets/mechanical/`: chassis, drivetrain, shaft adapter, and mounting source
   files.
@@ -47,6 +54,9 @@ Platform implementation details live in the child repositories.
 - `operations/agentic-development-workflow.md`: deferred post-C++-migration
   workflow enhancements, templates, and evaluation guidance.
 - `verification/`: known issues, checklists, and project change notes.
+- `verification/questions/US-002.yaml`: live hardware/workshop discovery queue.
+- `verification/procedures/` and `verification/evidence/`: reusable physical
+  procedures and append-only qualified observations.
 
 ## Platform Implementation Docs
 - Android app details: `../robot-android-app/docs/README.md`
