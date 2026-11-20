@@ -6,7 +6,9 @@ description: Implement a Ready AI robot backlog story through code, documentatio
 # Execute Story
 
 Read the story, its `implementation-plan.md`, [`docs/backlog/workflow.md`](../../../docs/backlog/workflow.md),
-the human-agent contract, and the nearest platform `AGENTS.md` before editing.
+the consequential decision and meaningful handoff sections of the
+[human-agent contract](../../../docs/operations/human-agent-working-contract.md),
+and the nearest platform `AGENTS.md` before editing.
 
 ## Start
 
@@ -30,6 +32,11 @@ the human-agent contract, and the nearest platform `AGENTS.md` before editing.
   authoritative source.
 - Retain physical observations in a new append-only evidence bundle. Link
   evidence from the story instead of pasting large logs.
+- Continue routine implementation decisions within the approved plan. If a
+  discovery materially changes scope, architecture, ownership, safety,
+  acceptance evidence, destructive action, or cost, record the pending decision
+  and pause only dependent work. Use the contract's contextual decision request
+  before asking; persist the answer and reconcile the plan before resuming.
 
 ## Finish
 
@@ -38,3 +45,7 @@ and review the acceptance criteria. Change the story directly from In Progress
 to Done only when its required evidence exists. Otherwise leave it In Progress
 with explicit unverified work, or mark it Blocked with the blocker owner and
 unblock condition. Regenerate and validate the backlog index.
+
+Use the meaningful-handoff template to distinguish implemented, verified,
+unverified, blocked, and remaining work; name the preserved boundary, evidence
+level, owner decisions or approvals, and next dependent action.

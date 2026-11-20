@@ -45,6 +45,87 @@ Within the authority granted by a task, agents should independently:
 Unknowns block only their dependent decisions. Unrelated work should continue
 when it remains safe and within scope.
 
+## Consequential Decisions And Questions
+
+Investigate before asking. Repository files, project documentation, registered
+evidence, safe read-only diagnostics, and established precedent are agent-owned
+discovery work. Routine, reversible implementation details are also agent-owned
+when the approved outcome and boundaries determine them.
+
+Ask the owner when an unresolved choice materially changes product intent,
+scope, architecture, subsystem ownership, safety, acceptance or evidence,
+irreversible or destructive action, or meaningful cost or elapsed time. A
+missing physical fact, approval, or observation also requires owner input when
+it cannot be gathered safely. Do not manufacture a question when no such
+decision remains; say that no owner decision is required in the handoff.
+
+Combine at most three decisions only when they share evidence and consequences,
+or when answering one independently would mislead. Ask safety, physical
+approval, destructive, and immediately blocking decisions separately. Pause
+only the work that depends on the answer.
+
+Before using a compact question interaction, explain the decision in friendly,
+plain language. Include only the relevant parts of this template:
+
+```text
+🧭 Situation
+What the agent is trying to decide and why it arose now.
+
+🔎 What I investigated
+The project facts, evidence, precedents, and remaining uncertainty.
+
+⚖️ Options and consequences
+Viable choices with their material advantages, disadvantages, risks, and
+effects on readiness or dependent work.
+
+💡 Recommendation
+The evidence-backed preferred option and why it best fits this project.
+
+❓ Owner input needed
+One complete question per decision. The compact question UI may shorten the
+options, but it must not introduce choices absent from this explanation.
+```
+
+After each accepted answer, update the artifact that owns the decision before
+continuing: the story definition during refinement, `implementation-plan.md`
+during planning, the plan/story/evidence record during execution, or the review
+record and routed artifact during review.
+
+## Meaningful Handoffs
+
+Every phase-ending handoff uses the relevant parts of this template:
+
+```text
+✅ Outcome
+The phase result and lifecycle/readiness state.
+
+📦 Coverage
+What the definition, plan, implementation, or review covers.
+
+🧭 Boundary
+The subsystem boundary preserved or intentionally changed.
+
+🔑 Decisions
+Material decisions made, including whether no owner decisions remain.
+
+🧪 Verification and evidence
+What was checked, at which evidence level, and the result.
+
+⚠️ Remaining uncertainty
+Unverified work, hardware facts, residual risks, blockers, or none.
+
+➡️ Next dependent action
+The next responsible phase, owner, approval, or concrete unblock action.
+```
+
+Use emoji as restrained navigation cues, not decoration. Optional domain cues
+are `⚡` electrical/power, `⚙️` motors/control, `🔩` mechanical, `🤖`
+AI/autonomy, and `💻` software. Durable artifacts remain professional Markdown
+and need not repeat conversational emoji.
+
+The evidence and adaptations behind this protocol are recorded in
+[human-agent interaction practices](human-agent-interaction-practices.md).
+
 ## Task Treatment
 
 Use the risk classes and Ready/Done rules in `../backlog/workflow.md`. Apply the
@@ -59,9 +140,9 @@ smallest useful artifact:
 - `Future autonomy`: additionally define confidence limits, stale or
   contradictory perception behavior, bounded admission, and manual override.
 
-For every meaningful handoff, state what changed, the boundary preserved or
-changed, what was verified, what was not run, remaining hardware uncertainty,
-and the next dependent action.
+For every meaningful handoff, use the shared handoff contract above and state
+what changed, what was verified, what was not run, remaining hardware
+uncertainty, and the next dependent action.
 
 ## Human Participation And Approval Boundaries
 

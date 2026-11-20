@@ -59,6 +59,8 @@ Platform implementation details live in the child repositories.
   safety authority.
 - `operations/human-agent-working-contract.md`: active collaboration,
   communication, approval, and minimum evidence guardrails.
+- `operations/human-agent-interaction-practices.md`: recent external practices
+  adapted for consequential questions, owner decisions, and lifecycle handoffs.
 - `operations/agentic-development-workflow.md`: active lightweight harness,
   repository skills, evidence ladder, learning, and diagram conventions.
 - `learning/`: concise reusable embedded, electrical, control, measurement, and

@@ -110,7 +110,18 @@ the consequential gaps:
 11. Conclude `ready`, remain `draft`, split, block, or defer.
 
 Questions should be small, contextual, and decision-changing. Unknowns block
-only dependent decisions.
+only dependent decisions. Use the consequential-decision and meaningful-handoff
+templates in the [human-agent working contract](../operations/human-agent-working-contract.md).
+Investigate discoverable facts before asking. Explain why the decision matters,
+the evidence found, viable consequences, and the recommendation before invoking
+a compact question interaction. Persist each accepted answer in the owning
+story or plan artifact before continuing.
+
+Planning follows the same interaction rule. If code, test, Git, or precedent
+analysis reveals a material owner choice, `plan-story` pauses only the affected
+planning branch, records the pending decision, and resumes after the answer is
+captured. A story cannot be `ready` while a decision-critical owner question
+remains unresolved.
 
 ## Story Storage And Traceability
 

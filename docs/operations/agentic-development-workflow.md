@@ -41,6 +41,11 @@ Use skills for repeatable work rather than persistent specialist personas:
 | `embedded-mentor` | Teach concise decision-relevant physical and real-time concepts and create useful Mermaid+ELK explanations |
 | `curate-component-documentation` | Create a compact component README from registered vendor sources with exact locators and uncertainty preserved |
 
+All lifecycle skills use the consequential-decision and meaningful-handoff
+templates in [the human-agent working contract](human-agent-working-contract.md).
+The recent primary-source practices adapted into that contract are retained in
+[human-agent interaction practices](human-agent-interaction-practices.md).
+
 A fresh isolated reviewer is useful for broad, cross-subsystem, or
 safety-relevant changes. A standing fleet of firmware, electrical, mechanical,
 documentation, and safety agents would duplicate context and is not justified

@@ -6,8 +6,11 @@ description: Review an AI robot story for readiness or review its implementation
 # Review Story
 
 Review against the story, [`docs/backlog/workflow.md`](../../../docs/backlog/workflow.md),
-system ownership boundaries, and the actual changed files and evidence. Lead
-with actionable findings rather than a walkthrough.
+system ownership boundaries, the consequential decision and meaningful handoff
+sections of the
+[human-agent contract](../../../docs/operations/human-agent-working-contract.md),
+and the actual changed files and evidence. Lead with actionable findings rather
+than a walkthrough.
 
 ## Select The Review
 
@@ -35,6 +38,14 @@ The coordinating agent must verify findings before reporting them.
 
 Order findings by severity and cite files, lines, concrete code paths, physical
 principles, or missing evidence. Separate demonstrated defects, concerns, and
-questions. Never infer device or bench qualification from builds or agent
-reports. If no findings remain, state the exact evidence reviewed and any
-residual limitations.
+questions. Classify unresolved items as defects, evidence gaps, research gaps,
+or owner decision gaps and route them to execution, verification, research, or
+planning respectively. Use the contract's contextual decision request only
+when review exposes a consequential owner choice; findings do not become
+preference questions merely because they need correction.
+
+Never infer device or bench qualification from builds or agent reports. Finish
+with the meaningful-handoff template specialized to the readiness or delivery
+verdict, evidence reviewed, affected boundary, dispositions, residual
+limitations, and next responsible phase. If no findings or owner decisions
+remain, state that explicitly without requesting acknowledgment.
