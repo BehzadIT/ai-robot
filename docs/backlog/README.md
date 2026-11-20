@@ -14,6 +14,12 @@ US-NNN`; `Review US-NNN for readiness`.
 Only the section between the markers below is generated. Edit the rest normally.
 
 <!-- BEGIN GENERATED STORY INDEX -->
+### Ready
+
+| ID | Title | Priority | Dependencies |
+| --- | --- | --- | --- |
+| `US-006` | [Migrate ESP32 Platform To ESP-IDF 6.1.1](items/US-006-migrate-esp32-platform-to-esp-idf-6-1-1/README.md) | high | US-002 (informs), US-003 (informs) |
+
 ### In Progress
 
 | ID | Title | Priority | Dependencies |

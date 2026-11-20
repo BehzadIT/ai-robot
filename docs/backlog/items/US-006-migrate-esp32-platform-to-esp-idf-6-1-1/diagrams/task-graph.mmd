@@ -1,0 +1,17 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+  T001["T001<br/>Baseline"] --> T002["T002<br/>Adapter TDD"]
+  T001 --> T003["T003<br/>CMake, config, lock"]
+  T002 --> T004["T004<br/>Invariants and docs"]
+  T003 --> T004
+  T004 --> T005["T005<br/>Clean host qualification"]
+  T005 --> T006["T006<br/>Device procedure"]
+  T006 --> T007["T007<br/>Gate 1 flash, boot, Wi-Fi"]
+  T007 --> T008["T008<br/>WebSocket and Pico logs"]
+  T008 --> T009["T009<br/>Bluetooth and heartbeat"]
+  T009 --> T010["T010<br/>Legacy audit and dry-run"]
+  T010 --> T011["T011<br/>Approved cleanup"]
+  T011 --> T012["T012<br/>Post-cleanup proof"]

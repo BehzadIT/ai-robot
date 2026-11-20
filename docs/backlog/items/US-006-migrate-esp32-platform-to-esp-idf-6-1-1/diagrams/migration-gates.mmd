@@ -1,0 +1,16 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+  Host["Migrate config, dependencies, lock, adapter, and docs"] --> HostGate{"Clean 6.1.1 tests and build pass?"}
+  HostGate -- No --> Retain["Retain ESP-IDF 5.5<br/>Migration incomplete"]
+  HostGate -- Yes --> Pause["Pause for exact device confirmation<br/>and Gate 1 approval"]
+  Pause --> Device["Flash on isolated bench<br/>Motor power disabled"]
+  Device --> DeviceGate{"Boot, Wi-Fi, WebSocket,<br/>UART, Bluetooth, heartbeat pass?"}
+  DeviceGate -- No or inconclusive --> Retain
+  DeviceGate -- Yes --> Audit["Re-audit legacy checkout<br/>and prepare exact deletion manifest"]
+  Audit --> CleanupGate{"No unique material,<br/>backup made, deletion approved?"}
+  CleanupGate -- No --> Retain
+  CleanupGate -- Yes --> Cleanup["Remove only audited 5.5 assets<br/>and reviewed unused tools"]
+  Cleanup --> Final["EIM 6.1.1 selected<br/>Doctor and clean build pass"]
