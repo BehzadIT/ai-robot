@@ -85,6 +85,11 @@
             }
           }
         },
+        "member_component_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^component-[a-z0-9-]+$"}
+        },
         "states": {
           "type": "object",
           "additionalProperties": false,

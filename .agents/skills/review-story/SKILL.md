@@ -44,6 +44,12 @@ planning respectively. Use the contract's contextual decision request only
 when review exposes a consequential owner choice; findings do not become
 preference questions merely because they need correction.
 
+Do not report a dormant registry or hardware unknown as a readiness defect or
+delivery blocker unless a claimed outcome, implemented decision, or next
+required operation depends on it. When it does, identify the exact dependency
+and minimum evidence needed. Review physical gates at the hazardous operation,
+not as a demand for inventory-wide qualification.
+
 Never infer device or bench qualification from builds or agent reports. Finish
 with the meaningful-handoff template specialized to the readiness or delivery
 verdict, evidence reviewed, affected boundary, dispositions, residual

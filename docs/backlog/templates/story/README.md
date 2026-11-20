@@ -26,4 +26,6 @@ Name ownership and exclusions.
 - **AC-001:** Independently observable outcome.
 
 ## Unknowns And Decisions
-Keep unresolved physical facts and owner decisions explicit.
+Keep unresolved physical facts and owner decisions explicit. Distinguish
+dormant registry context from unknowns activated because this story's outcome
+or next task depends on them. Ask for activated physical facts just in time.

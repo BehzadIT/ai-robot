@@ -48,7 +48,7 @@ sources:
     model_scope: Raspberry Pi Pico 2 W and Pico 2 W with headers
     revision: Release 2; build date 2026-07-03
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-raspberry-pi-pico-2w-01]
     retrieval:
       url: https://pip-assets.raspberrypi.com/categories/1088-raspberry-pi-pico-2-w/documents/RP-008304-DS-3-pico-2-w-datasheet.pdf
@@ -57,7 +57,6 @@ sources:
     applicability: Board-level reference for the owner-reported Pico 2 W controller.
     limitations:
       - Does not qualify the as-built harness, supply, mounting, or header population.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-pico-2w-pinout
     title: Raspberry Pi Pico 2 W Pinout
     kind: vendor-manual
@@ -67,7 +66,7 @@ sources:
     model_scope: Raspberry Pi Pico 2 W and Pico 2 W with headers
     revision: Revision 1
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-raspberry-pi-pico-2w-01]
     retrieval:
       url: https://pip-assets.raspberrypi.com/categories/1088-raspberry-pi-pico-2-w/documents/RP-008305-DS-1-pico-2-w-pinout.pdf
@@ -76,7 +75,6 @@ sources:
     applicability: Vendor pinout reference for identifying Pico 2 W board pins.
     limitations:
       - A vendor pinout does not prove which pins are connected in the robot harness.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-pico-2w-schematic
     title: Raspberry Pi Pico 2 W Schematic
     kind: vendor-manual
@@ -86,7 +84,7 @@ sources:
     model_scope: Raspberry Pi Pico 2 W and Pico 2 W with headers
     revision: Revision 1
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-raspberry-pi-pico-2w-01]
     retrieval:
       url: https://pip-assets.raspberrypi.com/categories/1088-raspberry-pi-pico-2-w/documents/RP-008306-DS-1-pico-2-w-schematic.pdf
@@ -95,7 +93,6 @@ sources:
     applicability: Vendor board schematic for Pico 2 W power and signal design context.
     limitations:
       - Does not describe the robot carrier wiring or as-built connections.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-rp2350-datasheet
     title: RP2350 Microcontroller Datasheet
     kind: vendor-manual
@@ -105,7 +102,7 @@ sources:
     model_scope: RP2350 microcontroller family
     revision: Release 3; updated 2026-10-02
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-raspberry-pi-pico-2w-01]
     retrieval:
       url: https://pip-assets.raspberrypi.com/categories/1214-rp2350/documents/RP-008373-DS-3-rp2350-datasheet.pdf
@@ -114,7 +111,6 @@ sources:
     applicability: MCU-level reference for the RP2350 used by the Pico 2 W.
     limitations:
       - Chip-level capabilities and limits do not override the Pico 2 W board-level design.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-rp2350-hardware-design
     title: Hardware Design With RP2350
     kind: vendor-manual
@@ -124,7 +120,7 @@ sources:
     model_scope: RP2350A and RP2350B hardware integration
     revision: Release 3; build date 2026-08-20
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-raspberry-pi-pico-2w-01]
     retrieval:
       url: https://pip-assets.raspberrypi.com/categories/1214-rp2350/documents/RP-008280-DS-2-hardware-design-with-rp2350.pdf
@@ -133,7 +129,6 @@ sources:
     applicability: Supporting MCU hardware-design reference for power, I/O, flash, clock, and USB context.
     limitations:
       - Primarily applies to custom RP2350 board design rather than the completed Pico 2 W module.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-esp32-series-datasheet
     title: ESP32 Series Datasheet
     kind: vendor-manual
@@ -143,7 +138,7 @@ sources:
     model_scope: Classic ESP32 SoC series
     revision: v5.3; 2026-07
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-esp32-dev-board-01]
     retrieval:
       url: https://documentation.espressif.com/esp32_datasheet_en.pdf
@@ -153,7 +148,6 @@ sources:
     limitations:
       - The exact installed development board and module remain unidentified.
       - SoC documentation cannot determine board GPIO exposure, USB-UART circuitry, regulator limits, or module variant.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-esp32-hardware-design-guidelines
     title: ESP32 Hardware Design Guidelines HTML Snapshot
     kind: vendor-web-page
@@ -163,7 +157,7 @@ sources:
     model_scope: Classic ESP32 SoC series
     revision: v1.9; 2025-09-17
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: text-reviewed
     component_ids: [component-esp32-dev-board-01]
     retrieval:
       url: https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/index.html
@@ -183,7 +177,7 @@ sources:
     model_scope: MDD10A Rev 2.0
     revision: v2.0; 2017-06
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-cytron-mdd10a-01]
     retrieval:
       url: https://docs.google.com/document/d/1ol8nICCTTw5dAHHE_hju08cCVH2GN5_Y3cGC6B4Gbas/export?format=pdf
@@ -193,7 +187,6 @@ sources:
     limitations:
       - The installed board revision has not been physically identified.
       - Do not apply Rev 2.0 limits to an earlier board until Q-US002-005 is resolved.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-pololu-37d-vendor-datasheet
     title: Pololu 37D Metal Gearmotors Datasheet
     kind: vendor-manual
@@ -203,7 +196,7 @@ sources:
     model_scope: 37D metal gearmotor family, including 12 V 30:1 encoder variants
     revision: Rev 1.2; 2020-01
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-pololu-37d-motors-01]
     retrieval:
       url: https://www.pololu.com/file/0J1736/pololu%E2%80%9037d%E2%80%90metal%E2%80%90gearmotors%E2%80%90rev%E2%80%901%E2%80%902.pdf
@@ -213,7 +206,6 @@ sources:
     limitations:
       - Exact installed order numbers and encoder variants remain unresolved under Q-US002-005.
       - Family data cannot select an item number or prove the installed gearbox and encoder identity.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-vl53l0x-datasheet
     title: ST VL53L0X Time-of-Flight Sensor Datasheet
     kind: vendor-manual
@@ -223,7 +215,7 @@ sources:
     model_scope: VL53L0X bare sensor
     revision: DS11555 Rev 6; 2024-06
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-vl53l0x-sensors-01]
     retrieval:
       url: https://www.hestore.hu/prod_getfile.php?id=18866
@@ -233,17 +225,16 @@ sources:
     limitations:
       - The vendor host and Arrow mirror timed out during acquisition; the retained vendor-authored PDF came from a distributor mirror.
       - Does not identify the carrier-board regulator, level shifting, pinout, or optical cover.
-      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-vl53l0x-api-manual
     title: ST VL53L0X API User Manual
     kind: vendor-manual
-    path: docs/assets/components/sensors/vl53l0x/vendor/st-vl53l0x-api-user-manual-rev-2.pdf
+    path: docs/assets/components/sensors/vl53l0x/vendor/st-vl53l0x-api-user-manual-rev-1.pdf
     sha256: b0eb07701b90ac2a7251e2988fe446131ac11e5cd2abed502e11a7637c90adce
     manufacturer: STMicroelectronics
     model_scope: VL53L0X API and calibration procedures
-    revision: UM2039 Rev 2.0; 2022-11
+    revision: UM2039 DocID029105 Rev 1; 2016-06
     authority: vendor
-    extraction_status: not-extracted
+    extraction_status: render-reviewed
     component_ids: [component-vl53l0x-sensors-01]
     retrieval:
       url: https://www.pololu.com/file/0J1508/VL53L0X-UM2309.pdf
@@ -253,7 +244,7 @@ sources:
     limitations:
       - Retained from a component distributor mirror after the vendor hosts timed out.
       - Does not prove the candidate carrier module identity or installed software path.
-      - No project claims have been extracted from this PDF in this documentation stage.
+      - The retained file is the June 2016 Rev 1 edition; later API packages or manuals may differ.
   - id: source-project-components-updated
     title: Robot Project Components Reference
     kind: project-pdf

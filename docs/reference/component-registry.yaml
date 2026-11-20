@@ -348,13 +348,6 @@ components:
         provenance:
           - source_id: source-iqload-evo-manual
             locator: page 9, technical data
-      - key: charge.maximum_voltage_lifepo4
-        value: 14.6
-        unit: V
-        state: documented-unverified
-        provenance:
-          - source_id: source-iqload-evo-manual
-            locator: charging-phase description
       - key: charge.maintenance_behavior
         value: monitoring and repeated limited charging described
         state: conflicting

@@ -55,9 +55,10 @@ project.
 - `verification/questions/US-002.yaml`
 
 For hardware, wiring, power, fabrication, or workshop procedures, use the
-registries and live question queue rather than inferring availability or exact
-identity from the generated BOM view. Link verified physical claims to an
-append-only evidence bundle.
+registries and open question records rather than inferring availability or
+exact identity from the generated BOM view. Keep unrelated unknowns dormant;
+the dependent story activates only the physical facts its decision needs and
+links verified claims to an append-only evidence bundle.
 
 Use Mermaid diagrams with explicit `layout: elk` when they materially clarify
 system structure, state, timing, dependencies, or wiring. Diagrams do not

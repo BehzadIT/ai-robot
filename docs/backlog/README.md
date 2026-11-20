@@ -24,7 +24,6 @@ Only the section between the markers below is generated. Edit the rest normally.
 
 | ID | Title | Priority | Dependencies |
 | --- | --- | --- | --- |
-| `US-002` | [Hardware, Workshop, Manuals, And Evidence](items/US-002-hardware-workshop-manual-and-evidence-system/README.md) | high | US-001 (blocks) |
 | `US-003` | [Agentic Toolchain, Devices, And Verification Loop](items/US-003-agentic-toolchain-device-and-verification-loop/README.md) | high | US-001 (blocks), US-002 (informs) |
 
 ### Done
@@ -32,6 +31,7 @@ Only the section between the markers below is generated. Edit the rest normally.
 | ID | Title | Priority | Dependencies |
 | --- | --- | --- | --- |
 | `US-001` | [System Roadmap And Human-Agent Workflow](items/US-001-system-roadmap-and-human-agent-workflow/README.md) | high | — |
+| `US-002` | [Hardware, Workshop, Manuals, And Evidence](items/US-002-hardware-workshop-manual-and-evidence-system/README.md) | high | US-001 (blocks) |
 | `US-004` | [Lightweight Agentic Development Harness](items/US-004-lightweight-agentic-development-harness/README.md) | high | US-001 (blocks), US-002 (informs), US-003 (informs) |
 | `US-005` | [Directory-Based Story Dossiers And Deterministic Engineering Plans](items/US-005-directory-story-dossiers/README.md) | high | US-004 (blocks) |
 <!-- END GENERATED STORY INDEX -->

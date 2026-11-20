@@ -32,6 +32,15 @@ and the nearest platform `AGENTS.md` before editing.
   authoritative source.
 - Retain physical observations in a new append-only evidence bundle. Link
   evidence from the story instead of pasting large logs.
+- Ignore dormant registry unknowns that cannot change the current task. When a
+  task first depends on an unavailable identity, measurement, setting, fit, or
+  condition, ask the owner just in time for the smallest useful observation and
+  state the decision it unlocks. Reconcile the result into story evidence and
+  shared component, wiring, or mechanical documentation.
+- Use applicable documented ratings without demanding redundant measurement,
+  while preserving variant and operating conditions. Do not treat prior
+  operation as proof of protection, isolation, thermal margin, or safe
+  energized behavior.
 - Continue routine implementation decisions within the approved plan. If a
   discovery materially changes scope, architecture, ownership, safety,
   acceptance evidence, destructive action, or cost, record the pending decision
@@ -43,8 +52,10 @@ and the nearest platform `AGENTS.md` before editing.
 Run fresh checks that prove each completion claim, inspect their full results,
 and review the acceptance criteria. Change the story directly from In Progress
 to Done only when its required evidence exists. Otherwise leave it In Progress
-with explicit unverified work, or mark it Blocked with the blocker owner and
-unblock condition. Regenerate and validate the backlog index.
+with explicit unverified work. A dependent task may be blocked while other work
+continues; mark the whole story Blocked only when the activated fact prevents
+all remaining required paths, with the blocker owner and unblock condition.
+Regenerate and validate the backlog index.
 
 Use the meaningful-handoff template to distinguish implemented, verified,
 unverified, blocked, and remaining work; name the preserved boundary, evidence

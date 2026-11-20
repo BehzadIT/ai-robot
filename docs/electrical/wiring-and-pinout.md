@@ -47,9 +47,10 @@ to `GP9/GP8`, while this note assigns PWM/DIR as `GP8/GP9` and `GP6/GP7`.
 Resolve `Q-US002-016` with power-isolated continuity to named Cytron inputs.
 Do not choose one source as correct or energize motors merely to infer the map.
 
-The live question queue is
-[`US-002.yaml`](../verification/questions/US-002.yaml); retained evidence will
-populate the first revision under `as-built/`.
+The open question registry is
+[`US-002.yaml`](../verification/questions/US-002.yaml). Activate a question only
+when a wiring or control story depends on it; retained evidence then populates
+the relevant revision under `as-built/`.
 
 ## Sources
 - Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)

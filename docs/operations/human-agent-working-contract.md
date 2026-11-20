@@ -45,6 +45,36 @@ Within the authority granted by a task, agents should independently:
 Unknowns block only their dependent decisions. Unrelated work should continue
 when it remains safe and within scope.
 
+## Progressive Hardware Qualification
+
+A registry unknown is dormant context, not a standing assignment or project
+blocker. Do not ask the owner to clear an inventory-wide question queue before
+ordinary stories can proceed.
+
+Activate an unknown only when a current story's acceptance criterion or next
+task materially depends on an exact identity, rating, setting, connection,
+dimension, condition, availability, or physical observation. Then:
+
+1. use registered documentation and bounded engineering assumptions when they
+   are sufficient for the decision;
+2. ask for the smallest missing observation, photograph, measurement, record,
+   or approval at the point it becomes useful, explaining the decision it
+   unlocks;
+3. retain the result with that story's evidence and reconcile the component,
+   source, question, wiring, or mechanical documentation it changes; and
+4. pause only the dependent task. Mark the whole story blocked only when no
+   required independent work remains and the missing fact prevents a required
+   outcome or safe next action.
+
+Manufacturer ratings may support planning when the documented product and
+variant are applicable and the value's conditions are preserved. Do not demand
+a new physical measurement merely to restate such a rating. Prior operation or
+an owner's report that something works does not by itself prove protection,
+isolation, wiring, thermal margin, or safe energized behavior. Apply approval
+gates and stop conditions immediately before the hazardous operation that
+needs them, rather than turning every dormant power unknown into an up-front
+blocker.
+
 ## Consequential Decisions And Questions
 
 Investigate before asking. Repository files, project documentation, registered

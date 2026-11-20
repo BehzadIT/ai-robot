@@ -78,6 +78,27 @@ class RegistryContractTest(unittest.TestCase):
         with self.assertRaises(jsonschema.ValidationError):
             jsonschema.validate({"schema_version": 1, "components": [component]}, schema)
 
+    def test_component_schema_rejects_duplicate_assembly_members(self) -> None:
+        schema = MODULE.load_json(MODULE.SCHEMAS / "component-registry.schema.json")
+        registry = MODULE.load_yaml(MODULE.REFERENCE / "component-registry.yaml")
+        component = copy.deepcopy(registry["components"][0])
+        component["member_component_ids"] = ["component-example-01", "component-example-01"]
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate({"schema_version": 1, "components": [component]}, schema)
+
+    def test_registry_rejects_assembly_cycle(self) -> None:
+        data = {
+            name: MODULE.load_yaml(registry)
+            for name, (registry, _schema) in MODULE.REGISTRIES.items()
+        }
+        data = copy.deepcopy(data)
+        first, second = data["components"]["components"][:2]
+        first["member_component_ids"] = [second["id"]]
+        second["member_component_ids"] = [first["id"]]
+        errors: list[str] = []
+        MODULE.validate_references(data, errors)
+        self.assertTrue(any("assembly cycle" in error for error in errors), errors)
+
     def test_dossier_rejects_stale_reviewed_source_hash(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -179,6 +200,39 @@ class RegistryContractTest(unittest.TestCase):
             finally:
                 MODULE.ROOT = old_root
             self.assertTrue(any("page label and fragment differ" in error for error in errors), errors)
+
+    def test_procedure_contract_rejects_missing_heading(self) -> None:
+        with tempfile.TemporaryDirectory(dir=MODULE.ROOT / "temp") as directory:
+            procedures = Path(directory)
+            procedure = procedures / "US999-PROC-001-example.md"
+            headings = [
+                heading
+                for heading in MODULE.REQUIRED_PROCEDURE_HEADINGS
+                if heading != "Stop conditions"
+            ]
+            procedure.write_text(
+                "# Example\n\n" + "\n\n".join(f"## {heading}\n\nText." for heading in headings),
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+            MODULE.validate_physical_procedures(errors, procedures)
+            self.assertTrue(any("missing procedure heading Stop conditions" in error for error in errors), errors)
+
+    def test_identity_procedure_requires_unknown_isolation_block(self) -> None:
+        with tempfile.TemporaryDirectory(dir=MODULE.ROOT / "temp") as directory:
+            procedures = Path(directory)
+            procedure = procedures / "US002-PROC-001-unpowered-identity.md"
+            procedure.write_text(
+                "# Example\n\n"
+                + "\n\n".join(
+                    f"## {heading}\n\nRobot off."
+                    for heading in MODULE.REQUIRED_PROCEDURE_HEADINGS
+                ),
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+            MODULE.validate_physical_procedures(errors, procedures)
+            self.assertTrue(any("unknown isolation inaccessible" in error for error in errors), errors)
 
 
 if __name__ == "__main__":

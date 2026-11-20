@@ -33,6 +33,10 @@ new pack.
   installed-product behavior.
 - Update reviewed source hashes and coverage honestly; use `curated` only when
   the repository contract permits it.
+- Treat open physical questions as dormant routing context unless a current
+  story decision has activated them. Curation may be complete while installed
+  identity, wiring, settings, or condition remain unknown; do not start a bulk
+  evidence campaign or make unrelated development wait for catalog completion.
 - Run the US-002 validator and documentation tests after editing.
 
 Source review never verifies physical identity, wiring, condition, settings, or

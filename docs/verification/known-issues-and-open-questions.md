@@ -4,6 +4,9 @@
 Collect every conflict, missing fact, and unresolved assumption that future engineering work must not ignore.
 
 ## Current status
+- Open hardware facts are dormant until a current story decision depends on
+  them. They do not form a global prerequisite; the dependent story activates
+  the minimum needed question and updates this record with its evidence.
 - `High priority`: several project facts are currently inconsistent across code, notes, and vendor material.
 - `High priority`: Pico 2 W / CYW43 Wi-Fi bring-up appears optimization-sensitive on some dual-core FreeRTOS builds, so the firmware now has a diagnostic `-O1` profile until that boundary is proven stable.
 - `High priority`: next clean-start C++ control firmware should avoid making

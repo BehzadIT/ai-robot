@@ -21,6 +21,20 @@ REFERENCE = ROOT / "docs" / "reference"
 SCHEMAS = REFERENCE / "schemas"
 EVIDENCE = ROOT / "docs" / "verification" / "evidence"
 COMPONENT_PACKS = ROOT / "docs" / "assets" / "components"
+PROCEDURES = ROOT / "docs" / "verification" / "procedures"
+
+REQUIRED_PROCEDURE_HEADINGS = (
+    "Goal",
+    "Why this is needed",
+    "Tools and protective equipment",
+    "Safe setup",
+    "Procedure",
+    "Expected result and tolerance",
+    "Failure indications",
+    "Stop conditions",
+    "How the result changes the decision",
+    "Evidence to retain",
+)
 
 REGISTRIES = {
     "components": (
@@ -269,6 +283,36 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
         if overlap:
             errors.append(f"{namespace}: IDs reused across namespaces: {sorted(overlap)}")
         all_ids.update(ids)
+
+    assembly_graph: dict[str, list[str]] = {}
+    for component in components:
+        component_id = component["id"]
+        members = component.get("member_component_ids", [])
+        assembly_graph[component_id] = members
+        for member_id in members:
+            if member_id not in component_ids:
+                errors.append(f"{component_id}: unknown member component {member_id}")
+            if member_id == component_id:
+                errors.append(f"{component_id}: component cannot contain itself")
+
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit_assembly(component_id: str, path: list[str]) -> None:
+        if component_id in visiting:
+            cycle_start = path.index(component_id)
+            errors.append(f"components: assembly cycle {' -> '.join(path[cycle_start:])}")
+            return
+        if component_id in visited or component_id not in assembly_graph:
+            return
+        visiting.add(component_id)
+        for member_id in assembly_graph[component_id]:
+            visit_assembly(member_id, [*path, member_id])
+        visiting.remove(component_id)
+        visited.add(component_id)
+
+    for component_id in assembly_graph:
+        visit_assembly(component_id, [component_id])
 
     for record in [*components, *tools]:
         record_id = record["id"]
@@ -584,6 +628,34 @@ def validate_markdown_links(errors: list[str]) -> None:
                 )
 
 
+def validate_physical_procedures(
+    errors: list[str], procedures: Path | None = None
+) -> None:
+    """Require the physical-procedure contract and its safety-critical order."""
+    procedures = procedures or PROCEDURES
+    for path in sorted(procedures.glob("US*-PROC-*.md")):
+        text = path.read_text(encoding="utf-8")
+        positions: list[int] = []
+        for heading in REQUIRED_PROCEDURE_HEADINGS:
+            match = re.search(rf"^## {re.escape(heading)}\s*$", text, re.MULTILINE)
+            if match is None:
+                errors.append(f"{path.relative_to(ROOT)}: missing procedure heading {heading}")
+                continue
+            positions.append(match.start())
+        if len(positions) == len(REQUIRED_PROCEDURE_HEADINGS) and positions != sorted(positions):
+            errors.append(f"{path.relative_to(ROOT)}: procedure headings are out of contract order")
+
+        if path.name == "US002-PROC-001-unpowered-identity.md":
+            safe_setup = re.search(
+                r"^## Safe setup\s*$\n(.*?)(?=^## )", text, re.MULTILINE | re.DOTALL
+            )
+            safe_text = safe_setup.group(1).lower() if safe_setup else ""
+            if "unknown" not in safe_text or "isolation" not in safe_text or "inaccessible" not in safe_text:
+                errors.append(
+                    f"{path.relative_to(ROOT)}: safe setup must make unknown isolation inaccessible"
+                )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write-indexes", action="store_true", help="regenerate human-readable registry indexes")
@@ -609,6 +681,7 @@ def main() -> int:
         validate_references(data, errors)
         check_or_write_indexes(data, args.write_indexes, errors)
         validate_markdown_links(errors)
+        validate_physical_procedures(errors)
     if args.base_ref:
         check_append_only(args.base_ref, errors)
 

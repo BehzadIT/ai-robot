@@ -24,6 +24,16 @@ turning a project note or owner statement into stronger proof than it is.
 8. Regenerate the BOM/source/component views and validate all records.
 
 Unknown exact identity is valid. A guessed manufacturer or variant is not.
+An open question records where evidence would matter; it is dormant until a
+story decision depends on it. Do not launch bulk inspection or measurement to
+clear the registry. The dependent story requests the minimum useful owner input
+just in time, retains the evidence, and updates these records.
+
+When an assembly contains independently rated, replaceable products whose
+limits affect a decision, give those products their own stable component
+records and documentation packs. Link them from the assembly with
+`member_component_ids`. Keep the assembly record for system topology and
+as-built context; do not map a product-specific manual only to the assembly.
 
 ## Sources and owner reports
 

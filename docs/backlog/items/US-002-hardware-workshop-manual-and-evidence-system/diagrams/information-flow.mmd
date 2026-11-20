@@ -6,10 +6,17 @@ flowchart LR
   Catalog[Generated component catalog] --> Documentation[Component documentation]
   Registry[Component and source registries] --> Catalog
   Registry --> Documentation
-  Questions[Open identity and compatibility questions] --> Documentation
+  Questions[Open identity and compatibility questions] --> Dormant[Dormant until a story decision needs them]
+  Dormant --> Documentation
+  Current[Registered family and candidate sources] --> Documentation
   Documentation --> Cited[Cited page or HTML section]
   Cited --> Manual[Complete vendor source when needed]
-  Owner[Owner observations] --> Evidence[Append-only evidence]
+  Story[Dependent future story] --> Activate[Activate smallest needed question]
+  Dormant --> Activate
+  Activate --> Owner[Just-in-time owner observation or measurement]
+  Owner --> Evidence[Append-only story evidence]
   Evidence --> Registry
+  Registry --> Acquire[Exact-source acquisition]
+  Acquire --> Documentation
   Documentation --> Decisions[Traceable engineering decisions]
   Evidence --> Decisions

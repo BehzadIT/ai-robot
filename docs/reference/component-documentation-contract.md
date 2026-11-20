@@ -28,6 +28,11 @@ that a manual qualifies installed hardware.
   that point.
 - `not-required`: documentation would not improve a foreseeable decision.
 
+An assembly may link independently rated product records through
+`member_component_ids`. Exact cell, fuse, disconnect, switch, regulator, or
+other product manuals belong to the product record; the assembly documentation
+owns topology and integration context.
+
 ## Documentation Status
 
 - `stub`: routing, current uncertainty, and sources may be listed, but no source
@@ -40,6 +45,20 @@ that a manual qualifies installed hardware.
 Coverage means the documentation accurately reports what is known or unresolved. It
 does not mean the physical identity, connection, condition, or behavior has
 been verified.
+
+## Progressive Qualification
+
+Unresolved component questions are durable routing context, not a queue that
+must be cleared before development continues. A `stub`, `partial` pack, unknown
+physical identity, or open question blocks only a story decision that actually
+depends on the missing fact.
+
+When a story needs an exact physical property, activate the relevant question
+inside that story, request only the smallest useful observation or measurement,
+retain the result with story evidence, and update this component pack and the
+registries. Do not run broad inventory or measurement campaigns merely to make
+the catalog look complete. Safety gates still apply immediately before work
+that depends on an unverified power, motion, fabrication, or protection fact.
 
 ## Citation Format
 

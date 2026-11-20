@@ -44,6 +44,8 @@ untested behavior as evidence.
 ## Open Questions
 
 Link unresolved registry questions and state what evidence would answer them.
+Treat them as dormant unless a current story decision activates one; do not
+present the list as an up-front completion gate.
 
 ## Sources and Coverage
 

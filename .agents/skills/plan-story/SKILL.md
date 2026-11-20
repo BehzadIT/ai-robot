@@ -21,6 +21,12 @@ answer and rationale in the plan before continuing.
 
 Create `implementation-plan.md` and observable `TNNN` tasks with an acyclic DAG,
 parallel safety, AC coverage, test mode, doubles, evidence, and physical gates.
+Do not add bulk hardware qualification as a prerequisite. Leave registry
+unknowns dormant unless a planned task depends on them; attach each activated
+unknown to the first dependent task and define the smallest just-in-time owner
+observation or measurement that resolves it. Use applicable manufacturer
+ratings for planning when their scope and conditions are preserved; require
+physical evidence only for the as-built fact the decision needs.
 Prefer named red/green/refactor TDD. Use a bounded retained spike only for a
 genuine unknown; never silently promote prototype code. Render diagrams,
 validate, review, then mark Ready. Later material changes increment

@@ -31,7 +31,7 @@ Platform implementation details live in the child repositories.
 - `electrical/`: power, wiring, BMS, charging, and electrical risks.
 - `mechanical/`: chassis, drivetrain, mounting fitment, and physical build notes.
 - `reference/component-registry.yaml`: canonical component identity, state,
-  claims, provenance, and blocking questions.
+  claims, provenance, and open questions activated only by dependent stories.
 - `reference/tool-registry.yaml`: workshop capability, condition, limits,
   accessories, familiarity, and safe-use constraints.
 - `reference/source-registry.yaml`: local source identity, hashes,

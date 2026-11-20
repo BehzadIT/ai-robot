@@ -43,6 +43,9 @@ Use skills for repeatable work rather than persistent specialist personas:
 
 All lifecycle skills use the consequential-decision and meaningful-handoff
 templates in [the human-agent working contract](human-agent-working-contract.md).
+They also use progressive qualification: hardware unknowns stay dormant until
+a current story decision depends on them, then the smallest useful owner
+observation or measurement is requested and reconciled into shared docs.
 The recent primary-source practices adapted into that contract are retained in
 [human-agent interaction practices](human-agent-interaction-practices.md).
 

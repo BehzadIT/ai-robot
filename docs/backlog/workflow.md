@@ -64,6 +64,22 @@ story is process or tooling work.
 dependency is finished. A story may enter `in-progress` only after dependencies
 marked `blocks` are `done`.
 
+## Progressive Qualification And Unknown Activation
+
+Open registry questions are routing aids, not a mandatory pre-story checklist.
+They remain dormant until a concrete acceptance criterion, task, or safety gate
+depends on them. Do not make a story wait for exact identity, dimensions,
+wiring, settings, or condition that cannot change its current decisions.
+
+During refinement or planning, activate only the smallest unknown needed for a
+specific decision and attach it to the first dependent task. During execution,
+ask the owner just in time for an unavailable physical observation or
+measurement, retain it with story evidence, and update the shared hardware
+documentation. A task may be blocked while independent tasks continue; block
+the story only when the activated unknown prevents every remaining required
+path. Physical approval and safe-state gates still apply at the operation that
+can energize, move, cut, drill, charge, or otherwise create risk.
+
 ## Definition Of Done
 
 - Implementation matches the approved ownership boundary.
