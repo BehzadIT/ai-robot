@@ -247,3 +247,16 @@ questions:
     status: open
     resolution: null
     evidence_ids: []
+  - id: Q-US002-020
+    batch: E
+    suspected_item: Available distance-sensor modules
+    known_context: The inventory names HC-SR04, a candidate VL53L0X carrier, and DYP-A02-V2.0, but it does not identify the HC-SR04 supplier, VL53L0X carrier-board design, or DYP-A02 interface variant.
+    question: What manufacturer, supplier, board markings, purchase links, and interface labels identify each available HC-SR04, VL53L0X, and DYP-A02-V2.0 module?
+    reason: Carrier boards and interface variants determine supply voltage, logic levels, pinout, regulation, level shifting, and which manual applies.
+    impact: [compatibility, documentation]
+    preferred_evidence: [front and rear module photos, purchase links, packaging or label text]
+    acceptable_fallback: Owner transcription of visible markings; keep carrier-level electrical assumptions unresolved.
+    source_ids: [source-project-components-updated, source-complete-component-list, source-vl53l0x-datasheet, source-vl53l0x-api-manual]
+    status: open
+    resolution: null
+    evidence_ids: []

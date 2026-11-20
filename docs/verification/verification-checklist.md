@@ -26,6 +26,6 @@ vendor manual do not prove the as-built harness by themselves.
 
 ## Sources
 - Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
-- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
+- Manual/source file: [DALY smart active-balance BMS manual](../assets/components/power/daly-bms/vendor/daly-smart-active-balance-bms-manual-2024-11-15.pdf)
 - Live question queue: [US-002.yaml](questions/US-002.yaml)
 - Procedure index: [procedures/README.md](procedures/README.md)

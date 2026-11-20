@@ -34,6 +34,8 @@ For system-level or cross-project work, start with:
 - `docs/electrical/wiring-and-pinout.md`
 - `docs/verification/known-issues-and-open-questions.md`
 - `docs/reference/component-registry.yaml`
+- `docs/assets/components/README.md`
+- `docs/reference/component-documentation-contract.md`
 - `docs/reference/tool-registry.yaml`
 - `docs/verification/questions/US-002.yaml`
 
@@ -102,5 +104,6 @@ architecture docs are intentionally updated in the same change.
 - Use Mermaid with explicit `layout: elk` when an important structure, flow,
   state, timing sequence, wiring relationship, or dependency is materially
   clearer visually.
-- Use repository skills in `.agents/skills/` for story refinement, execution,
-  review, and decision-relevant embedded mentoring.
+- Use repository skills in `.agents/skills/` for story refinement, planning,
+  execution, review, component-source curation, and decision-relevant embedded
+  mentoring.

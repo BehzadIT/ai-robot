@@ -20,4 +20,4 @@ Mechanical and electrical degradation can look like firmware issues. Inspection 
 
 ## Sources
 - Source file: [faulty-shaft-and-solution.txt](../assets/mechanical/faulty-shaft-and-solution.txt)
-- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
+- Manual/source file: [DALY smart active-balance BMS manual](../assets/components/power/daly-bms/vendor/daly-smart-active-balance-bms-manual-2024-11-15.pdf)

@@ -5,7 +5,7 @@ SPEC=importlib.util.spec_from_file_location("validate_backlog",Path(__file__).pa
 v=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(v)
 class BacklogValidationTests(unittest.TestCase):
  def test_live_dossiers_validate(self): self.assertEqual([],v.validate())
- def test_discovers_directory_readmes(self): self.assertEqual(5,len(list(v.ITEMS.glob("US-*/README.md"))))
+ def test_discovers_directory_readmes(self): self.assertEqual(6,len(list(v.ITEMS.glob("US-*/README.md"))))
  def test_parse_frontmatter(self):
   with tempfile.TemporaryDirectory() as td:
    p=Path(td)/"README.md";p.write_text("---\nid: US-999\n---\n# body\n")

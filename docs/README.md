@@ -17,6 +17,8 @@ Platform implementation details live in the child repositories.
 - `backlog/workflow.md`: active lifecycle, risk classes, Ready/Done
   definitions, dependency semantics, and traceability contract.
 - `reference/source-index.md`: where source material and platform repos live.
+- `assets/components/README.md`: generated component-documentation catalog,
+  coverage state, and agent-first documentation links.
 
 ## Interfaces
 - `interfaces/command-protocol.md`: operator-intent command semantics and
@@ -37,9 +39,12 @@ Platform implementation details live in the child repositories.
 - `reference/hardware-records.md`: record update, provenance, evidence, and
   validation workflow.
 - `reference/bom-and-parts-status.md`: generated human-readable registry view.
-- `assets/electrical/`: battery, wiring, charger, BMS, and cell source files.
-- `assets/mechanical/`: chassis, drivetrain, shaft adapter, and mounting source
-  files.
+- `assets/components/`: category/product packs containing canonical component
+  documentation and original vendor material.
+- `assets/electrical/`: project-specific battery, wiring, and power source
+  artifacts.
+- `assets/mechanical/`: project-specific chassis, drivetrain, adapter, and
+  mounting source artifacts.
 - `assets/reference/`: component lists and general project source material.
 
 ## Operations And Verification

@@ -16,9 +16,12 @@ turning a project note or owner statement into stronger proof than it is.
    dated owner report.
 5. Add or link a question when an unresolved fact affects safety,
    compatibility, procedure, or documentation.
-6. Add a dossier only for installed, safety-relevant, or repeatedly
-   decision-relevant items.
-7. Regenerate the BOM/source views and validate all records.
+6. Set `documentation_requirement`. Use `required` for distinct products that
+   are installed, available, safety-relevant, or repeatedly decision-relevant;
+   use `conditional` for mixed stock until an exact product affects a decision.
+7. Put a required component's canonical documentation and vendor sources in its
+   category/product pack under `docs/assets/components/`.
+8. Regenerate the BOM/source/component views and validate all records.
 
 Unknown exact identity is valid. A guessed manufacturer or variant is not.
 
@@ -27,6 +30,29 @@ Unknown exact identity is valid. A guessed manufacturer or variant is not.
 Register a durable source once with its path, SHA-256, applicability, and
 limitations. Cite page, section, code symbol, photograph, or measurement point
 on each claim. A family manual is not an exact product identity.
+
+For material acquired from the web, record the exact retrieval URL, retrieval
+date, and host type. Prefer the manufacturer host. A vendor-authored document
+retained from a distributor mirror remains vendor-authored, but its retrieval
+record and limitations must disclose the mirror. HTML-only vendor documentation
+may be retained as a source-faithful Markdown snapshot; do not present format
+conversion as project analysis.
+
+PDFs stay binary and use `not-extracted` until a later review explicitly
+creates page- or section-linked claims. Downloading or registering a manual does
+not by itself qualify its applicability to installed hardware.
+
+Vendor manuals, datasheets, and source-faithful HTML snapshots live in the
+matching component pack's `vendor/` directory. Project wiring, configuration,
+measurements, CAD, and as-built artifacts remain in their owning electrical,
+mechanical, reference, or evidence areas and are linked from the documentation.
+
+The component documentation contract is in
+[`component-documentation-contract.md`](component-documentation-contract.md).
+Use the repository `curate-component-documentation` skill for later source review.
+Until that review occurs, keep the documentation `stub` or `partial`, leave reviewed
+source hashes empty, and do not imply that a navigational source list is a
+curated summary.
 
 Owner input is useful and is recorded as `owner-reported`. Physical labels,
 continuity, voltage, behavior, and condition require a new evidence bundle when

@@ -97,5 +97,5 @@ If a statement appears only in rough project notes and cannot be confirmed by co
 - Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
 - Source file: [robot-battery-system.txt](../assets/electrical/robot-battery-system.txt)
 - Source file: [pololu-37d-encoder-spec-and-rpm-test-code.txt](../assets/reference/pololu-37d-encoder-spec-and-rpm-test-code.txt)
-- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
+- Manual/source file: [DALY smart active-balance BMS manual](../assets/components/power/daly-bms/vendor/daly-smart-active-balance-bms-manual-2024-11-15.pdf)
 - Manual/source file: [robot-project-complete-component-list.txt](../assets/reference/robot-project-complete-component-list.txt)

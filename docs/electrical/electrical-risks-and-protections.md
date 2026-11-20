@@ -20,6 +20,6 @@ Capture electrical hazards and protection assumptions that matter during develop
 - Validate pack voltage and BMS identity before integrating any battery telemetry features.
 
 ## Sources
-- Manual/source file: [smart-active-balance-bms-manual.pdf](../assets/electrical/smart-active-balance-bms-manual.pdf)
-- Manual/source file: [jgcfr18650-2200mah-lifepo4-cell-specification.pdf](../assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf)
-- Manual/source file: [iqload-evo-charger-manual-en-2021.pdf](../assets/electrical/iqload-evo-charger-manual-en-2021.pdf)
+- Manual/source file: [DALY smart active-balance BMS manual](../assets/components/power/daly-bms/vendor/daly-smart-active-balance-bms-manual-2024-11-15.pdf)
+- Manual/source file: [candidate JGCFR18650 cell specification](../assets/components/power/lifepo4-battery-pack/vendor/candidate-jgcfr18650-cell-specification-r1.1.pdf)
+- Manual/source file: [iQLoad EVO 5 and 7 manual](../assets/components/power/panther-iqload-evo-charger/vendor/iqload-evo-5-and-7-manual-2021.pdf)

@@ -8,6 +8,7 @@ components:
     model: Pico 2 W
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: owner-reported
@@ -42,7 +43,7 @@ components:
             locator: page 2, Raspberry Pi Pico 2 W entry
         notes: The historical text list incorrectly says RP2040.
     question_ids: [Q-US002-003, Q-US002-016]
-    dossier: docs/reference/components/component-raspberry-pi-pico-2w-01.md
+    documentation: docs/assets/components/controllers/raspberry-pi-pico-2w/README.md
     notes: []
   - id: component-esp32-dev-board-01
     name: ESP32 development board
@@ -52,6 +53,7 @@ components:
     model: null
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: unknown
@@ -78,7 +80,7 @@ components:
           - source_id: source-esp32-sdkconfig
             locator: CONFIG_IDF_TARGET="esp32"
     question_ids: [Q-US002-004]
-    dossier: docs/reference/components/component-esp32-dev-board-01.md
+    documentation: docs/assets/components/controllers/esp32-development-board/README.md
     notes: []
   - id: component-pololu-37d-motors-01
     name: Pololu 37D 30:1 gearmotors with encoders
@@ -88,6 +90,7 @@ components:
     model: 37D metal gearmotor
     variant: 30:1, 12 V, integrated quadrature encoder; exact order number unknown
     revision: null
+    documentation_requirement: required
     quantity: 2
     instances:
       - id: motor-right
@@ -162,7 +165,7 @@ components:
           - source_id: source-pico-cpp-drivetrain-constants
             locator: EncoderPins::kLeftPinA/kLeftPinB are GP20/GP21
     question_ids: [Q-US002-002, Q-US002-003, Q-US002-005]
-    dossier: docs/reference/components/component-pololu-37d-motors-01.md
+    documentation: docs/assets/components/actuators/pololu-37d-gearmotors/README.md
     notes: []
   - id: component-cytron-mdd10a-01
     name: Cytron MDD10A dual-channel motor driver
@@ -172,6 +175,7 @@ components:
     model: MDD10A
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: owner-reported
@@ -215,7 +219,7 @@ components:
           - source_id: source-pico-cpp-drivetrain-constants
             locator: MotorPins maps right PWM/DIR to GP7/GP6 and left to GP9/GP8
     question_ids: [Q-US002-005, Q-US002-006, Q-US002-016]
-    dossier: docs/reference/components/component-cytron-mdd10a-01.md
+    documentation: docs/assets/components/interfaces/cytron-mdd10a-motor-driver/README.md
     notes: []
   - id: component-lifepo4-pack-01
     name: 4S2P LiFePO4 battery pack
@@ -225,6 +229,7 @@ components:
     model: custom pack
     variant: 4S2P 18650 LiFePO4; exact cells and revision unknown
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: owner-reported
@@ -269,7 +274,7 @@ components:
           - source_id: source-goldencell-18650-spec
             locator: Candidate datasheet only; applicability is unverified
     question_ids: [Q-US002-006, Q-US002-017, Q-US002-018, Q-US002-019]
-    dossier: docs/reference/components/component-lifepo4-pack-01.md
+    documentation: docs/assets/components/power/lifepo4-battery-pack/README.md
     notes: []
   - id: component-daly-bms-01
     name: Installed DALY-family BMS
@@ -279,6 +284,7 @@ components:
     model: null
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: conflicting
@@ -308,7 +314,7 @@ components:
           - source_id: source-complete-component-list
             locator: DALY Smart Active Balance BMS
     question_ids: [Q-US002-001, Q-US002-006, Q-US002-017]
-    dossier: docs/reference/components/component-daly-bms-01.md
+    documentation: docs/assets/components/power/daly-bms/README.md
     notes: []
   - id: component-panther-iqload-evo-charger-01
     name: Panther iQLoad EVO charger
@@ -318,6 +324,7 @@ components:
     model: iQLoad EVO 5
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: owner-reported
@@ -357,7 +364,7 @@ components:
           - source_id: source-battery-system-note
             locator: Battery Charger says trickle mode disabled
     question_ids: [Q-US002-007, Q-US002-014, Q-US002-017]
-    dossier: docs/reference/components/component-panther-iqload-evo-charger-01.md
+    documentation: docs/assets/components/power/panther-iqload-evo-charger/README.md
     notes: []
   - id: component-tracked-chassis-01
     name: Double-layer suspension crawler chassis
@@ -367,6 +374,7 @@ components:
     model: null
     variant: upgraded for Pololu 37D drivetrain
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: documented-unverified
@@ -395,7 +403,7 @@ components:
           - source_id: source-chassis-expansion-note
             locator: Chassis Dimensions
     question_ids: [Q-US002-012, Q-US002-013]
-    dossier: docs/reference/components/component-tracked-chassis-01.md
+    documentation: docs/assets/components/mechanical/tracked-chassis/README.md
     notes: []
   - id: component-xbox-compatible-controller-01
     name: Xbox-compatible game controller
@@ -405,6 +413,7 @@ components:
     model: null
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: unknown
@@ -420,6 +429,7 @@ components:
     known_failure_modes: [Disconnect, stale snapshots, unsupported controller mapping]
     claims: []
     question_ids: []
+    documentation: docs/assets/components/interfaces/xbox-compatible-controller/README.md
     notes: [Exact controller identity is lower priority than current power and control hardware.]
   - id: component-hcsr04-sensors-01
     name: HC-SR04 ultrasonic sensors
@@ -429,6 +439,7 @@ components:
     model: HC-SR04
     variant: 5 V
     revision: null
+    documentation_requirement: required
     quantity: 2
     states:
       identity: documented-unverified
@@ -450,7 +461,8 @@ components:
         provenance:
           - source_id: source-project-components-updated
             locator: page 2, Sensors
-    question_ids: []
+    question_ids: [Q-US002-020]
+    documentation: docs/assets/components/sensors/hc-sr04/README.md
     notes: []
   - id: component-vl53l0x-sensors-01
     name: VL53L0X time-of-flight sensor modules
@@ -460,6 +472,7 @@ components:
     model: VL53L0X module
     variant: Samiore Robot candidate
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: documented-unverified
@@ -480,7 +493,8 @@ components:
         provenance:
           - source_id: source-complete-component-list
             locator: VL53L0X entries
-    question_ids: []
+    question_ids: [Q-US002-020]
+    documentation: docs/assets/components/sensors/vl53l0x/README.md
     notes: []
   - id: component-dyp-a02-sensor-01
     name: DYP-A02-V2.0 waterproof ultrasonic sensor
@@ -490,6 +504,7 @@ components:
     model: DYP-A02-V2.0
     variant: Interface option unknown
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: documented-unverified
@@ -510,7 +525,8 @@ components:
         provenance:
           - source_id: source-complete-component-list
             locator: DYP-A02-V2.0 entry
-    question_ids: []
+    question_ids: [Q-US002-020]
+    documentation: docs/assets/components/sensors/dyp-a02/README.md
     notes: []
   - id: component-legacy-520-motors-01
     name: Legacy 520 encoder DC gearmotors
@@ -520,6 +536,7 @@ components:
     model: JGB3865-520R45-12
     variant: "45:1"
     revision: null
+    documentation_requirement: required
     quantity: 2
     states:
       identity: documented-unverified
@@ -541,6 +558,7 @@ components:
           - source_id: source-suspended-chassis-manual
             locator: page 3, 520 encoder DC gear motor
     question_ids: []
+    documentation: docs/assets/components/actuators/legacy-520-gearmotors/README.md
     notes: []
   - id: component-power-protection-01
     name: Power fuse, disconnect, switch, connectors, and high-current wiring
@@ -550,6 +568,7 @@ components:
     model: null
     variant: null
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: suspected-missing
@@ -571,7 +590,7 @@ components:
           - source_id: source-battery-system-note
             locator: Battery Connection Hardware lacks a fuse/disconnect as-built record
     question_ids: [Q-US002-006, Q-US002-019]
-    dossier: docs/reference/components/component-power-protection-01.md
+    documentation: docs/assets/components/power/power-protection-and-distribution/README.md
     notes: []
   - id: component-prototyping-stock-01
     name: Electronics prototyping stock
@@ -581,6 +600,7 @@ components:
     model: mixed kits
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -611,6 +631,7 @@ components:
     model: mixed stock
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -641,6 +662,7 @@ components:
     model: mixed stock
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -671,6 +693,7 @@ components:
     model: mixed stock
     variant: M2-M22 ranges across separate kits
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -701,6 +724,7 @@ components:
     model: mixed stock
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -731,6 +755,7 @@ components:
     model: mixed stock
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -763,6 +788,7 @@ components:
     model: mixed stock
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -793,6 +819,7 @@ components:
     model: mixed stock
     variant: null
     revision: null
+    documentation_requirement: conditional
     quantity: 1
     states:
       identity: documented-unverified
@@ -825,6 +852,7 @@ components:
     model: "2687"
     variant: 6 mm D input to 12 mm hex output
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: documented-unverified
@@ -846,6 +874,7 @@ components:
           - source_id: source-shaft-adapter-note
             locator: Custom Adapter Solution
     question_ids: [Q-US002-012, Q-US002-013, Q-US002-014]
+    documentation: docs/assets/components/mechanical/pololu-shaft-adapter/README.md
     notes: []
   - id: component-pololu-motor-brackets-01
     name: Pololu aluminum motor brackets
@@ -855,6 +884,7 @@ components:
     model: null
     variant: for future motor upgrades; exact part unknown
     revision: null
+    documentation_requirement: required
     quantity: 1
     states:
       identity: documented-unverified
@@ -876,4 +906,5 @@ components:
           - source_id: source-project-components-updated
             locator: page 2, Tools and Miscellaneous
     question_ids: [Q-US002-013]
+    documentation: docs/assets/components/mechanical/pololu-motor-brackets/README.md
     notes: []

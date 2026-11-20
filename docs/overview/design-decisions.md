@@ -70,6 +70,13 @@ control, wiring, power, battery, and future autonomy work requires explicit
 failure behavior, approval boundaries, and evidence appropriate to the
 physical risk. A successful build alone is not evidence of safe robot behavior.
 
+### Component documentation is layered and agent-first
+The component registry owns inventory and evidence state, each component pack
+README owns the concise project interpretation, and registered vendor files
+remain the original specification. Agents read the generated component catalog
+and documentation before opening cited pages or an entire manual. Source curation
+cannot qualify installed identity, wiring, condition, settings, or behavior.
+
 ## Related Docs
 - System architecture: `system-architecture.md`
 - Capability roadmap: `capability-roadmap.md`

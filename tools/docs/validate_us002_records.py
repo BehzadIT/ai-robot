@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 REFERENCE = ROOT / "docs" / "reference"
 SCHEMAS = REFERENCE / "schemas"
 EVIDENCE = ROOT / "docs" / "verification" / "evidence"
+COMPONENT_PACKS = ROOT / "docs" / "assets" / "components"
 
 REGISTRIES = {
     "components": (
@@ -100,6 +101,149 @@ def collect_ids(records: Iterable[dict[str, Any]], label: str, errors: list[str]
     return found
 
 
+def load_markdown_frontmatter(path: Path) -> dict[str, Any]:
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---\n"):
+        raise ValueError("missing YAML front matter")
+    closing = text.find("\n---\n", 4)
+    if closing == -1:
+        raise ValueError("unterminated YAML front matter")
+    value = yaml.safe_load(text[4:closing])
+    if not isinstance(value, dict):
+        raise ValueError("front matter must be a mapping")
+    return value
+
+
+def validate_component_documentation(
+    components: list[dict[str, Any]],
+    sources: list[dict[str, Any]],
+    errors: list[str],
+) -> dict[str, dict[str, Any]]:
+    schema = load_json(SCHEMAS / "component-documentation.schema.json")
+    validator = jsonschema.Draft202012Validator(
+        schema, format_checker=jsonschema.FormatChecker()
+    )
+    source_by_id = {source["id"]: source for source in sources}
+    vendor_sources_by_component: dict[str, set[str]] = {}
+    for source in sources:
+        if source["kind"] not in {"vendor-manual", "vendor-web-page"}:
+            continue
+        for component_id in source.get("component_ids", []):
+            vendor_sources_by_component.setdefault(component_id, set()).add(source["id"])
+
+    metadata_by_component: dict[str, dict[str, Any]] = {}
+    citation_pattern = re.compile(
+        r"\[([^\]]*(source-[a-z0-9-]+)[^\]]*)\]\(([^)]+)\)"
+    )
+    for component in components:
+        component_id = component["id"]
+        documentation_value = component.get("documentation")
+        requirement = component["documentation_requirement"]
+        if requirement == "required" and not documentation_value:
+            errors.append(f"{component_id}: required component lacks documentation")
+            continue
+        if not documentation_value:
+            continue
+
+        documentation = ROOT / documentation_value
+        if not documentation.is_file():
+            errors.append(f"{component_id}: documentation does not exist: {documentation_value}")
+            continue
+        try:
+            metadata = load_markdown_frontmatter(documentation)
+        except (OSError, ValueError, yaml.YAMLError) as exc:
+            errors.append(f"{documentation.relative_to(ROOT)}: {exc}")
+            continue
+
+        for error in validator.iter_errors(metadata):
+            location = ".".join(str(part) for part in error.absolute_path) or "<root>"
+            errors.append(f"{documentation.relative_to(ROOT)}:{location}: {error.message}")
+        if metadata.get("component_id") != component_id:
+            errors.append(f"{documentation.relative_to(ROOT)}: component_id must be {component_id}")
+
+        status = metadata.get("documentation_status")
+        reviewed_sources = metadata.get("reviewed_sources", [])
+        coverage = metadata.get("coverage", {})
+        if status == "stub" and reviewed_sources:
+            errors.append(f"{component_id}: stub documentation cannot claim reviewed sources")
+        if status == "curated":
+            if not metadata.get("reviewed_on"):
+                errors.append(f"{component_id}: curated documentation needs reviewed_on")
+            incomplete = [
+                key for key, value in coverage.items()
+                if value in {"partial", "pending"}
+            ]
+            if incomplete:
+                errors.append(
+                    f"{component_id}: curated documentation has incomplete coverage {sorted(incomplete)}"
+                )
+
+        reviewed_ids: set[str] = set()
+        for reviewed in reviewed_sources:
+            source_id = reviewed.get("id")
+            if source_id in reviewed_ids:
+                errors.append(f"{component_id}: duplicate reviewed source {source_id}")
+                continue
+            reviewed_ids.add(source_id)
+            source = source_by_id.get(source_id)
+            if not source:
+                errors.append(f"{component_id}: unknown reviewed source {source_id}")
+                continue
+            if component_id not in source.get("component_ids", []):
+                errors.append(f"{component_id}: reviewed source {source_id} is not mapped to component")
+            if reviewed.get("sha256") != source["sha256"]:
+                errors.append(f"{component_id}: reviewed source {source_id} hash is stale")
+
+        if status == "curated":
+            expected = vendor_sources_by_component.get(component_id, set())
+            if reviewed_ids != expected:
+                errors.append(
+                    f"{component_id}: curated reviewed sources must equal mapped vendor sources; "
+                    f"expected {sorted(expected)}, observed {sorted(reviewed_ids)}"
+                )
+
+        cited_ids: set[str] = set()
+        text = documentation.read_text(encoding="utf-8")
+        for label, source_id, raw_target in citation_pattern.findall(text):
+            cited_ids.add(source_id)
+            source = source_by_id.get(source_id)
+            if not source:
+                errors.append(f"{documentation.relative_to(ROOT)}: citation uses unknown {source_id}")
+                continue
+            path_part, separator, fragment = raw_target.partition("#")
+            resolved = (documentation.parent / path_part).resolve()
+            registered = (ROOT / source["path"]).resolve()
+            if resolved != registered:
+                errors.append(
+                    f"{documentation.relative_to(ROOT)}: {source_id} citation path does not match registry"
+                )
+            if registered.suffix.lower() == ".pdf":
+                page_label = re.search(r"PDF p\. ([0-9]+)", label)
+                page_fragment = re.fullmatch(r"page=([0-9]+)", fragment)
+                if not page_label or not page_fragment:
+                    errors.append(
+                        f"{documentation.relative_to(ROOT)}: {source_id} PDF citation needs "
+                        "'PDF p. N' and '#page=N'"
+                    )
+                elif page_label.group(1) != page_fragment.group(1):
+                    errors.append(
+                        f"{documentation.relative_to(ROOT)}: {source_id} citation page label and fragment differ"
+                    )
+            elif source["kind"] == "vendor-web-page" and ("§" not in label or not separator or not fragment):
+                errors.append(
+                    f"{documentation.relative_to(ROOT)}: {source_id} HTML citation needs a section and anchor"
+                )
+
+        if status == "curated" and not reviewed_ids.issubset(cited_ids):
+            errors.append(
+                f"{component_id}: curated component documentation lacks citations for "
+                f"{sorted(reviewed_ids - cited_ids)}"
+            )
+        metadata_by_component[component_id] = metadata
+
+    return metadata_by_component
+
+
 def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> None:
     components = data["components"]["components"]
     tools = data["tools"]["tools"]
@@ -135,10 +279,6 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
             source_id = provenance.get("source_id")
             if source_id and source_id not in source_ids:
                 errors.append(f"{record_id}: unknown source reference {source_id}")
-        dossier = record.get("dossier")
-        if dossier and not (ROOT / dossier).is_file():
-            errors.append(f"{record_id}: dossier does not exist: {dossier}")
-
         claim_keys: set[str] = set()
         for claim in record.get("claims", []):
             if claim["key"] in claim_keys:
@@ -158,7 +298,16 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
             if source_id not in source_ids:
                 errors.append(f"{question['id']}: unknown source reference {source_id}")
 
+    source_hash_owners: dict[str, list[str]] = {}
     for source in sources:
+        for component_id in source.get("component_ids", []):
+            if component_id not in component_ids:
+                errors.append(f"{source['id']}: unknown component reference {component_id}")
+        if source["kind"] in {"vendor-manual", "vendor-web-page"}:
+            if not source.get("component_ids"):
+                errors.append(f"{source['id']}: vendor source needs component_ids")
+            if not source["path"].startswith("docs/assets/components/") or "/vendor/" not in source["path"]:
+                errors.append(f"{source['id']}: vendor source must live in a component vendor directory")
         path = ROOT / source["path"]
         if not path.is_file():
             errors.append(f"{source['id']}: source path does not exist: {source['path']}")
@@ -169,7 +318,18 @@ def validate_references(data: dict[str, dict[str, Any]], errors: list[str]) -> N
                 f"{source['id']}: sha256 mismatch for {source['path']}; "
                 f"expected {source['sha256']}, observed {observed}"
             )
+        source_hash_owners.setdefault(observed, []).append(source["id"])
+        if path.suffix.lower() == ".pdf":
+            with path.open("rb") as stream:
+                signature = stream.read(5)
+            if signature != b"%PDF-":
+                errors.append(f"{source['id']}: PDF source lacks a PDF signature: {source['path']}")
 
+    for digest, owners in source_hash_owners.items():
+        if len(owners) > 1:
+            errors.append(f"sources: duplicate sha256 {digest} used by {sorted(owners)}")
+
+    validate_component_documentation(components, sources, errors)
     validate_evidence(component_ids, tool_ids, question_ids, errors)
 
 
@@ -260,10 +420,18 @@ def render_bom(data: dict[str, dict[str, Any]]) -> str:
 
 
 def render_source_index(data: dict[str, dict[str, Any]]) -> str:
-    rows = [
-        f"| `{source['id']}` | [{source['title']}](../../{source['path']}) | {source['kind']} | {source['authority']} | {source['extraction_status']} |"
-        for source in data["sources"]["sources"]
-    ]
+    rows = []
+    for source in data["sources"]["sources"]:
+        retrieval = source.get("retrieval")
+        origin = (
+            f"[{retrieval['host_type']}]({retrieval['url']}) ({retrieval['retrieved_on']})"
+            if retrieval
+            else "—"
+        )
+        rows.append(
+            f"| `{source['id']}` | [{source['title']}](../../{source['path']}) | "
+            f"{source['kind']} | {source['authority']} | {source['extraction_status']} | {origin} |"
+        )
     return "\n".join(
         [
             "# Source Index",
@@ -280,8 +448,8 @@ def render_source_index(data: dict[str, dict[str, Any]]) -> str:
             "",
             "## Registered Sources",
             "",
-            "| ID | Source | Kind | Authority | Extraction |",
-            "| --- | --- | --- | --- | --- |",
+            "| ID | Source | Kind | Authority | Extraction | Retrieval |",
+            "| --- | --- | --- | --- | --- | --- |",
             *rows,
             "",
             "A registered source is not automatically proof that its claims apply to the",
@@ -292,10 +460,93 @@ def render_source_index(data: dict[str, dict[str, Any]]) -> str:
     )
 
 
+def render_component_catalog(data: dict[str, dict[str, Any]]) -> str:
+    components = data["components"]["components"]
+    sources = data["sources"]["sources"]
+    source_counts: dict[str, int] = {}
+    for source in sources:
+        for component_id in source.get("component_ids", []):
+            source_counts[component_id] = source_counts.get(component_id, 0) + 1
+
+    requirement_counts = {"required": 0, "conditional": 0, "not-required": 0}
+    status_counts = {
+        "curated": 0,
+        "partial": 0,
+        "stub": 0,
+        "conditional": 0,
+        "missing": 0,
+    }
+    rows: list[str] = []
+    for component in components:
+        requirement = component["documentation_requirement"]
+        requirement_counts[requirement] += 1
+        documentation_value = component.get("documentation")
+        metadata: dict[str, Any] = {}
+        if documentation_value and (ROOT / documentation_value).is_file():
+            try:
+                metadata = load_markdown_frontmatter(ROOT / documentation_value)
+            except (OSError, ValueError, yaml.YAMLError):
+                metadata = {}
+        default_status = "conditional" if requirement == "conditional" and not documentation_value else "missing"
+        status = metadata.get("documentation_status", default_status)
+        if status not in status_counts:
+            status = "missing"
+        status_counts[status] += 1
+
+        if documentation_value:
+            relative = Path(documentation_value).relative_to("docs/assets/components")
+            name = f"[{component['name']}]({relative.as_posix()})"
+        else:
+            name = component["name"]
+        coverage = metadata.get("coverage", {})
+        applicable = [value for value in coverage.values() if value != "not-applicable"]
+        covered = sum(value == "covered" for value in applicable)
+        coverage_text = f"{covered}/{len(applicable)}" if applicable else "—"
+        questions = ", ".join(f"`{value}`" for value in component.get("question_ids", [])) or "—"
+        rows.append(
+            f"| `{component['id']}` | {name} | {component['category']} | "
+            f"{component['states']['identity']} | {requirement} | {status} | "
+            f"{coverage_text} | {source_counts.get(component['id'], 0)} | {questions} |"
+        )
+
+    return "\n".join(
+        [
+            "# Component Documentation Catalog",
+            "",
+            "This file is generated from the component and source registries plus documentation",
+            "front matter. Do not edit it directly; update those records and run",
+            "`python3 tools/docs/validate_us002_records.py --write-indexes`.",
+            "",
+            "Read the component documentation first, then its registry state and unresolved",
+            "questions. Open cited source pages next and the complete vendor source only",
+            "when the documentation is insufficient.",
+            "",
+            "## Coverage Summary",
+            "",
+            f"- Registered components: {len(components)}",
+            f"- Documentation requirement: {requirement_counts['required']} required, "
+            f"{requirement_counts['conditional']} conditional, {requirement_counts['not-required']} not required",
+            f"- Documentation: {status_counts['curated']} curated, {status_counts['partial']} partial, "
+            f"{status_counts['stub']} stub, {status_counts['missing']} missing required",
+            f"- Conditional registry records without documentation: {status_counts['conditional']}",
+            "",
+            "Coverage reports documented decision areas, not physical qualification.",
+            "",
+            "## Components",
+            "",
+            "| ID | Component | Category | Identity | Requirement | Documentation | Coverage | Sources | Open questions |",
+            "| --- | --- | --- | --- | --- | --- | --- | ---: | --- |",
+            *rows,
+            "",
+        ]
+    )
+
+
 def check_or_write_indexes(data: dict[str, dict[str, Any]], write: bool, errors: list[str]) -> None:
     expected = {
         REFERENCE / "bom-and-parts-status.md": render_bom(data),
         REFERENCE / "source-index.md": render_source_index(data),
+        COMPONENT_PACKS / "README.md": render_component_catalog(data),
     }
     for path, content in expected.items():
         if write:
@@ -321,6 +572,7 @@ def validate_markdown_links(errors: list[str]) -> None:
     pattern = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
     for markdown in sorted((ROOT / "docs").rglob("*.md")):
         text = markdown.read_text(encoding="utf-8")
+        text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
         for raw_target in pattern.findall(text):
             target = raw_target.strip().strip("<>").split("#", 1)[0]
             if not target or target.startswith(("http://", "https://", "mailto:")):

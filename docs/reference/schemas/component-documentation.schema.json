@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "component-documentation.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "component_id", "documentation_status", "reviewed_on",
+    "reviewed_sources", "coverage"
+  ],
+  "properties": {
+    "component_id": {"type": "string", "pattern": "^component-[a-z0-9-]+$"},
+    "documentation_status": {"enum": ["stub", "partial", "curated"]},
+    "reviewed_on": {"type": ["string", "null"], "format": "date"},
+    "reviewed_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sha256"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^source-[a-z0-9-]+$"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_and_applicability", "safety_and_limits",
+        "power_and_electrical", "interfaces_and_timing",
+        "configuration_and_calibration", "mechanical_and_environmental",
+        "diagnostics_and_failure_modes", "replacement_and_compatibility"
+      ],
+      "properties": {
+        "identity_and_applicability": {"$ref": "#/$defs/coverageState"},
+        "safety_and_limits": {"$ref": "#/$defs/coverageState"},
+        "power_and_electrical": {"$ref": "#/$defs/coverageState"},
+        "interfaces_and_timing": {"$ref": "#/$defs/coverageState"},
+        "configuration_and_calibration": {"$ref": "#/$defs/coverageState"},
+        "mechanical_and_environmental": {"$ref": "#/$defs/coverageState"},
+        "diagnostics_and_failure_modes": {"$ref": "#/$defs/coverageState"},
+        "replacement_and_compatibility": {"$ref": "#/$defs/coverageState"}
+      }
+    }
+  },
+  "$defs": {
+    "coverageState": {
+      "enum": ["covered", "partial", "pending", "not-applicable"]
+    }
+  }
+}

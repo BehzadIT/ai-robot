@@ -35,9 +35,11 @@ Use skills for repeatable work rather than persistent specialist personas:
 | Skill | Responsibility |
 | --- | --- |
 | `refine-story` | Capture a Draft, discover context, ask consequential questions, and produce a decision-complete Ready story |
+| `plan-story` | Turn a decision-complete story into a deterministic task and verification plan |
 | `execute-story` | Implement a Ready story within ownership and approval boundaries, collecting claim-matched evidence |
 | `review-story` | Review readiness or delivery using only the technical lenses relevant to the risk |
 | `embedded-mentor` | Teach concise decision-relevant physical and real-time concepts and create useful Mermaid+ELK explanations |
+| `curate-component-documentation` | Create a compact component README from registered vendor sources with exact locators and uncertainty preserved |
 
 A fresh isolated reviewer is useful for broad, cross-subsystem, or
 safety-relevant changes. A standing fleet of firmware, electrical, mechanical,

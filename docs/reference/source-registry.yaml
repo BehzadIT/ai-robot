@@ -39,6 +39,221 @@ sources:
     applicability: Proves the current ESP-IDF target is classic ESP32, not the exact physical board.
     limitations:
       - Software target selection is not physical board identity.
+  - id: source-pico-2w-datasheet
+    title: Raspberry Pi Pico 2 W Datasheet
+    kind: vendor-manual
+    path: docs/assets/components/controllers/raspberry-pi-pico-2w/vendor/pico-2-w-datasheet-release-2.pdf
+    sha256: 8f519b945e9f7078ffd3fee464992fca376d8037ebcd1f83bd2a021241717eb2
+    manufacturer: Raspberry Pi Ltd
+    model_scope: Raspberry Pi Pico 2 W and Pico 2 W with headers
+    revision: Release 2; build date 2026-07-03
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-raspberry-pi-pico-2w-01]
+    retrieval:
+      url: https://pip-assets.raspberrypi.com/categories/1088-raspberry-pi-pico-2-w/documents/RP-008304-DS-3-pico-2-w-datasheet.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: Board-level reference for the owner-reported Pico 2 W controller.
+    limitations:
+      - Does not qualify the as-built harness, supply, mounting, or header population.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-pico-2w-pinout
+    title: Raspberry Pi Pico 2 W Pinout
+    kind: vendor-manual
+    path: docs/assets/components/controllers/raspberry-pi-pico-2w/vendor/pico-2-w-pinout-rev-1.pdf
+    sha256: 42d3092e901ef10846ae5eea5f4b3f73e1b577985ad6baa1b145d05559cc9f89
+    manufacturer: Raspberry Pi Ltd
+    model_scope: Raspberry Pi Pico 2 W and Pico 2 W with headers
+    revision: Revision 1
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-raspberry-pi-pico-2w-01]
+    retrieval:
+      url: https://pip-assets.raspberrypi.com/categories/1088-raspberry-pi-pico-2-w/documents/RP-008305-DS-1-pico-2-w-pinout.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: Vendor pinout reference for identifying Pico 2 W board pins.
+    limitations:
+      - A vendor pinout does not prove which pins are connected in the robot harness.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-pico-2w-schematic
+    title: Raspberry Pi Pico 2 W Schematic
+    kind: vendor-manual
+    path: docs/assets/components/controllers/raspberry-pi-pico-2w/vendor/pico-2-w-schematic-rev-1.pdf
+    sha256: f6791f8a818bc73b6963bd4cdb66afaa3e2479db9edd9ef76bb4aaaacc9bf7d1
+    manufacturer: Raspberry Pi Ltd
+    model_scope: Raspberry Pi Pico 2 W and Pico 2 W with headers
+    revision: Revision 1
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-raspberry-pi-pico-2w-01]
+    retrieval:
+      url: https://pip-assets.raspberrypi.com/categories/1088-raspberry-pi-pico-2-w/documents/RP-008306-DS-1-pico-2-w-schematic.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: Vendor board schematic for Pico 2 W power and signal design context.
+    limitations:
+      - Does not describe the robot carrier wiring or as-built connections.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-rp2350-datasheet
+    title: RP2350 Microcontroller Datasheet
+    kind: vendor-manual
+    path: docs/assets/components/controllers/raspberry-pi-pico-2w/vendor/rp2350-datasheet-release-3.pdf
+    sha256: a638d6780da919162660691bfa02c6dcf7c2a0b6e9f18e2d7519c80b664a2e39
+    manufacturer: Raspberry Pi Ltd
+    model_scope: RP2350 microcontroller family
+    revision: Release 3; updated 2026-10-02
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-raspberry-pi-pico-2w-01]
+    retrieval:
+      url: https://pip-assets.raspberrypi.com/categories/1214-rp2350/documents/RP-008373-DS-3-rp2350-datasheet.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: MCU-level reference for the RP2350 used by the Pico 2 W.
+    limitations:
+      - Chip-level capabilities and limits do not override the Pico 2 W board-level design.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-rp2350-hardware-design
+    title: Hardware Design With RP2350
+    kind: vendor-manual
+    path: docs/assets/components/controllers/raspberry-pi-pico-2w/vendor/rp2350-hardware-design-release-3.pdf
+    sha256: cef88bc7d87e67b4262ee15f2b94b03566667143f4e8daf6931828bef6408059
+    manufacturer: Raspberry Pi Ltd
+    model_scope: RP2350A and RP2350B hardware integration
+    revision: Release 3; build date 2026-08-20
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-raspberry-pi-pico-2w-01]
+    retrieval:
+      url: https://pip-assets.raspberrypi.com/categories/1214-rp2350/documents/RP-008280-DS-2-hardware-design-with-rp2350.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: Supporting MCU hardware-design reference for power, I/O, flash, clock, and USB context.
+    limitations:
+      - Primarily applies to custom RP2350 board design rather than the completed Pico 2 W module.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-esp32-series-datasheet
+    title: ESP32 Series Datasheet
+    kind: vendor-manual
+    path: docs/assets/components/controllers/esp32-development-board/vendor/esp32-series-datasheet-v5.3.pdf
+    sha256: a7917e6b47528c9dcab06837a49d452e582751335797db879f1cf2d17cd29adf
+    manufacturer: Espressif Systems
+    model_scope: Classic ESP32 SoC series
+    revision: v5.3; 2026-07
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-esp32-dev-board-01]
+    retrieval:
+      url: https://documentation.espressif.com/esp32_datasheet_en.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: SoC-family reference consistent with the current firmware target of classic ESP32.
+    limitations:
+      - The exact installed development board and module remain unidentified.
+      - SoC documentation cannot determine board GPIO exposure, USB-UART circuitry, regulator limits, or module variant.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-esp32-hardware-design-guidelines
+    title: ESP32 Hardware Design Guidelines HTML Snapshot
+    kind: vendor-web-page
+    path: docs/assets/components/controllers/esp32-development-board/vendor/esp32-hardware-design-guidelines-v1.9.md
+    sha256: 139e58bf41cb03211d8860d5bba8da0825643272dd438615cb6f92512992bade
+    manufacturer: Espressif Systems
+    model_scope: Classic ESP32 SoC series
+    revision: v1.9; 2025-09-17
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-esp32-dev-board-01]
+    retrieval:
+      url: https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/index.html
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: Source-faithful Markdown snapshot of the vendor's HTML-only ESP32 hardware-design guide.
+    limitations:
+      - The exact installed development board and module remain unidentified.
+      - HTML layout was normalized to Markdown and image references still resolve to the official vendor host.
+      - The snapshot is retained source material, not a project-specific safety interpretation.
+  - id: source-cytron-mdd10a-manual
+    title: Cytron MDD10A Dual Channel Motor Driver User Manual
+    kind: vendor-manual
+    path: docs/assets/components/interfaces/cytron-mdd10a-motor-driver/vendor/cytron-mdd10a-user-manual-v2.0.pdf
+    sha256: dc1120016644500f63e2815006bb1b9cd5119b2e9d2c95a9307152338619f9fa
+    manufacturer: Cytron Technologies Sdn. Bhd.
+    model_scope: MDD10A Rev 2.0
+    revision: v2.0; 2017-06
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-cytron-mdd10a-01]
+    retrieval:
+      url: https://docs.google.com/document/d/1ol8nICCTTw5dAHHE_hju08cCVH2GN5_Y3cGC6B4Gbas/export?format=pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer-controlled
+    applicability: Vendor manual for the reported MDD10A motor-driver family and Rev 2.0 board.
+    limitations:
+      - The installed board revision has not been physically identified.
+      - Do not apply Rev 2.0 limits to an earlier board until Q-US002-005 is resolved.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-pololu-37d-vendor-datasheet
+    title: Pololu 37D Metal Gearmotors Datasheet
+    kind: vendor-manual
+    path: docs/assets/components/actuators/pololu-37d-gearmotors/vendor/pololu-37d-metal-gearmotors-rev-1.2.pdf
+    sha256: 71172f074ecd6752d59863f04616bcd341d7bdca5588734de31d328a10735ba1
+    manufacturer: Pololu Corporation
+    model_scope: 37D metal gearmotor family, including 12 V 30:1 encoder variants
+    revision: Rev 1.2; 2020-01
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-pololu-37d-motors-01]
+    retrieval:
+      url: https://www.pololu.com/file/0J1736/pololu%E2%80%9037d%E2%80%90metal%E2%80%90gearmotors%E2%80%90rev%E2%80%901%E2%80%902.pdf
+      retrieved_on: "2026-11-19"
+      host_type: manufacturer
+    applicability: Family-level electrical, encoder, mechanical, and performance reference for the reported Pololu 37D drivetrain.
+    limitations:
+      - Exact installed order numbers and encoder variants remain unresolved under Q-US002-005.
+      - Family data cannot select an item number or prove the installed gearbox and encoder identity.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-vl53l0x-datasheet
+    title: ST VL53L0X Time-of-Flight Sensor Datasheet
+    kind: vendor-manual
+    path: docs/assets/components/sensors/vl53l0x/vendor/st-vl53l0x-datasheet-rev-6.pdf
+    sha256: c8789c79235e9544bc355313f8ae51f96042026e8a7dbec3118c316def96f668
+    manufacturer: STMicroelectronics
+    model_scope: VL53L0X bare sensor
+    revision: DS11555 Rev 6; 2024-06
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-vl53l0x-sensors-01]
+    retrieval:
+      url: https://www.hestore.hu/prod_getfile.php?id=18866
+      retrieved_on: "2026-11-19"
+      host_type: distributor-mirror
+    applicability: Vendor-authored chip-level reference for the VL53L0X used on an unidentified candidate carrier module.
+    limitations:
+      - The vendor host and Arrow mirror timed out during acquisition; the retained vendor-authored PDF came from a distributor mirror.
+      - Does not identify the carrier-board regulator, level shifting, pinout, or optical cover.
+      - No project claims have been extracted from this PDF in this documentation stage.
+  - id: source-vl53l0x-api-manual
+    title: ST VL53L0X API User Manual
+    kind: vendor-manual
+    path: docs/assets/components/sensors/vl53l0x/vendor/st-vl53l0x-api-user-manual-rev-2.pdf
+    sha256: b0eb07701b90ac2a7251e2988fe446131ac11e5cd2abed502e11a7637c90adce
+    manufacturer: STMicroelectronics
+    model_scope: VL53L0X API and calibration procedures
+    revision: UM2039 Rev 2.0; 2022-11
+    authority: vendor
+    extraction_status: not-extracted
+    component_ids: [component-vl53l0x-sensors-01]
+    retrieval:
+      url: https://www.pololu.com/file/0J1508/VL53L0X-UM2309.pdf
+      retrieved_on: "2026-11-19"
+      host_type: distributor-mirror
+    applicability: Vendor-authored API reference for future VL53L0X software evaluation.
+    limitations:
+      - Retained from a component distributor mirror after the vendor hosts timed out.
+      - Does not prove the candidate carrier module identity or installed software path.
+      - No project claims have been extracted from this PDF in this documentation stage.
   - id: source-project-components-updated
     title: Robot Project Components Reference
     kind: project-pdf
@@ -124,39 +339,42 @@ sources:
   - id: source-goldencell-18650-spec
     title: JGCFR18650 2200 mAh 3.2 V Cell Specification
     kind: vendor-manual
-    path: docs/assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf
+    path: docs/assets/components/power/lifepo4-battery-pack/vendor/candidate-jgcfr18650-cell-specification-r1.1.pdf
     sha256: f2b9a83af80b89f7da974eea0cbb8920d1d9148a2903863cd5ad363a30223096
     manufacturer: Shandong Goldencell Electronics Technology Co., Ltd.
     model_scope: 18FC-7.04Wh / JGCFR18650-2200mAh-3.2V
     revision: R1.1
     authority: vendor
     extraction_status: render-reviewed
+    component_ids: [component-lifepo4-pack-01]
     applicability: Electrical limits only if the installed cells match this exact model and revision.
     limitations:
       - Installed cell identity is not verified.
   - id: source-daly-active-balance-manual
     title: DALY Smart Active Balance BMS User Manual
     kind: vendor-manual
-    path: docs/assets/electrical/smart-active-balance-bms-manual.pdf
+    path: docs/assets/components/power/daly-bms/vendor/daly-smart-active-balance-bms-manual-2024-11-15.pdf
     sha256: 79c8c43d03d5a62b72802096019ee0910ab3299ad27c2171add4169e560d5265
     manufacturer: DALY
     model_scope: Smart Active Balance BMS family, 4-24S and 40-500A variants
     revision: "2024-11-15"
     authority: vendor
     extraction_status: render-reviewed
+    component_ids: [component-daly-bms-01]
     applicability: Family-level installation and safety guidance; exact applicability depends on the installed label.
     limitations:
       - A family manual cannot resolve the installed model, current rating, or interface options.
   - id: source-iqload-evo-manual
     title: iQLoad EVO 5 And EVO 7 Charger Manual
     kind: vendor-manual
-    path: docs/assets/electrical/iqload-evo-charger-manual-en-2021.pdf
+    path: docs/assets/components/power/panther-iqload-evo-charger/vendor/iqload-evo-5-and-7-manual-2021.pdf
     sha256: 81b8bc98ff297c2fc18f394e44e26a3c5d30e1f64d24ead1f0ed4095aab839ba
     manufacturer: Panther
     model_scope: iQLoad EVO 5 and EVO 7
     revision: "2021"
     authority: vendor
     extraction_status: render-reviewed
+    component_ids: [component-panther-iqload-evo-charger-01]
     applicability: Charger features and safety instructions; physical model and selected program remain unverified.
     limitations:
       - Describes monitoring/trickle behavior that conflicts with the project battery note.
@@ -164,13 +382,14 @@ sources:
   - id: source-suspended-chassis-manual
     title: Suspension Crawler Vehicle Technical Parameters
     kind: vendor-manual
-    path: docs/assets/mechanical/suspended-tracked-vehicle-technical-parameters.pdf
+    path: docs/assets/components/mechanical/tracked-chassis/vendor/suspension-crawler-technical-parameters.pdf
     sha256: 12b91c0f66c0476213c7613e0494e0f48264786a00e544f413fd3a3ab7b41f3c
     manufacturer: null
     model_scope: Original tracked chassis, controller, and 520 motor package
     revision: "2024-05-07"
     authority: vendor
     extraction_status: render-reviewed
+    component_ids: [component-tracked-chassis-01, component-legacy-520-motors-01]
     applicability: Base-chassis geometry and legacy stock hardware only.
     limitations:
       - Stock controller and 520 motor specifications do not describe the upgraded drivetrain.

@@ -21,5 +21,5 @@ Describe the physical robot build at the level needed to inspect, reproduce, and
 
 ## Sources
 - Manual/source file: [robot-project-components-updated.pdf](../assets/reference/robot-project-components-updated.pdf)
-- Manual/source file: [suspended-tracked-vehicle-technical-parameters.pdf](../assets/mechanical/suspended-tracked-vehicle-technical-parameters.pdf)
+- Manual/source file: [suspension crawler technical parameters](../assets/components/mechanical/tracked-chassis/vendor/suspension-crawler-technical-parameters.pdf)
 - Source file: [robot-chassis-expansion-design.txt](../assets/mechanical/robot-chassis-expansion-design.txt)

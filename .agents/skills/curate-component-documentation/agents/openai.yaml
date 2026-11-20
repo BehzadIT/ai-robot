@@ -1,0 +1,6 @@
+interface:
+  display_name: "Curate Component Documentation"
+  short_description: "Create cited agent-first component documentation"
+  default_prompt: "Use $curate-component-documentation to create or revise a cited component README from its registered sources."
+policy:
+  allow_implicit_invocation: true

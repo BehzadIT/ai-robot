@@ -15,14 +15,29 @@
         "properties": {
           "id": {"type": "string", "pattern": "^source-[a-z0-9-]+$"},
           "title": {"type": "string", "minLength": 1},
-          "kind": {"enum": ["vendor-manual", "project-note", "project-pdf", "photo", "data", "code"]},
+          "kind": {"enum": ["vendor-manual", "vendor-web-page", "project-note", "project-pdf", "photo", "data", "code"]},
           "path": {"type": "string", "pattern": "^(docs|robot-(pico|esp32|android)-platform|robot-android-app)/"},
           "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
           "manufacturer": {"type": ["string", "null"]},
           "model_scope": {"type": ["string", "null"]},
           "revision": {"type": ["string", "null"]},
-          "authority": {"enum": ["vendor", "code-backed", "owner-project-note", "generated-project-note", "unknown"]},
+          "authority": {"enum": ["vendor", "authorized-distributor", "code-backed", "owner-project-note", "generated-project-note", "unknown"]},
           "extraction_status": {"enum": ["not-extracted", "text-reviewed", "render-reviewed", "ocr-unverified"]},
+          "retrieval": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["url", "retrieved_on", "host_type"],
+            "properties": {
+              "url": {"type": "string", "format": "uri"},
+              "retrieved_on": {"type": "string", "format": "date"},
+              "host_type": {"enum": ["manufacturer", "manufacturer-controlled", "authorized-distributor", "distributor-mirror", "archive", "unknown"]}
+            }
+          },
+          "component_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^component-[a-z0-9-]+$"}
+          },
           "applicability": {"type": "string", "minLength": 1},
           "limitations": {"type": "array", "items": {"type": "string"}},
           "summary": {"type": "string"}

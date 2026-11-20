@@ -3,6 +3,8 @@ from __future__ import annotations
 import importlib.util
 import copy
 import sys
+import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 
@@ -59,6 +61,124 @@ class RegistryContractTest(unittest.TestCase):
         invalid["components"][0]["claims"][0].pop("provenance")
         with self.assertRaises(jsonschema.ValidationError):
             jsonschema.validate(invalid, schema)
+
+    def test_source_schema_rejects_unknown_retrieval_host_type(self) -> None:
+        schema = MODULE.load_json(MODULE.SCHEMAS / "source-registry.schema.json")
+        registry = MODULE.load_yaml(MODULE.REFERENCE / "source-registry.yaml")
+        source = copy.deepcopy(next(item for item in registry["sources"] if item.get("retrieval")))
+        source["retrieval"]["host_type"] = "unclassified-mirror"
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate({"schema_version": 1, "sources": [source]}, schema)
+
+    def test_component_schema_requires_documentation_classification(self) -> None:
+        schema = MODULE.load_json(MODULE.SCHEMAS / "component-registry.schema.json")
+        registry = MODULE.load_yaml(MODULE.REFERENCE / "component-registry.yaml")
+        component = copy.deepcopy(registry["components"][0])
+        component.pop("documentation_requirement")
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate({"schema_version": 1, "components": [component]}, schema)
+
+    def test_dossier_rejects_stale_reviewed_source_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            documentation = root / "docs/assets/components/controllers/example/README.md"
+            documentation.parent.mkdir(parents=True)
+            documentation.write_text(
+                textwrap.dedent(
+                    """\
+                    ---
+                    component_id: component-example-01
+                    documentation_status: partial
+                    reviewed_on: "2026-11-19"
+                    reviewed_sources:
+                      - id: source-example
+                        sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    coverage:
+                      identity_and_applicability: partial
+                      safety_and_limits: pending
+                      power_and_electrical: pending
+                      interfaces_and_timing: pending
+                      configuration_and_calibration: pending
+                      mechanical_and_environmental: pending
+                      diagnostics_and_failure_modes: pending
+                      replacement_and_compatibility: pending
+                    ---
+                    # Example
+                    """
+                ),
+                encoding="utf-8",
+            )
+            components = [{
+                "id": "component-example-01",
+                "documentation_requirement": "required",
+                "documentation": "docs/assets/components/controllers/example/README.md",
+            }]
+            sources = [{
+                "id": "source-example",
+                "kind": "vendor-manual",
+                "path": "docs/assets/components/controllers/example/vendor/example.pdf",
+                "sha256": "b" * 64,
+                "component_ids": ["component-example-01"],
+            }]
+            old_root = MODULE.ROOT
+            MODULE.ROOT = root
+            try:
+                errors: list[str] = []
+                MODULE.validate_component_documentation(components, sources, errors)
+            finally:
+                MODULE.ROOT = old_root
+            self.assertTrue(any("hash is stale" in error for error in errors), errors)
+
+    def test_dossier_rejects_mismatched_pdf_page_locator(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            documentation = root / "docs/assets/components/controllers/example/README.md"
+            documentation.parent.mkdir(parents=True)
+            documentation.write_text(
+                textwrap.dedent(
+                    """\
+                    ---
+                    component_id: component-example-01
+                    documentation_status: partial
+                    reviewed_on: null
+                    reviewed_sources: []
+                    coverage:
+                      identity_and_applicability: partial
+                      safety_and_limits: pending
+                      power_and_electrical: pending
+                      interfaces_and_timing: pending
+                      configuration_and_calibration: pending
+                      mechanical_and_environmental: pending
+                      diagnostics_and_failure_modes: pending
+                      replacement_and_compatibility: pending
+                    ---
+                    # Example
+
+                    [source-example, PDF p. 4, §Limits](vendor/example.pdf#page=5)
+                    """
+                ),
+                encoding="utf-8",
+            )
+            components = [{
+                "id": "component-example-01",
+                "documentation_requirement": "required",
+                "documentation": "docs/assets/components/controllers/example/README.md",
+            }]
+            sources = [{
+                "id": "source-example",
+                "kind": "vendor-manual",
+                "path": "docs/assets/components/controllers/example/vendor/example.pdf",
+                "sha256": "b" * 64,
+                "component_ids": ["component-example-01"],
+            }]
+            old_root = MODULE.ROOT
+            MODULE.ROOT = root
+            try:
+                errors: list[str] = []
+                MODULE.validate_component_documentation(components, sources, errors)
+            finally:
+                MODULE.ROOT = old_root
+            self.assertTrue(any("page label and fragment differ" in error for error in errors), errors)
 
 
 if __name__ == "__main__":

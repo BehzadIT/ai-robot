@@ -58,7 +58,7 @@
       "required": [
         "id", "name", "category", "manufacturer", "model", "variant",
         "quantity", "states", "system_role", "owner_subsystem", "claims",
-        "question_ids"
+        "question_ids", "documentation_requirement"
       ],
       "properties": {
         "id": {"type": "string", "pattern": "^component-[a-z0-9-]+$"},
@@ -108,7 +108,10 @@
           "type": "array",
           "items": {"type": "string", "pattern": "^Q-US002-[0-9]{3}$"}
         },
-        "dossier": {"type": "string"},
+        "documentation_requirement": {
+          "enum": ["required", "conditional", "not-required"]
+        },
+        "documentation": {"type": "string"},
         "notes": {"type": "array", "items": {"type": "string"}}
       }
     }

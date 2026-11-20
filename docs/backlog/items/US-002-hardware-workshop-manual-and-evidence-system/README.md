@@ -20,6 +20,16 @@ As the robot builder, I want components, tools, manuals, and physical evidence c
 - **AC-001:** Component and tool records distinguish identity, availability, condition, and confidence.
 - **AC-002:** Physical claims use append-only evidence and unresolved facts remain explicit.
 - **AC-003:** Relevant manuals and safe measurement procedures are discoverable.
+- **AC-004:** Decision-relevant products use category/product documentation
+  packs with registered vendor sources and machine-countable coverage.
+- **AC-005:** Component documentation preserve uncertainty and use exact source
+  locators when later curated.
+- **AC-006:** Agents follow the component catalog and documentation before opening a
+  complete manual.
 
 ## Current Status
-Registry foundations exist; connected-hardware identification and qualification remain in progress. See [implementation-plan.md](implementation-plan.md) and the [historical record](materials/legacy-story-record.md).
+Registry foundations and the component-documentation curation system exist;
+source extraction, connected-hardware identification, and physical
+qualification remain in progress. See
+[implementation-plan.md](implementation-plan.md) and the
+[historical record](materials/legacy-story-record.md).

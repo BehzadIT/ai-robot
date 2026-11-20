@@ -111,7 +111,7 @@ database.
 | PCB layout | Footprints, copper, vias, stack-up, and board implementation |
 | Mechanical drawing/CAD | Geometry, mounting, material, tolerance, clearance, and load-relevant information |
 | As-built record | What the current physical robot contains, including deviations from design |
-| Component dossier | Searchable project-specific summary linked to authoritative source material |
+| Component documentation | Searchable project-specific summary linked to authoritative source material |
 | Tool record | Capability, limits, accessories, condition, familiarity, and safe use of a workshop or development tool |
 | Evidence bundle | Immutable record of the procedure, system identity, raw artifacts, observations, and result |
 
@@ -178,7 +178,7 @@ decision-relevant claim has its own provenance. Global source lists are
 navigational only and cannot prove an individual voltage, pin, model, or
 capability.
 
-Required human-readable dossiers should live at
+Required human-readable documentation should live at
 `docs/reference/components/<component-id>.md` and explain:
 
 - what the component does in this robot;
@@ -190,7 +190,7 @@ Required human-readable dossiers should live at
 - replacement and compatibility considerations;
 - verified facts, owner reports, conflicts, and remaining questions.
 
-Do not create a dossier for generic low-risk consumables unless their material,
+Do not create a documentation for generic low-risk consumables unless their material,
 rating, or compatibility materially affects a decision.
 
 ## Workshop Capability Registry
@@ -552,7 +552,7 @@ because they affect present control and electrical safety.
 4. **Active / owner-assisted:** record responses without overstating
    verification.
 5. **Implemented foundation:** create component, tool, and source registries,
-   schemas, validation, and priority dossiers/manual summaries.
+   schemas, validation, and priority documentation/manual summaries.
 6. **Blocked by identity evidence and KiCad availability:** capture the first
    as-built revision and system schematic.
 7. **Procedures implemented; execution approval-gated:** run unpowered identity

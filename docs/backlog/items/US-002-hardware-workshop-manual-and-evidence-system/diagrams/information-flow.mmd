@@ -3,7 +3,13 @@ config:
   layout: elk
 ---
 flowchart LR
-  Manuals --> Registries
+  Catalog[Generated component catalog] --> Documentation[Component documentation]
+  Registry[Component and source registries] --> Catalog
+  Registry --> Documentation
+  Questions[Open identity and compatibility questions] --> Documentation
+  Documentation --> Cited[Cited page or HTML section]
+  Cited --> Manual[Complete vendor source when needed]
   Owner[Owner observations] --> Evidence[Append-only evidence]
-  Evidence --> Registries
-  Registries --> Decisions[Safe engineering decisions]
+  Evidence --> Registry
+  Documentation --> Decisions[Traceable engineering decisions]
+  Evidence --> Decisions

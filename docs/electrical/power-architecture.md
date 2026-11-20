@@ -21,4 +21,4 @@ Describe the robot power tree and electrical ownership boundaries.
 ## Sources
 - Source file: [robot-battery-system.txt](../assets/electrical/robot-battery-system.txt)
 - Source file: [wiring-reference.txt](../assets/electrical/wiring-reference.txt)
-- Manual/source file: [jgcfr18650-2200mah-lifepo4-cell-specification.pdf](../assets/electrical/jgcfr18650-2200mah-lifepo4-cell-specification.pdf)
+- Manual/source file: [candidate JGCFR18650 cell specification](../assets/components/power/lifepo4-battery-pack/vendor/candidate-jgcfr18650-cell-specification-r1.1.pdf)
